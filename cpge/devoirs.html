@@ -80,16 +80,13 @@ p { color:#444; line-height:1.8; margin-bottom:16px; }
     <hr class="section-rule">
     
     <div style="display:flex; gap:1em; margin:2em 0 1em; justify-content:center;">
-      <button onclick="switchTab('td')" id="btn-td" style="padding:0.6em 1.6em; border-radius:8px; border:none; background:#111; color:#fff; font-size:1em; cursor:pointer; font-weight:600;">Devoirs surveillés</button>
-      <button onclick="switchTab('chapitres')" id="btn-chapitres" style="padding:0.6em 1.6em; border-radius:8px; border:none; background:#ccc; color:#111; font-size:1em; cursor:pointer; font-weight:600;">Interrogations écrites</button>
-      <button onclick="switchTab('annales')" id="btn-annales" style="padding:0.6em 1.6em; border-radius:8px; border:none; background:#ccc; color:#111; font-size:1em; cursor:pointer; font-weight:600;">DST années précédentes</button>
+      <button onclick="switchTab('DST')" id="btn-td" style="padding:0.6em 1.6em; border-radius:8px; border:none; background:#111; color:#fff; font-size:1em; cursor:pointer; font-weight:600;">Devoirs surveillés</button>
+      <button onclick="switchTab('annales')" id="btn-annales" style="padding:0.6em 1.6em; border-radius:8px; border:none; background:#ccc; color:#111; font-size:1em; cursor:pointer; font-weight:600;">DST année précédente</button>
+      <button onclick="switchTab('ie')" id="btn-chapitres" style="padding:0.6em 1.6em; border-radius:8px; border:none; background:#ccc; color:#111; font-size:1em; cursor:pointer; font-weight:600;">Interrogations écrites</button>
     </div>
 
-    <div id="tab-td" style="max-width:555px; margin:0 auto;">
-    </div>
-
-    <div id="tab-chapitres" style="display:none; max-width:555px; margin:0 auto;">
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> IE1 – ??? (??/??)</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/iecpge/IE1.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
+    <div id="tab-DST" style="max-width:555px; margin:0 auto;">
+      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DST1 (??/??) – ???</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/dstcpge/DST1.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
     </div>
 
     <div id="tab-annales" style="display:none; max-width:555px; margin:0 auto;">
@@ -104,6 +101,10 @@ p { color:#444; line-height:1.8; margin-bottom:16px; }
       <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DST9 – Espaces vectoriels</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/annalesDST/DST9.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
       <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DST10 – Examen mi-semestriel</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/annalesDST/DST10.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
       <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DST11 – Examen fin de semestre</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/annalesDST/DST11.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
+    </div>
+
+    <div id="tab-ie" style="display:none; max-width:555px; margin:0 auto;">
+      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> IE1 – ??? (??/??)</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/iecpge/IE1.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
     </div>
   </div>
 </div>
