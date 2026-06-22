@@ -82,32 +82,28 @@ p { color:#444; line-height:1.8; margin-bottom:16px; }
     <div style="display:flex; gap:1em; margin:2em 0 1em; justify-content:center;">
       <button onclick="switchTab('td')" id="btn-td" style="padding:0.6em 1.6em; border-radius:8px; border:none; background:#111; color:#fff; font-size:1em; cursor:pointer; font-weight:600;">Devoirs surveillés</button>
       <button onclick="switchTab('chapitres')" id="btn-chapitres" style="padding:0.6em 1.6em; border-radius:8px; border:none; background:#ccc; color:#111; font-size:1em; cursor:pointer; font-weight:600;">Interrogations écrites</button>
-      <button onclick="switchTab('troisieme')" id="btn-troisieme" style="padding:0.6em 1.6em; border-radius:8px; border:none; background:#ccc; color:#111; font-size:1em; cursor:pointer; font-weight:600;">Devoirs maisons</button>
+      <button onclick="switchTab('annales')" id="btn-annales" style="padding:0.6em 1.6em; border-radius:8px; border:none; background:#ccc; color:#111; font-size:1em; cursor:pointer; font-weight:600;">DST années précédentes</button>
     </div>
 
     <div id="tab-td" style="max-width:555px; margin:0 auto;">
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DST1 – Études de fonctions (06/09)</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/dstcpge/DST1.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DST2 – Logique, ensemble et études de fonctions (27/09)</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/dstcpge/DST2.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DST3 – Examen mi-semestriel (5/11)</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/dstcpge/DST3.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DST4 – Trigonométrie, nombres complexes et études de fonctions (15/11)</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/dstcpge/DST4.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DST5 – Suites et équations différentielles (13/12)</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/dstcpge/DST5.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DST6 – Examen fin de semestre (14/01)</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/dstcpge/DST6.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DST7 – Continuité, matrices, systèmes linéaires et dérivabilité (31/01)</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/dstcpge/DST7.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DST8 – Polynômes, géométrie plane et dérivabilité (14/03)</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/dstcpge/DST8.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DST9 – Espaces vectoriels (4/04)</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/dstcpge/DST9.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DST10 – Examen mi-semestriel (15/04)</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/dstcpge/DST10.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DST11 – Examen fin de semestre (10/06)</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/dstcpge/DST11.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
     </div>
 
     <div id="tab-chapitres" style="display:none; max-width:555px; margin:0 auto;">
       <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> IE1 – ??? (??/??)</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/iecpge/IE1.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
     </div>
 
-    <div id="tab-troisieme" style="display:none; max-width:555px; margin:0 auto;">
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DM1 – Bijectivité, trigonométrie et études de fonctions (5/11)</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/dmcpge/DM1.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DM2 – Nombres complexes (25/11)</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/dmcpge/DM2.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DM3 – Suites (06/01)</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/dmcpge/DM3.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DM4 – Polynômes (09/03)</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/dmcpge/DM4.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
+    <div id="tab-annales" style="display:none; max-width:555px; margin:0 auto;">
+      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DST1 – Études de fonctions</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/annalesDST/DST1.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
+      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DST2 – Logique, ensemble et études de fonctions</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/annalesDST/DST2.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
+      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DST3 – Examen mi-semestriel</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/annalesDST/DST3.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
+      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DST4 – Trigonométrie, nombres complexes et études de fonctions</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/annalesDST/DST4.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
+      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DST5 – Suites et équations différentielles</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/annalesDST/DST5.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
+      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DST6 – Examen fin de semestre</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/annalesDST/DST6.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
+      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DST7 – Continuité, matrices, systèmes linéaires et dérivabilité</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/annalesDST/DST7.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
+      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DST8 – Polynômes, géométrie plane et dérivabilité</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/annalesDST/DST8.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
+      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DST9 – Espaces vectoriels</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/annalesDST/DST9.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
+      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DST10 – Examen mi-semestriel</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/annalesDST/DST10.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
+      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DST11 – Examen fin de semestre</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/annalesDST/DST11.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
     </div>
   </div>
 </div>
@@ -151,7 +147,7 @@ function checkPassword() {
   for (var i = 0; i < input.length; i++) {
     hash = (Math.imul(31, hash) + input.charCodeAt(i)) | 0;
   }
-  if (hash === -1401434985) {
+  if (hash === -1401434984) {
     document.getElementById('password-overlay').style.display = 'none';
     sessionStorage.setItem('auth', '1');
   } else {
@@ -193,13 +189,13 @@ function toggleAccord(header) {
 function switchTab(tab) {
   document.getElementById('tab-td').style.display = tab==='td' ? 'block' : 'none';
   document.getElementById('tab-chapitres').style.display = tab==='chapitres' ? 'block' : 'none';
-  document.getElementById('tab-troisieme').style.display = tab==='troisieme' ? 'block' : 'none';
+  document.getElementById('tab-annales').style.display = tab==='annales' ? 'block' : 'none';
   document.getElementById('btn-td').style.background = tab==='td' ? '#111' : '#ccc';
   document.getElementById('btn-td').style.color = tab==='td' ? '#fff' : '#111';
   document.getElementById('btn-chapitres').style.background = tab==='chapitres' ? '#111' : '#ccc';
   document.getElementById('btn-chapitres').style.color = tab==='chapitres' ? '#fff' : '#111';
-  document.getElementById('btn-troisieme').style.background = tab==='troisieme' ? '#111' : '#ccc';
-  document.getElementById('btn-troisieme').style.color = tab==='troisieme' ? '#fff' : '#111';
+  document.getElementById('btn-annales').style.background = tab==='annales' ? '#111' : '#ccc';
+  document.getElementById('btn-annales').style.color = tab==='annales' ? '#fff' : '#111';
 }
 </script>
 </body>
