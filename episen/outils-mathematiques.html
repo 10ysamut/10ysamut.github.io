@@ -181,11 +181,22 @@ function toggleDropdown(id, btn) {
   if (!isOpen) { el.style.display="block"; btn.classList.add('open'); }
 }
 
+var pdfModalScrollY = 0;
 function openPdf(event, url) {
   event.preventDefault();
-  document.getElementById('pdfModalFrame').src = url;
-  document.getElementById('pdfModalOpenNewTab').href = url;
+  // On affiche le PDF via la liseuse pdf.js (celle utilisee a l'origine sur le site),
+  // qui gere son propre scroll tactile, plutot que de compter sur le lecteur natif
+  // du navigateur dans une iframe (peu fiable au toucher sur mobile).
+  var viewerBase = new URL('../assets/pdfjs/web/viewer.html', window.location.href).href;
+  var viewerSrc = viewerBase + '?file=' + encodeURIComponent(url);
+  pdfModalScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+  document.getElementById('pdfModalFrame').src = viewerSrc;
+  document.getElementById('pdfModalOpenNewTab').href = viewerSrc;
   document.getElementById('pdfModalOverlay').classList.add('open');
+  document.body.style.position = 'fixed';
+  document.body.style.top = '-' + pdfModalScrollY + 'px';
+  document.body.style.left = '0';
+  document.body.style.right = '0';
   document.body.style.overflow = 'hidden';
   return false;
 }
@@ -193,7 +204,12 @@ function closePdfModal(event) {
   if (event) event.stopPropagation();
   document.getElementById('pdfModalOverlay').classList.remove('open');
   document.getElementById('pdfModalFrame').src = '';
+  document.body.style.position = '';
+  document.body.style.top = '';
+  document.body.style.left = '';
+  document.body.style.right = '';
   document.body.style.overflow = '';
+  window.scrollTo(0, pdfModalScrollY);
 }
 document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closePdfModal(); });
 </script>
