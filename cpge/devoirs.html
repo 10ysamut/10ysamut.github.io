@@ -35,7 +35,7 @@ body { background-color: #f4f4f4; }
 @media (max-width:992px) {
   html, body { overflow-x:hidden !important; max-width:100vw !important; }
   .content-section { padding-top:70px; }
-  #tab-td, #tab-chapitres { max-width:100% !important; margin:0 !important; }
+  #tab-td, #tab-chapitres, #tab-annales { max-width:100% !important; margin:0 !important; }
   .accord-body { width:100% !important; overflow:hidden !important; }
   .accord-body iframe { display:block !important; width:100% !important; max-width:100% !important; height:calc(100vw * 1.414) !important; }
   .content-section { margin:0 !important; padding:16px 8px !important; padding-top:70px !important; }
@@ -67,46 +67,168 @@ p { color:#444; line-height:1.8; margin-bottom:16px; }
 .accord-header { padding:0.8em 1em; cursor:pointer; font-size:1em; display:flex; align-items:center; gap:0.6em; background:#ececec; transition:background 0.15s; }
 .accord-header:hover { background:#e2e2e2; }
 .accord-body { display:none; padding:0; }
+
+.chapgrid { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:20px; margin:0.5em 0 2em; }
+.chapcard { background:#fff; border:1px solid #e2e2e2; border-radius:14px; padding:26px 28px; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+.chapcard .tag { font-size:0.72em; font-weight:800; letter-spacing:0.09em; color:#999; text-transform:uppercase; margin-bottom:8px; }
+.chapcard h3 { font-size:1.22em; font-weight:800; text-transform:uppercase; letter-spacing:0.01em; margin:0 0 22px 0; line-height:1.3; color:#111; }
+.chapcard .pills { display:flex; flex-wrap:wrap; gap:10px; }
+.chapcard .pill { display:inline-flex; align-items:center; gap:0.5em; border:1.5px solid #ccc; border-radius:999px; padding:9px 18px; font-size:0.83em; font-weight:700; color:#333; text-decoration:none; transition:all 0.15s; background:#fff; }
+.chapcard .pill:hover { background:#111; color:#fff; border-color:#111; }
+.chapcard .pill.disabled { color:#bbb; border-style:dashed; border-color:#ddd; cursor:default; }
+@media (max-width:700px) { .chapgrid { grid-template-columns:1fr; } }
+#pdfModalOverlay { display:none; position:fixed; top:0; left:260px; right:0; bottom:0; background:rgba(0,0,0,0.55); z-index:9999; }
+#pdfModalOverlay.open { display:block; }
+#pdfModalBox { position:absolute; top:24px; left:24px; right:24px; bottom:24px; background:#fff; border-radius:8px; overflow:hidden; box-shadow:0 10px 40px rgba(0,0,0,0.3); display:flex; flex-direction:column; }
+#pdfModalHeader { display:flex; justify-content:space-between; align-items:center; gap:10px; padding:10px 14px; background:#f4f4f4; border-bottom:1px solid #ddd; flex-shrink:0; }
+#pdfModalOpenNewTab { display:inline-flex; align-items:center; gap:6px; font-size:0.85em; font-weight:600; color:#333; text-decoration:none; white-space:nowrap; }
+#pdfModalOpenNewTab:hover { color:#000; }
+#pdfModalClose { cursor:pointer; border:none; background:#111; color:#fff; border-radius:6px; padding:8px 18px; font-size:0.9em; font-weight:600; display:inline-flex; align-items:center; gap:6px; white-space:nowrap; }
+#pdfModalClose:hover { background:#333; }
+#pdfModalFrame { flex:1; width:100%; border:none; }
+@media (max-width:992px) {
+  #pdfModalOverlay { left:0; }
+  #pdfModalBox { top:0; left:0; right:0; bottom:0; border-radius:0; height:100dvh; }
+  #pdfModalHeader { position:sticky; top:0; z-index:2; padding:12px 14px; padding-top:calc(12px + env(safe-area-inset-top)); box-shadow:0 1px 4px rgba(0,0,0,0.08); }
+  #pdfModalOpenNewTab .label-full { display:none; }
+  #pdfModalClose { padding:10px 18px; font-size:1em; }
+}
 </style>
 </head>
 <body>
 
 <div id="sidebar-container"></div>
 
+<div id="pdfModalOverlay" onclick="closePdfModal(event)">
+  <div id="pdfModalBox" onclick="event.stopPropagation()">
+    <div id="pdfModalHeader">
+      <a id="pdfModalOpenNewTab" href="#" target="_blank" rel="noopener"><i class="fa fa-external-link"></i> <span class="label-full">Ouvrir dans un nouvel onglet</span></a>
+      <button id="pdfModalClose" onclick="closePdfModal()"><i class="fa fa-times"></i> Fermer</button>
+    </div>
+    <iframe id="pdfModalFrame" src="" title="Aper&ccedil;u PDF"></iframe>
+  </div>
+</div>
+
 <div class="w3-padding-large" id="main">
   <div class="content-section" id="cours">
     <p class="breadcrumb">Classe préparatoire</p>
     <h2>Les devoirs en PTSI</h2>
     <hr class="section-rule">
-    
-    <div style="display:flex; gap:1em; margin:2em 0 1em; justify-content:center;">
+    <div style="display:flex; gap:1em; margin:2em 0 1em; justify-content:center; flex-wrap:wrap;">
       <button onclick="switchTab('td')" id="btn-td" style="padding:0.6em 1.6em; border-radius:8px; border:none; background:#111; color:#fff; font-size:1em; cursor:pointer; font-weight:600;">Devoirs surveillés</button>
-      <button onclick="switchTab('annales')" id="btn-annales" style="padding:0.6em 1.6em; border-radius:8px; border:none; background:#ccc; color:#111; font-size:1em; cursor:pointer; font-weight:600;">DST année précédente</button>
       <button onclick="switchTab('chapitres')" id="btn-chapitres" style="padding:0.6em 1.6em; border-radius:8px; border:none; background:#ccc; color:#111; font-size:1em; cursor:pointer; font-weight:600;">Interrogations écrites</button>
+      <button onclick="switchTab('annales')" id="btn-annales" style="padding:0.6em 1.6em; border-radius:8px; border:none; background:#ccc; color:#111; font-size:1em; cursor:pointer; font-weight:600;">DST année précédente</button>
     </div>
 
-    <div id="tab-td" style="max-width:555px; margin:0 auto;">
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DST1 (??/??) – ??? </div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/dstcpge/DST1.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
+    <div id="tab-td">
+    <div class="chapgrid">
+      <div class="chapcard">
+        <div class="tag">DST 1</div>
+        <h3>Sujet à venir</h3>
+        <div class="pills">
+          <a class="pill" href="../docs/dstcpge/DST1.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> DST1</a>
+        </div>
+      </div>
     </div>
 
-    <div id="tab-chapitres" style="display:none; max-width:555px; margin:0 auto;">
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> IE1 – ??? (??/??)</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/iecpge/IE1.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
+    
     </div>
 
-    <div id="tab-annales" style="display:none; max-width:555px; margin:0 auto;">
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DST1 – Études de fonctions</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/annalesDST/DST1.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DST2 – Logique, ensemble et études de fonctions</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/annalesDST/DST2.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DST3 – Examen mi-semestriel</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/annalesDST/DST3.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DST4 – Trigonométrie, nombres complexes et études de fonctions</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/annalesDST/DST4.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DST5 – Suites et équations différentielles</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/annalesDST/DST5.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DST6 – Examen fin de semestre</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/annalesDST/DST6.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DST7 – Continuité, matrices, systèmes linéaires et dérivabilité</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/annalesDST/DST7.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DST8 – Polynômes, géométrie plane et dérivabilité</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/annalesDST/DST8.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DST9 – Espaces vectoriels</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/annalesDST/DST9.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DST10 – Examen mi-semestriel</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/annalesDST/DST10.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> DST11 – Examen fin de semestre</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/annalesDST/DST11.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
+    <div id="tab-chapitres" style="display:none;">
+    <div class="chapgrid">
+      <div class="chapcard">
+        <div class="tag">IE 1</div>
+        <h3>Sujet à venir</h3>
+        <div class="pills">
+          <a class="pill" href="../docs/iecpge/IE1.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> IE1</a>
+        </div>
+      </div>
     </div>
-  </div>
+
+    
+    </div>
+
+    <div id="tab-annales" style="display:none;">
+    <div class="chapgrid">
+      <div class="chapcard">
+        <div class="tag">DST 1</div>
+        <h3>Études de fonctions</h3>
+        <div class="pills">
+          <a class="pill" href="../docs/annalesDST/DST1.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> DST1</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">DST 2</div>
+        <h3>Logique, ensemble et études de fonctions</h3>
+        <div class="pills">
+          <a class="pill" href="../docs/annalesDST/DST2.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> DST2</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">DST 3</div>
+        <h3>Examen mi-semestriel</h3>
+        <div class="pills">
+          <a class="pill" href="../docs/annalesDST/DST3.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> DST3</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">DST 4</div>
+        <h3>Trigonométrie, nombres complexes et études de fonctions</h3>
+        <div class="pills">
+          <a class="pill" href="../docs/annalesDST/DST4.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> DST4</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">DST 5</div>
+        <h3>Suites et équations différentielles</h3>
+        <div class="pills">
+          <a class="pill" href="../docs/annalesDST/DST5.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> DST5</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">DST 6</div>
+        <h3>Examen fin de semestre</h3>
+        <div class="pills">
+          <a class="pill" href="../docs/annalesDST/DST6.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> DST6</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">DST 7</div>
+        <h3>Continuité, matrices, systèmes linéaires et dérivabilité</h3>
+        <div class="pills">
+          <a class="pill" href="../docs/annalesDST/DST7.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> DST7</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">DST 8</div>
+        <h3>Polynômes, géométrie plane et dérivabilité</h3>
+        <div class="pills">
+          <a class="pill" href="../docs/annalesDST/DST8.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> DST8</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">DST 9</div>
+        <h3>Espaces vectoriels</h3>
+        <div class="pills">
+          <a class="pill" href="../docs/annalesDST/DST9.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> DST9</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">DST 10</div>
+        <h3>Examen mi-semestriel</h3>
+        <div class="pills">
+          <a class="pill" href="../docs/annalesDST/DST10.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> DST10</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">DST 11</div>
+        <h3>Examen fin de semestre</h3>
+        <div class="pills">
+          <a class="pill" href="../docs/annalesDST/DST11.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> DST11</a>
+        </div>
+      </div>
+    </div>
+    </div>  </div>
 </div>
 
 <style>
@@ -176,17 +298,6 @@ function toggleDropdown(id, btn) {
   document.querySelectorAll('.dropdown-btn').forEach(function(b) { b.classList.remove('open'); });
   if (!isOpen) { el.style.display="block"; btn.classList.add('open'); }
 }
-function toggleAccord(header) {
-  var body = header.nextElementSibling;
-  var isOpen = body.style.display === 'block';
-  var allBodies = header.closest('[id^="tab-"]').querySelectorAll('.accord-body');
-  allBodies.forEach(function(b) { b.style.display='none'; });
-  if (!isOpen) {
-    body.style.display='block';
-    var iframe = body.querySelector('iframe');
-    if (iframe && !iframe.src) { iframe.src = iframe.dataset.src; }
-  }
-}
 function switchTab(tab) {
   document.getElementById('tab-td').style.display = tab==='td' ? 'block' : 'none';
   document.getElementById('tab-chapitres').style.display = tab==='chapitres' ? 'block' : 'none';
@@ -198,6 +309,36 @@ function switchTab(tab) {
   document.getElementById('btn-annales').style.background = tab==='annales' ? '#111' : '#ccc';
   document.getElementById('btn-annales').style.color = tab==='annales' ? '#fff' : '#111';
 }
+
+
+var pdfModalScrollY = 0;
+function openPdf(event, url) {
+  event.preventDefault();
+  var viewerBase = new URL('../assets/pdfjs/web/viewer.html', window.location.href).href;
+  var viewerSrc = viewerBase + '?file=' + encodeURIComponent(url);
+  pdfModalScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+  document.getElementById('pdfModalFrame').src = viewerSrc;
+  document.getElementById('pdfModalOpenNewTab').href = viewerSrc;
+  document.getElementById('pdfModalOverlay').classList.add('open');
+  document.body.style.position = 'fixed';
+  document.body.style.top = '-' + pdfModalScrollY + 'px';
+  document.body.style.left = '0';
+  document.body.style.right = '0';
+  document.body.style.overflow = 'hidden';
+  return false;
+}
+function closePdfModal(event) {
+  if (event) event.stopPropagation();
+  document.getElementById('pdfModalOverlay').classList.remove('open');
+  document.getElementById('pdfModalFrame').src = '';
+  document.body.style.position = '';
+  document.body.style.top = '';
+  document.body.style.left = '';
+  document.body.style.right = '';
+  document.body.style.overflow = '';
+  window.scrollTo(0, pdfModalScrollY);
+}
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closePdfModal(); });
 </script>
 </body>
 </html>

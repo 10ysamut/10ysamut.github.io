@@ -79,19 +79,6 @@ p { color:#444; line-height:1.8; margin-bottom:16px; }
     <hr class="section-rule">
     <p>En construction</p>
 
-
-    <div style="display:flex; gap:1em; margin:2em 0 1em; justify-content:center;">
-      <button onclick="switchTab('td')" id="btn-td" style="padding:0.6em 1.6em; border-radius:8px; border:none; background:#111; color:#fff; font-size:1em; cursor:pointer; font-weight:600;">Travaux dirigés</button>
-      <button onclick="switchTab('chapitres')" id="btn-chapitres" style="padding:0.6em 1.6em; border-radius:8px; border:none; background:#ccc; color:#111; font-size:1em; cursor:pointer; font-weight:600;">Chapitres de cours</button>
-    </div>
-
-    <div id="tab-td" style="max-width:555px; margin:0 auto;">
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> ?? </div><div class="accord-body"><iframe data-src=" " width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-    </div>
-
-    <div id="tab-chapitres" style="display:none; max-width:555px; margin:0 auto;">
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> ?? </div><div class="accord-body"><iframe data-src=" " width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      
   </div>
 </div>
 
@@ -110,25 +97,7 @@ function toggleDropdown(id, btn) {
   document.querySelectorAll('.dropdown-btn').forEach(function(b) { b.classList.remove('open'); });
   if (!isOpen) { el.style.display="block"; btn.classList.add('open'); }
 }
-function toggleAccord(header) {
-  var body = header.nextElementSibling;
-  var isOpen = body.style.display === 'block';
-  var allBodies = header.closest('[id^="tab-"]').querySelectorAll('.accord-body');
-  allBodies.forEach(function(b) { b.style.display='none'; });
-  if (!isOpen) {
-    body.style.display='block';
-    var iframe = body.querySelector('iframe');
-    if (iframe && !iframe.src) { iframe.src = iframe.dataset.src; }
-  }
-}
-function switchTab(tab) {
-  document.getElementById('tab-td').style.display = tab==='td' ? 'block' : 'none';
-  document.getElementById('tab-chapitres').style.display = tab==='chapitres' ? 'block' : 'none';
-  document.getElementById('btn-td').style.background = tab==='td' ? '#111' : '#ccc';
-  document.getElementById('btn-td').style.color = tab==='td' ? '#fff' : '#111';
-  document.getElementById('btn-chapitres').style.background = tab==='chapitres' ? '#111' : '#ccc';
-  document.getElementById('btn-chapitres').style.color = tab==='chapitres' ? '#fff' : '#111';
-}
+
 </script>
 </body>
 </html>

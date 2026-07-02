@@ -66,11 +66,47 @@ p { color:#444; line-height:1.8; margin-bottom:16px; }
 .accord-header { padding:0.8em 1em; cursor:pointer; font-size:1em; display:flex; align-items:center; gap:0.6em; background:#ececec; transition:background 0.15s; }
 .accord-header:hover { background:#e2e2e2; }
 .accord-body { display:none; padding:0; }
+
+.chapgrid { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:20px; margin:2em 0; }
+.chapcard { background:#fff; border:1px solid #e2e2e2; border-radius:14px; padding:26px 28px; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+.chapcard .tag { font-size:0.72em; font-weight:800; letter-spacing:0.09em; color:#999; text-transform:uppercase; margin-bottom:8px; }
+.chapcard h3 { font-size:1.22em; font-weight:800; text-transform:uppercase; letter-spacing:0.01em; margin:0 0 22px 0; line-height:1.3; color:#111; }
+.chapcard .pills { display:flex; flex-wrap:wrap; gap:10px; }
+.chapcard .pill { display:inline-flex; align-items:center; gap:0.5em; border:1.5px solid #ccc; border-radius:999px; padding:9px 18px; font-size:0.83em; font-weight:700; color:#333; text-decoration:none; transition:all 0.15s; background:#fff; }
+.chapcard .pill:hover { background:#111; color:#fff; border-color:#111; }
+.chapcard .pill.disabled { color:#bbb; border-style:dashed; border-color:#ddd; cursor:default; }
+@media (max-width:700px) { .chapgrid { grid-template-columns:1fr; } }
+#pdfModalOverlay { display:none; position:fixed; top:0; left:260px; right:0; bottom:0; background:rgba(0,0,0,0.55); z-index:9999; }
+#pdfModalOverlay.open { display:block; }
+#pdfModalBox { position:absolute; top:24px; left:24px; right:24px; bottom:24px; background:#fff; border-radius:8px; overflow:hidden; box-shadow:0 10px 40px rgba(0,0,0,0.3); display:flex; flex-direction:column; }
+#pdfModalHeader { display:flex; justify-content:space-between; align-items:center; gap:10px; padding:10px 14px; background:#f4f4f4; border-bottom:1px solid #ddd; flex-shrink:0; }
+#pdfModalOpenNewTab { display:inline-flex; align-items:center; gap:6px; font-size:0.85em; font-weight:600; color:#333; text-decoration:none; white-space:nowrap; }
+#pdfModalOpenNewTab:hover { color:#000; }
+#pdfModalClose { cursor:pointer; border:none; background:#111; color:#fff; border-radius:6px; padding:8px 18px; font-size:0.9em; font-weight:600; display:inline-flex; align-items:center; gap:6px; white-space:nowrap; }
+#pdfModalClose:hover { background:#333; }
+#pdfModalFrame { flex:1; width:100%; border:none; }
+@media (max-width:992px) {
+  #pdfModalOverlay { left:0; }
+  #pdfModalBox { top:0; left:0; right:0; bottom:0; border-radius:0; height:100dvh; }
+  #pdfModalHeader { position:sticky; top:0; z-index:2; padding:12px 14px; padding-top:calc(12px + env(safe-area-inset-top)); box-shadow:0 1px 4px rgba(0,0,0,0.08); }
+  #pdfModalOpenNewTab .label-full { display:none; }
+  #pdfModalClose { padding:10px 18px; font-size:1em; }
+}
 </style>
 </head>
 <body>
 
 <div id="sidebar-container"></div>
+
+<div id="pdfModalOverlay" onclick="closePdfModal(event)">
+  <div id="pdfModalBox" onclick="event.stopPropagation()">
+    <div id="pdfModalHeader">
+      <a id="pdfModalOpenNewTab" href="#" target="_blank" rel="noopener"><i class="fa fa-external-link"></i> <span class="label-full">Ouvrir dans un nouvel onglet</span></a>
+      <button id="pdfModalClose" onclick="closePdfModal()"><i class="fa fa-times"></i> Fermer</button>
+    </div>
+    <iframe id="pdfModalFrame" src="" title="Aper&ccedil;u PDF"></iframe>
+  </div>
+</div>
 
 <div class="w3-padding-large" id="main">
   <div class="content-section" id="cours">
@@ -79,11 +115,23 @@ p { color:#444; line-height:1.8; margin-bottom:16px; }
     <hr class="section-rule">
     <p>Vous trouverez ici les programmes de khôlle de mathématiques de la PTSI du Lycée Saint-Léon année 2026-2027.</p>
 
-    <div id="tab-td" style="max-width:555px; margin:0 auto;">
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Je prépare ma khôlle</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/programmesdekholles/prepakholles.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Semaine #1</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/programmesdekholles/Semaine1.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-
+    <div class="chapgrid">
+      <div class="chapcard">
+        <div class="tag">GUIDE</div>
+        <h3>Je prépare ma khôlle</h3>
+        <div class="pills">
+          <a class="pill" href="../docs/programmesdekholles/prepakholles.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> PDF</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag"></div>
+        <h3>Programme de la semaine 1</h3>
+        <div class="pills">
+          <a class="pill" href="../docs/programmesdekholles/Semaine1.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> KH1</a>
+        </div>
+      </div>
     </div>
+
   </div>
 </div>
 
@@ -102,17 +150,35 @@ function toggleDropdown(id, btn) {
   document.querySelectorAll('.dropdown-btn').forEach(function(b) { b.classList.remove('open'); });
   if (!isOpen) { el.style.display="block"; btn.classList.add('open'); }
 }
-function toggleAccord(header) {
-  var body = header.nextElementSibling;
-  var isOpen = body.style.display === 'block';
-  var allBodies = header.closest('[id^="tab-"]').querySelectorAll('.accord-body');
-  allBodies.forEach(function(b) { b.style.display='none'; });
-  if (!isOpen) {
-    body.style.display='block';
-    var iframe = body.querySelector('iframe');
-    if (iframe && !iframe.src) { iframe.src = iframe.dataset.src; }
-  }
+
+var pdfModalScrollY = 0;
+function openPdf(event, url) {
+  event.preventDefault();
+  var viewerBase = new URL('../assets/pdfjs/web/viewer.html', window.location.href).href;
+  var viewerSrc = viewerBase + '?file=' + encodeURIComponent(url);
+  pdfModalScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+  document.getElementById('pdfModalFrame').src = viewerSrc;
+  document.getElementById('pdfModalOpenNewTab').href = viewerSrc;
+  document.getElementById('pdfModalOverlay').classList.add('open');
+  document.body.style.position = 'fixed';
+  document.body.style.top = '-' + pdfModalScrollY + 'px';
+  document.body.style.left = '0';
+  document.body.style.right = '0';
+  document.body.style.overflow = 'hidden';
+  return false;
 }
+function closePdfModal(event) {
+  if (event) event.stopPropagation();
+  document.getElementById('pdfModalOverlay').classList.remove('open');
+  document.getElementById('pdfModalFrame').src = '';
+  document.body.style.position = '';
+  document.body.style.top = '';
+  document.body.style.left = '';
+  document.body.style.right = '';
+  document.body.style.overflow = '';
+  window.scrollTo(0, pdfModalScrollY);
+}
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closePdfModal(); });
 </script>
 </body>
 </html>
