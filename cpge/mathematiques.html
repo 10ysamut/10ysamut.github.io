@@ -76,11 +76,29 @@ p { color:#444; line-height:1.8; margin-bottom:16px; }
 .chapcard .pill:hover { background:#111; color:#fff; border-color:#111; }
 .chapcard .pill.disabled { color:#bbb; border-style:dashed; border-color:#ddd; cursor:default; }
 @media (max-width:700px) { .chapgrid { grid-template-columns:1fr; } }
+
+#pdfModalOverlay { display:none; position:fixed; top:0; left:260px; right:0; bottom:0; background:rgba(0,0,0,0.55); z-index:3; }
+#pdfModalOverlay.open { display:block; }
+#pdfModalBox { position:absolute; top:24px; left:24px; right:24px; bottom:24px; background:#fff; border-radius:8px; overflow:hidden; box-shadow:0 10px 40px rgba(0,0,0,0.3); display:flex; flex-direction:column; }
+#pdfModalHeader { display:flex; justify-content:flex-end; align-items:center; padding:8px 12px; background:#f4f4f4; border-bottom:1px solid #ddd; flex-shrink:0; }
+#pdfModalClose { cursor:pointer; border:none; background:#111; color:#fff; border-radius:6px; padding:6px 16px; font-size:0.85em; font-weight:600; }
+#pdfModalClose:hover { background:#333; }
+#pdfModalFrame { flex:1; width:100%; border:none; }
+@media (max-width:992px) { #pdfModalOverlay { left:0; } #pdfModalBox { top:12px; left:12px; right:12px; bottom:12px; } }
 </style>
 </head>
 <body>
 
 <div id="sidebar-container"></div>
+
+<div id="pdfModalOverlay" onclick="closePdfModal(event)">
+  <div id="pdfModalBox" onclick="event.stopPropagation()">
+    <div id="pdfModalHeader">
+      <button id="pdfModalClose" onclick="closePdfModal()">Fermer &#10005;</button>
+    </div>
+    <iframe id="pdfModalFrame" src="" title="Aper&ccedil;u PDF"></iframe>
+  </div>
+</div>
 
 <div class="w3-padding-large" id="main">
   <div class="content-section" id="cours">
@@ -98,236 +116,236 @@ p { color:#444; line-height:1.8; margin-bottom:16px; }
         <div class="tag">CHAPITRE 0</div>
         <h3>Mathématiques pour la physique et l'ingénieur</h3>
         <div class="pills">
-                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH0.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
+                    <a class="pill" href="../docs/chapitrescpge/CH0.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
         </div>
       </div>
       <div class="chapcard">
         <div class="tag">CHAPITRE 1</div>
         <h3>Logique et raisonnement</h3>
         <div class="pills">
-                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH1.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD1CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 1</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD1CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 1 corrigé</a>
+                    <a class="pill" href="../docs/chapitrescpge/CH1.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../docs/tdcpge/TD1CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 1</a>
+          <a class="pill" href="../docs/tdcpgecorrection/TD1CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 1 corrigé</a>
         </div>
       </div>
       <div class="chapcard">
         <div class="tag">CHAPITRE 2</div>
         <h3>Fonctions numériques de la variable réelle</h3>
         <div class="pills">
-                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH2.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD2CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 2</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD3CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 3</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD2CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 2 corrigé</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD3CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 3 corrigé</a>
+                    <a class="pill" href="../docs/chapitrescpge/CH2.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../docs/tdcpge/TD2CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 2</a>
+          <a class="pill" href="../docs/tdcpge/TD3CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 3</a>
+          <a class="pill" href="../docs/tdcpgecorrection/TD2CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 2 corrigé</a>
+          <a class="pill" href="../docs/tdcpgecorrection/TD3CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 3 corrigé</a>
         </div>
       </div>
       <div class="chapcard">
         <div class="tag">CHAPITRE 3</div>
         <h3>Ensembles et applications</h3>
         <div class="pills">
-                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH3.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD4CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 4</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD4CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 4 corrigé</a>
+                    <a class="pill" href="../docs/chapitrescpge/CH3.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../docs/tdcpge/TD4CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 4</a>
+          <a class="pill" href="../docs/tdcpgecorrection/TD4CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 4 corrigé</a>
         </div>
       </div>
       <div class="chapcard">
         <div class="tag">CHAPITRE 4</div>
         <h3>Calculs algébriques</h3>
         <div class="pills">
-                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH4.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD5CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 5</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD5CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 5 corrigé</a>
+                    <a class="pill" href="../docs/chapitrescpge/CH4.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../docs/tdcpge/TD5CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 5</a>
+          <a class="pill" href="../docs/tdcpgecorrection/TD5CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 5 corrigé</a>
         </div>
       </div>
       <div class="chapcard">
         <div class="tag">CHAPITRE 5</div>
         <h3>Trigonométrie</h3>
         <div class="pills">
-                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH5.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD6CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 6</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD6CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 6 corrigé</a>
+                    <a class="pill" href="../docs/chapitrescpge/CH5.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../docs/tdcpge/TD6CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 6</a>
+          <a class="pill" href="../docs/tdcpgecorrection/TD6CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 6 corrigé</a>
         </div>
       </div>
       <div class="chapcard">
         <div class="tag">CHAPITRE 6</div>
         <h3>Fonctions usuelles</h3>
         <div class="pills">
-                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH6.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD7CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 7</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD7CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 7 corrigé</a>
+                    <a class="pill" href="../docs/chapitrescpge/CH6.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../docs/tdcpge/TD7CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 7</a>
+          <a class="pill" href="../docs/tdcpgecorrection/TD7CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 7 corrigé</a>
         </div>
       </div>
       <div class="chapcard">
         <div class="tag">CHAPITRE 7</div>
         <h3>Nombres complexes</h3>
         <div class="pills">
-                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH7.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD8CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 8</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD8CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 8 corrigé</a>
+                    <a class="pill" href="../docs/chapitrescpge/CH7.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../docs/tdcpge/TD8CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 8</a>
+          <a class="pill" href="../docs/tdcpgecorrection/TD8CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 8 corrigé</a>
         </div>
       </div>
       <div class="chapcard">
         <div class="tag">CHAPITRE 8</div>
         <h3>Primitives et équations différentielles</h3>
         <div class="pills">
-                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH8.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD9CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 9</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD10CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 10</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD9CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 9 corrigé</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD10CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 10 corrigé</a>
+                    <a class="pill" href="../docs/chapitrescpge/CH8.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../docs/tdcpge/TD9CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 9</a>
+          <a class="pill" href="../docs/tdcpge/TD10CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 10</a>
+          <a class="pill" href="../docs/tdcpgecorrection/TD9CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 9 corrigé</a>
+          <a class="pill" href="../docs/tdcpgecorrection/TD10CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 10 corrigé</a>
         </div>
       </div>
       <div class="chapcard">
         <div class="tag">CHAPITRE 9</div>
         <h3>Suites et nombres réels</h3>
         <div class="pills">
-                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH9.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD11CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 11</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD11CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 11 corrigé</a>
-        </div>
-      </div>
-      <div class="chapcard">
-        <div class="tag">COMPLÉMENT</div>
-        <h3>Arithmétique</h3>
-        <div class="pills">
-                    <span class="pill disabled"><i class="fa fa-file-pdf-o"></i> Cours (à venir)</span>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD15CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 15</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD15CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 15 corrigé</a>
+                    <a class="pill" href="../docs/chapitrescpge/CH9.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../docs/tdcpge/TD11CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 11</a>
+          <a class="pill" href="../docs/tdcpgecorrection/TD11CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 11 corrigé</a>
         </div>
       </div>
       <div class="chapcard">
         <div class="tag">CHAPITRE 10</div>
         <h3>Continuité</h3>
         <div class="pills">
-                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH10.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD12CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 12</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD12CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 12 corrigé</a>
+                    <a class="pill" href="../docs/chapitrescpge/CH10.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../docs/tdcpge/TD12CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 12</a>
+          <a class="pill" href="../docs/tdcpgecorrection/TD12CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 12 corrigé</a>
         </div>
       </div>
       <div class="chapcard">
         <div class="tag">CHAPITRE 11</div>
         <h3>Matrices et systèmes linéaires</h3>
         <div class="pills">
-                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH11.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD13CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 13</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD13CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 13 corrigé</a>
+                    <a class="pill" href="../docs/chapitrescpge/CH11.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../docs/tdcpge/TD13CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 13</a>
+          <a class="pill" href="../docs/tdcpgecorrection/TD13CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 13 corrigé</a>
         </div>
       </div>
       <div class="chapcard">
         <div class="tag">CHAPITRE 12</div>
         <h3>Dérivabilité</h3>
         <div class="pills">
-                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH12.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD14CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 14</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD14CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 14 corrigé</a>
+                    <a class="pill" href="../docs/chapitrescpge/CH12.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../docs/tdcpge/TD14CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 14</a>
+          <a class="pill" href="../docs/tdcpgecorrection/TD14CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 14 corrigé</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">CHAPITRE 13</div>
+        <h3>Arithmétique</h3>
+        <div class="pills">
+                    <span class="pill disabled"><i class="fa fa-file-pdf-o"></i> Cours (à venir)</span>
+          <a class="pill" href="../docs/tdcpge/TD15CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 15</a>
+          <a class="pill" href="../docs/tdcpgecorrection/TD15CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 15 corrigé</a>
         </div>
       </div>
       <div class="chapcard">
         <div class="tag">CHAPITRE 14</div>
         <h3>Géométrie du plan</h3>
         <div class="pills">
-                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH14.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD16CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 16</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD16CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 16 corrigé</a>
+                    <a class="pill" href="../docs/chapitrescpge/CH14.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../docs/tdcpge/TD16CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 16</a>
+          <a class="pill" href="../docs/tdcpgecorrection/TD16CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 16 corrigé</a>
         </div>
       </div>
       <div class="chapcard">
         <div class="tag">CHAPITRE 15</div>
         <h3>Polynômes</h3>
         <div class="pills">
-                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH15.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD17CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 17</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD17CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 17 corrigé</a>
+                    <a class="pill" href="../docs/chapitrescpge/CH15.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../docs/tdcpge/TD17CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 17</a>
+          <a class="pill" href="../docs/tdcpgecorrection/TD17CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 17 corrigé</a>
         </div>
       </div>
       <div class="chapcard">
         <div class="tag">CHAPITRE 16</div>
         <h3>Espaces vectoriels</h3>
         <div class="pills">
-                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH16.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD18CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 18</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD18CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 18 corrigé</a>
+                    <a class="pill" href="../docs/chapitrescpge/CH16.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../docs/tdcpge/TD18CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 18</a>
+          <a class="pill" href="../docs/tdcpgecorrection/TD18CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 18 corrigé</a>
         </div>
       </div>
       <div class="chapcard">
         <div class="tag">CHAPITRE 17</div>
         <h3>Analyse asymptotique</h3>
         <div class="pills">
-                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH17.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD19CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 19</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD19CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 19 corrigé</a>
+                    <a class="pill" href="../docs/chapitrescpge/CH17.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../docs/tdcpge/TD19CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 19</a>
+          <a class="pill" href="../docs/tdcpgecorrection/TD19CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 19 corrigé</a>
         </div>
       </div>
       <div class="chapcard">
         <div class="tag">CHAPITRE 18</div>
         <h3>Applications linéaires</h3>
         <div class="pills">
-                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH18.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD20CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 20</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD20CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 20 corrigé</a>
+                    <a class="pill" href="../docs/chapitrescpge/CH18.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../docs/tdcpge/TD20CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 20</a>
+          <a class="pill" href="../docs/tdcpgecorrection/TD20CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 20 corrigé</a>
         </div>
       </div>
       <div class="chapcard">
         <div class="tag">CHAPITRE 19</div>
         <h3>Intégration</h3>
         <div class="pills">
-                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH19.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD21CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 21</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD21CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 21 corrigé</a>
+                    <a class="pill" href="../docs/chapitrescpge/CH19.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../docs/tdcpge/TD21CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 21</a>
+          <a class="pill" href="../docs/tdcpgecorrection/TD21CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 21 corrigé</a>
         </div>
       </div>
       <div class="chapcard">
         <div class="tag">CHAPITRE 20</div>
         <h3>Séries numériques</h3>
         <div class="pills">
-                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH20.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD22CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 22</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD22CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 22 corrigé</a>
+                    <a class="pill" href="../docs/chapitrescpge/CH20.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../docs/tdcpge/TD22CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 22</a>
+          <a class="pill" href="../docs/tdcpgecorrection/TD22CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 22 corrigé</a>
         </div>
       </div>
       <div class="chapcard">
         <div class="tag">CHAPITRE 21</div>
         <h3>Dénombrement</h3>
         <div class="pills">
-                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH21.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD23CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 23</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD23CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 23 corrigé</a>
+                    <a class="pill" href="../docs/chapitrescpge/CH21.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../docs/tdcpge/TD23CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 23</a>
+          <a class="pill" href="../docs/tdcpgecorrection/TD23CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 23 corrigé</a>
         </div>
       </div>
       <div class="chapcard">
         <div class="tag">CHAPITRE 22</div>
         <h3>Géométrie dans l'espace</h3>
         <div class="pills">
-                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH22.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD24CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 24</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD24CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 24 corrigé</a>
+                    <a class="pill" href="../docs/chapitrescpge/CH22.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../docs/tdcpge/TD24CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 24</a>
+          <a class="pill" href="../docs/tdcpgecorrection/TD24CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 24 corrigé</a>
         </div>
       </div>
       <div class="chapcard">
-        <div class="tag">COMPLÉMENT</div>
+        <div class="tag">CHAPITRE 23</div>
         <h3>Probabilités</h3>
         <div class="pills">
                     <span class="pill disabled"><i class="fa fa-file-pdf-o"></i> Cours (à venir)</span>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD25CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 25</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD25CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 25 corrigé</a>
+          <a class="pill" href="../docs/tdcpge/TD25CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 25</a>
+          <a class="pill" href="../docs/tdcpgecorrection/TD25CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 25 corrigé</a>
         </div>
       </div>
       <div class="chapcard">
-        <div class="tag">COMPLÉMENT</div>
+        <div class="tag">CHAPITRE 24</div>
         <h3>Déterminant</h3>
         <div class="pills">
                     <span class="pill disabled"><i class="fa fa-file-pdf-o"></i> Cours (à venir)</span>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD26CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 26</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD26CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 26 corrigé</a>
+          <a class="pill" href="../docs/tdcpge/TD26CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 26</a>
+          <a class="pill" href="../docs/tdcpgecorrection/TD26CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 26 corrigé</a>
         </div>
       </div>
       <div class="chapcard">
-        <div class="tag">COMPLÉMENT</div>
+        <div class="tag">CHAPITRE 25</div>
         <h3>Fonctions à deux variables</h3>
         <div class="pills">
                     <span class="pill disabled"><i class="fa fa-file-pdf-o"></i> Cours (à venir)</span>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD27CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 27</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD27CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 27 corrigé</a>
+          <a class="pill" href="../docs/tdcpge/TD27CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 27</a>
+          <a class="pill" href="../docs/tdcpgecorrection/TD27CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 27 corrigé</a>
         </div>
       </div>
     </div>
@@ -349,6 +367,21 @@ function toggleDropdown(id, btn) {
   document.querySelectorAll('.dropdown-btn').forEach(function(b) { b.classList.remove('open'); });
   if (!isOpen) { el.style.display="block"; btn.classList.add('open'); }
 }
+
+function openPdf(event, url) {
+  event.preventDefault();
+  document.getElementById('pdfModalFrame').src = url;
+  document.getElementById('pdfModalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  return false;
+}
+function closePdfModal(event) {
+  if (event) event.stopPropagation();
+  document.getElementById('pdfModalOverlay').classList.remove('open');
+  document.getElementById('pdfModalFrame').src = '';
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closePdfModal(); });
 </script>
 </body>
 </html>

@@ -63,11 +63,29 @@ p { color:#444; line-height:1.8; margin-bottom:16px; }
 .chapcard .pill:hover { background:#111; color:#fff; border-color:#111; }
 .chapcard .pill.disabled { color:#bbb; border-style:dashed; border-color:#ddd; cursor:default; }
 @media (max-width:700px) { .chapgrid { grid-template-columns:1fr; } }
+
+#pdfModalOverlay { display:none; position:fixed; top:0; left:260px; right:0; bottom:0; background:rgba(0,0,0,0.55); z-index:3; }
+#pdfModalOverlay.open { display:block; }
+#pdfModalBox { position:absolute; top:24px; left:24px; right:24px; bottom:24px; background:#fff; border-radius:8px; overflow:hidden; box-shadow:0 10px 40px rgba(0,0,0,0.3); display:flex; flex-direction:column; }
+#pdfModalHeader { display:flex; justify-content:flex-end; align-items:center; padding:8px 12px; background:#f4f4f4; border-bottom:1px solid #ddd; flex-shrink:0; }
+#pdfModalClose { cursor:pointer; border:none; background:#111; color:#fff; border-radius:6px; padding:6px 16px; font-size:0.85em; font-weight:600; }
+#pdfModalClose:hover { background:#333; }
+#pdfModalFrame { flex:1; width:100%; border:none; }
+@media (max-width:992px) { #pdfModalOverlay { left:0; } #pdfModalBox { top:12px; left:12px; right:12px; bottom:12px; } }
 </style>
 </head>
 <body>
 
 <div id="sidebar-container"></div>
+
+<div id="pdfModalOverlay" onclick="closePdfModal(event)">
+  <div id="pdfModalBox" onclick="event.stopPropagation()">
+    <div id="pdfModalHeader">
+      <button id="pdfModalClose" onclick="closePdfModal()">Fermer &#10005;</button>
+    </div>
+    <iframe id="pdfModalFrame" src="" title="Aper&ccedil;u PDF"></iframe>
+  </div>
+</div>
 
 <div class="w3-padding-large" id="main">
   <div class="content-section" id="cours">
@@ -82,56 +100,56 @@ p { color:#444; line-height:1.8; margin-bottom:16px; }
         <div class="tag">CHAPITRE 1</div>
         <h3>Rappels d'algèbre et d'analyse</h3>
         <div class="pills">
-                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/episenS1/CH1episenS1.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/episenS1/TD1episenS1.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 1</a>
+                    <a class="pill" href="../docs/episenS1/CH1episenS1.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../docs/episenS1/TD1episenS1.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 1</a>
         </div>
       </div>
       <div class="chapcard">
         <div class="tag">CHAPITRE 2</div>
         <h3>Calcul intégral</h3>
         <div class="pills">
-                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/episenS1/CH2episenS1.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/episenS1/TD2episenS1.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 2</a>
+                    <a class="pill" href="../docs/episenS1/CH2episenS1.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../docs/episenS1/TD2episenS1.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 2</a>
         </div>
       </div>
       <div class="chapcard">
         <div class="tag">CHAPITRE 3</div>
         <h3>Relations de comparaison</h3>
         <div class="pills">
-                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/episenS1/CH3episenS1.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/episenS1/TD3episenS1.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 3</a>
+                    <a class="pill" href="../docs/episenS1/CH3episenS1.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../docs/episenS1/TD3episenS1.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 3</a>
         </div>
       </div>
       <div class="chapcard">
         <div class="tag">CHAPITRE 4</div>
         <h3>Séries numériques</h3>
         <div class="pills">
-                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/episenS1/CH4episenS1.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/episenS1/TD4episenS1.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 4</a>
+                    <a class="pill" href="../docs/episenS1/CH4episenS1.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../docs/episenS1/TD4episenS1.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 4</a>
         </div>
       </div>
       <div class="chapcard">
         <div class="tag">CHAPITRE 5</div>
         <h3>Intégrales impropres</h3>
         <div class="pills">
-                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/episenS1/CH5episenS1.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/episenS1/TD5episenS1.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 5</a>
+                    <a class="pill" href="../docs/episenS1/CH5episenS1.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../docs/episenS1/TD5episenS1.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 5</a>
         </div>
       </div>
       <div class="chapcard">
         <div class="tag">CHAPITRE 6</div>
         <h3>Optimisation</h3>
         <div class="pills">
-                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/episenS1/CH6episenS1.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/episenS1/TD6episenS1.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 6</a>
+                    <a class="pill" href="../docs/episenS1/CH6episenS1.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../docs/episenS1/TD6episenS1.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 6</a>
         </div>
       </div>
       <div class="chapcard">
         <div class="tag">CHAPITRE 7</div>
         <h3>Intégrales multiples</h3>
         <div class="pills">
-                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/episenS1/CH7episenS1.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/episenS1/TD7episenS1.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 7</a>
+                    <a class="pill" href="../docs/episenS1/CH7episenS1.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../docs/episenS1/TD7episenS1.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 7</a>
         </div>
       </div>
     </div>
@@ -153,6 +171,21 @@ function toggleDropdown(id, btn) {
   document.querySelectorAll('.dropdown-btn').forEach(function(b) { b.classList.remove('open'); });
   if (!isOpen) { el.style.display="block"; btn.classList.add('open'); }
 }
+
+function openPdf(event, url) {
+  event.preventDefault();
+  document.getElementById('pdfModalFrame').src = url;
+  document.getElementById('pdfModalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  return false;
+}
+function closePdfModal(event) {
+  if (event) event.stopPropagation();
+  document.getElementById('pdfModalOverlay').classList.remove('open');
+  document.getElementById('pdfModalFrame').src = '';
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closePdfModal(); });
 </script>
 </body>
 </html>
