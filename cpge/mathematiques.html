@@ -77,14 +77,22 @@ p { color:#444; line-height:1.8; margin-bottom:16px; }
 .chapcard .pill.disabled { color:#bbb; border-style:dashed; border-color:#ddd; cursor:default; }
 @media (max-width:700px) { .chapgrid { grid-template-columns:1fr; } }
 
-#pdfModalOverlay { display:none; position:fixed; top:0; left:260px; right:0; bottom:0; background:rgba(0,0,0,0.55); z-index:3; }
+#pdfModalOverlay { display:none; position:fixed; top:0; left:260px; right:0; bottom:0; background:rgba(0,0,0,0.55); z-index:9999; }
 #pdfModalOverlay.open { display:block; }
 #pdfModalBox { position:absolute; top:24px; left:24px; right:24px; bottom:24px; background:#fff; border-radius:8px; overflow:hidden; box-shadow:0 10px 40px rgba(0,0,0,0.3); display:flex; flex-direction:column; }
-#pdfModalHeader { display:flex; justify-content:flex-end; align-items:center; padding:8px 12px; background:#f4f4f4; border-bottom:1px solid #ddd; flex-shrink:0; }
-#pdfModalClose { cursor:pointer; border:none; background:#111; color:#fff; border-radius:6px; padding:6px 16px; font-size:0.85em; font-weight:600; }
+#pdfModalHeader { display:flex; justify-content:space-between; align-items:center; gap:10px; padding:10px 14px; background:#f4f4f4; border-bottom:1px solid #ddd; flex-shrink:0; }
+#pdfModalOpenNewTab { display:inline-flex; align-items:center; gap:6px; font-size:0.85em; font-weight:600; color:#333; text-decoration:none; white-space:nowrap; }
+#pdfModalOpenNewTab:hover { color:#000; }
+#pdfModalClose { cursor:pointer; border:none; background:#111; color:#fff; border-radius:6px; padding:8px 18px; font-size:0.9em; font-weight:600; display:inline-flex; align-items:center; gap:6px; white-space:nowrap; }
 #pdfModalClose:hover { background:#333; }
 #pdfModalFrame { flex:1; width:100%; border:none; }
-@media (max-width:992px) { #pdfModalOverlay { left:0; } #pdfModalBox { top:12px; left:12px; right:12px; bottom:12px; } }
+@media (max-width:992px) {
+  #pdfModalOverlay { left:0; }
+  #pdfModalBox { top:0; left:0; right:0; bottom:0; border-radius:0; height:100dvh; }
+  #pdfModalHeader { position:sticky; top:0; z-index:2; padding:12px 14px; padding-top:calc(12px + env(safe-area-inset-top)); box-shadow:0 1px 4px rgba(0,0,0,0.08); }
+  #pdfModalOpenNewTab .label-full { display:none; }
+  #pdfModalClose { padding:10px 18px; font-size:1em; }
+}
 </style>
 </head>
 <body>
@@ -94,7 +102,8 @@ p { color:#444; line-height:1.8; margin-bottom:16px; }
 <div id="pdfModalOverlay" onclick="closePdfModal(event)">
   <div id="pdfModalBox" onclick="event.stopPropagation()">
     <div id="pdfModalHeader">
-      <button id="pdfModalClose" onclick="closePdfModal()">Fermer &#10005;</button>
+      <a id="pdfModalOpenNewTab" href="#" target="_blank" rel="noopener"><i class="fa fa-external-link"></i> <span class="label-full">Ouvrir dans un nouvel onglet</span></a>
+      <button id="pdfModalClose" onclick="closePdfModal()"><i class="fa fa-times"></i> Fermer</button>
     </div>
     <iframe id="pdfModalFrame" src="" title="Aper&ccedil;u PDF"></iframe>
   </div>
@@ -368,10 +377,22 @@ function toggleDropdown(id, btn) {
   if (!isOpen) { el.style.display="block"; btn.classList.add('open'); }
 }
 
+var pdfModalScrollY = 0;
 function openPdf(event, url) {
   event.preventDefault();
-  document.getElementById('pdfModalFrame').src = url;
+  // On affiche le PDF via la liseuse pdf.js (celle utilisee a l'origine sur le site),
+  // qui gere son propre scroll tactile, plutot que de compter sur le lecteur natif
+  // du navigateur dans une iframe (peu fiable au toucher sur mobile).
+  var viewerBase = new URL('../assets/pdfjs/web/viewer.html', window.location.href).href;
+  var viewerSrc = viewerBase + '?file=' + encodeURIComponent(url);
+  pdfModalScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+  document.getElementById('pdfModalFrame').src = viewerSrc;
+  document.getElementById('pdfModalOpenNewTab').href = viewerSrc;
   document.getElementById('pdfModalOverlay').classList.add('open');
+  document.body.style.position = 'fixed';
+  document.body.style.top = '-' + pdfModalScrollY + 'px';
+  document.body.style.left = '0';
+  document.body.style.right = '0';
   document.body.style.overflow = 'hidden';
   return false;
 }
@@ -379,7 +400,12 @@ function closePdfModal(event) {
   if (event) event.stopPropagation();
   document.getElementById('pdfModalOverlay').classList.remove('open');
   document.getElementById('pdfModalFrame').src = '';
+  document.body.style.position = '';
+  document.body.style.top = '';
+  document.body.style.left = '';
+  document.body.style.right = '';
   document.body.style.overflow = '';
+  window.scrollTo(0, pdfModalScrollY);
 }
 document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closePdfModal(); });
 </script>
