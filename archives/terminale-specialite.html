@@ -66,11 +66,39 @@ p { color:#444; line-height:1.8; margin-bottom:16px; }
 #myNavbar { background:#ffffff !important; border-bottom:1px solid #ddd; }
 #myNavbar a { color:#333 !important; }
 #myNavbar a:hover { background-color:#f0f0f0 !important; }
+
+.chapgrid { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:20px; margin:2em 0; }
+.chapcard { background:#fff; border:1px solid #e2e2e2; border-radius:14px; padding:26px 28px; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+.chapcard .tag { font-size:0.72em; font-weight:800; letter-spacing:0.09em; color:#999; text-transform:uppercase; margin-bottom:8px; }
+.chapcard h3 { font-size:1.22em; font-weight:800; text-transform:uppercase; letter-spacing:0.01em; margin:0 0 22px 0; line-height:1.3; color:#111; }
+.chapcard .pills { display:flex; flex-wrap:wrap; gap:10px; }
+.chapcard .pill { display:inline-flex; align-items:center; gap:0.5em; border:1.5px solid #ccc; border-radius:999px; padding:9px 18px; font-size:0.83em; font-weight:700; color:#333; text-decoration:none; transition:all 0.15s; background:#fff; }
+.chapcard .pill:hover { background:#111; color:#fff; border-color:#111; }
+.chapcard .pill.disabled { color:#bbb; border-style:dashed; border-color:#ddd; cursor:default; }
+@media (max-width:700px) { .chapgrid { grid-template-columns:1fr; } }
+
+#pdfModalOverlay { display:none; position:fixed; top:0; left:260px; right:0; bottom:0; background:rgba(0,0,0,0.55); z-index:3; }
+#pdfModalOverlay.open { display:block; }
+#pdfModalBox { position:absolute; top:24px; left:24px; right:24px; bottom:24px; background:#fff; border-radius:8px; overflow:hidden; box-shadow:0 10px 40px rgba(0,0,0,0.3); display:flex; flex-direction:column; }
+#pdfModalHeader { display:flex; justify-content:flex-end; align-items:center; padding:8px 12px; background:#f4f4f4; border-bottom:1px solid #ddd; flex-shrink:0; }
+#pdfModalClose { cursor:pointer; border:none; background:#111; color:#fff; border-radius:6px; padding:6px 16px; font-size:0.85em; font-weight:600; }
+#pdfModalClose:hover { background:#333; }
+#pdfModalFrame { flex:1; width:100%; border:none; }
+@media (max-width:992px) { #pdfModalOverlay { left:0; } #pdfModalBox { top:12px; left:12px; right:12px; bottom:12px; } }
 </style>
 </head>
 <body>
 
 <div id="sidebar-container"></div>
+
+<div id="pdfModalOverlay" onclick="closePdfModal(event)">
+  <div id="pdfModalBox" onclick="event.stopPropagation()">
+    <div id="pdfModalHeader">
+      <button id="pdfModalClose" onclick="closePdfModal()">Fermer &#10005;</button>
+    </div>
+    <iframe id="pdfModalFrame" src="" title="Aper&ccedil;u PDF"></iframe>
+  </div>
+</div>
 
 <div class="w3-padding-large" id="main">
   <div class="content-section" id="cours">
@@ -79,66 +107,116 @@ p { color:#444; line-height:1.8; margin-bottom:16px; }
     <hr class="section-rule">
     <p>Vous trouverez ici quelques documents que j'ai utilisés pour mes cours de spécialité mathématiques en terminale au lycée Champlain à Chennevières-sur-Marne durant l'année scolaire 2024-2025.</p>
 
-    <div style="display:flex; gap:1em; margin:2em 0 1em; justify-content:center;">
-      <button onclick="switchTab('td')" id="btn-td" style="padding:0.6em 1.6em; border-radius:8px; border:none; background:#111; color:#fff; font-size:1em; cursor:pointer; font-weight:600;">Travaux dirigés</button>
-      <button onclick="switchTab('chapitres')" id="btn-chapitres" style="padding:0.6em 1.6em; border-radius:8px; border:none; background:#ccc; color:#111; font-size:1em; cursor:pointer; font-weight:600;">TP Python</button>
-    </div>
-
-    <div id="tab-td" style="max-width:555px; margin:0 auto;">
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD0 – Rappels sur les suites</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdterm/TD0term.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD1 – Suites et raisonnement par récurrence</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdterm/TD1term.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD2 – Géométrie dans l'espace</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdterm/TD2term.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD3 – Limite d'une suite</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdterm/TD3term.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD4 – Coordonnées dans l'espace</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdterm/TD4term.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD5 – Lois binomiales</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdterm/TD5term.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD6 – Dérivation et convexité</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdterm/TD6term.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD7 – Orthogonalité</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdterm/TD7term.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD8 – Limites d'une fonction</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdterm/TD8term.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD9 – Logarithme népérien</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdterm/TD9term.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD10 – Continuité</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdterm/TD10term.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD11 – Primitives et équations différentielles</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdterm/TD11term.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD12 – Combinatoire et dénombrement</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdterm/TD12term.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD13 – Intégration</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdterm/TD13term.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD14 – Sommes de variables aléatoires</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdterm/TD14term.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-    </div>
-
-    <div id="tab-chapitres" style="display:none;">
-      <div class="formulaires-grid">
-        <div class="formulaire-card">
-          <div class="card-number">TP 01</div>
-          <div class="card-title">Suites et récurrences</div>
-          <p class="card-desc">Implémentation d'algorithmes de calcul de termes de suites définies par récurrence et visualisation de leur convergence.</p>
-          <a href="https://github.com/10ysamut/TPspemathsterm/blob/main/TP%20Suites%20et%20re%CC%81currences.ipynb" class="card-link" target="_blank" rel="noopener"><i class="fa fa-github" style="margin-right:5px;"></i>Voir sur GitHub →</a>
+    <div class="chapgrid">
+      <div class="chapcard">
+        <div class="tag">TD 0</div>
+        <h3>Rappels sur les suites</h3>
+        <div class="pills">
+                    <a class="pill" href="../docs/tdterm/TD0term.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 0</a>
         </div>
-        <div class="formulaire-card">
-          <div class="card-number">TP 02</div>
-          <div class="card-title">Limites de suites</div>
-          <p class="card-desc">Exploration numérique du comportement asymptotique de suites et illustration graphique de la notion de limite.</p>
-          <a href="https://github.com/10ysamut/TPspemathsterm/blob/main/TP%20Introduction%20a%CC%80%20la%20notion%20de%20limite.ipynb" class="card-link" target="_blank" rel="noopener"><i class="fa fa-github" style="margin-right:5px;"></i>Voir sur GitHub →</a>
+      </div>
+      <div class="chapcard">
+        <div class="tag">TD 1</div>
+        <h3>Suites et raisonnement par récurrence</h3>
+        <div class="pills">
+                    <a class="pill" href="../docs/tdterm/TD1term.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 1</a>
+          <a class="pill" href="https://github.com/10ysamut/TPspemathsterm/blob/main/TP%20Suites%20et%20re%CC%81currences.ipynb" target="_blank" rel="noopener"><i class="fa fa-github"></i> TP 1</a>
         </div>
-        <div class="formulaire-card">
-          <div class="card-number">TP 03</div>
-          <div class="card-title">Problème de surréservation</div>
-          <p class="card-desc">Modélisation probabiliste d'un problème de gestion de capacité, simulation et calcul de la loi binomiale.</p>
-          <a href="https://github.com/10ysamut/TPspemathsterm/blob/main/TP%20Un%20proble%CC%80me%20de%20surre%CC%81servation.ipynb" class="card-link" target="_blank" rel="noopener"><i class="fa fa-github" style="margin-right:5px;"></i>Voir sur GitHub →</a>
+      </div>
+      <div class="chapcard">
+        <div class="tag">TD 2</div>
+        <h3>Géométrie dans l'espace</h3>
+        <div class="pills">
+                    <a class="pill" href="../docs/tdterm/TD2term.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 2</a>
         </div>
-        <div class="formulaire-card">
-          <div class="card-number">TP 04</div>
-          <div class="card-title">Approximation du logarithme népérien</div>
-          <p class="card-desc">Calcul approché de ln par des méthodes numériques itératives et étude de la vitesse de convergence.</p>
-          <a href="https://github.com/10ysamut/TPspemathsterm/blob/main/TP%20Logarithme%20ne%CC%81pe%CC%81rien.ipynb" class="card-link" target="_blank" rel="noopener"><i class="fa fa-github" style="margin-right:5px;"></i>Voir sur GitHub →</a>
+      </div>
+      <div class="chapcard">
+        <div class="tag">TD 3</div>
+        <h3>Limite d'une suite</h3>
+        <div class="pills">
+                    <a class="pill" href="../docs/tdterm/TD3term.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 3</a>
+          <a class="pill" href="https://github.com/10ysamut/TPspemathsterm/blob/main/TP%20Introduction%20a%CC%80%20la%20notion%20de%20limite.ipynb" target="_blank" rel="noopener"><i class="fa fa-github"></i> TP 2</a>
         </div>
-        <div class="formulaire-card">
-          <div class="card-number">TP 05</div>
-          <div class="card-title">Dichotomie</div>
-          <p class="card-desc">Implémentation de l'algorithme de dichotomie pour la recherche de zéros de fonctions continues sur un intervalle.</p>
-          <a href="https://github.com/10ysamut/TPspemathsterm/blob/main/TP%20Dichotomie.ipynb" class="card-link" target="_blank" rel="noopener"><i class="fa fa-github" style="margin-right:5px;"></i>Voir sur GitHub →</a>
+      </div>
+      <div class="chapcard">
+        <div class="tag">TD 4</div>
+        <h3>Coordonnées dans l'espace</h3>
+        <div class="pills">
+                    <a class="pill" href="../docs/tdterm/TD4term.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 4</a>
         </div>
-        <div class="formulaire-card">
-          <div class="card-number">TP 06</div>
-          <div class="card-title">Triangle de Pascal</div>
-          <p class="card-desc">Construction et affichage du triangle de Pascal, exploration des coefficients binomiaux et de leurs propriétés.</p>
-          <a href="https://github.com/10ysamut/TPspemathsterm/blob/main/TP%20Combinatoire%20et%20coefficients%20binomiaux.ipynb" class="card-link" target="_blank" rel="noopener"><i class="fa fa-github" style="margin-right:5px;"></i>Voir sur GitHub →</a>
+      </div>
+      <div class="chapcard">
+        <div class="tag">TD 5</div>
+        <h3>Lois binomiales</h3>
+        <div class="pills">
+                    <a class="pill" href="../docs/tdterm/TD5term.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 5</a>
+          <a class="pill" href="https://github.com/10ysamut/TPspemathsterm/blob/main/TP%20Un%20proble%CC%80me%20de%20surre%CC%81servation.ipynb" target="_blank" rel="noopener"><i class="fa fa-github"></i> TP 3</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">TD 6</div>
+        <h3>Dérivation et convexité</h3>
+        <div class="pills">
+                    <a class="pill" href="../docs/tdterm/TD6term.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 6</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">TD 7</div>
+        <h3>Orthogonalité</h3>
+        <div class="pills">
+                    <a class="pill" href="../docs/tdterm/TD7term.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 7</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">TD 8</div>
+        <h3>Limites d'une fonction</h3>
+        <div class="pills">
+                    <a class="pill" href="../docs/tdterm/TD8term.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 8</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">TD 9</div>
+        <h3>Logarithme népérien</h3>
+        <div class="pills">
+                    <a class="pill" href="../docs/tdterm/TD9term.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 9</a>
+          <a class="pill" href="https://github.com/10ysamut/TPspemathsterm/blob/main/TP%20Logarithme%20ne%CC%81pe%CC%81rien.ipynb" target="_blank" rel="noopener"><i class="fa fa-github"></i> TP 4</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">TD 10</div>
+        <h3>Continuité</h3>
+        <div class="pills">
+                    <a class="pill" href="../docs/tdterm/TD10term.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 10</a>
+          <a class="pill" href="https://github.com/10ysamut/TPspemathsterm/blob/main/TP%20Dichotomie.ipynb" target="_blank" rel="noopener"><i class="fa fa-github"></i> TP 5</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">TD 11</div>
+        <h3>Primitives et équations différentielles</h3>
+        <div class="pills">
+                    <a class="pill" href="../docs/tdterm/TD11term.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 11</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">TD 12</div>
+        <h3>Combinatoire et dénombrement</h3>
+        <div class="pills">
+                    <a class="pill" href="../docs/tdterm/TD12term.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 12</a>
+          <a class="pill" href="https://github.com/10ysamut/TPspemathsterm/blob/main/TP%20Combinatoire%20et%20coefficients%20binomiaux.ipynb" target="_blank" rel="noopener"><i class="fa fa-github"></i> TP 6</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">TD 13</div>
+        <h3>Intégration</h3>
+        <div class="pills">
+                    <a class="pill" href="../docs/tdterm/TD13term.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 13</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">TD 14</div>
+        <h3>Sommes de variables aléatoires</h3>
+        <div class="pills">
+                    <a class="pill" href="../docs/tdterm/TD14term.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 14</a>
         </div>
       </div>
     </div>
@@ -161,25 +239,20 @@ function toggleDropdown(id, btn) {
   document.querySelectorAll('.dropdown-btn').forEach(function(b) { b.classList.remove('open'); });
   if (!isOpen) { el.style.display="block"; btn.classList.add('open'); }
 }
-function toggleAccord(header) {
-  var body = header.nextElementSibling;
-  var isOpen = body.style.display === 'block';
-  var allBodies = header.closest('[id^="tab-"]').querySelectorAll('.accord-body');
-  allBodies.forEach(function(b) { b.style.display='none'; });
-  if (!isOpen) {
-    body.style.display='block';
-    var iframe = body.querySelector('iframe');
-    if (iframe && !iframe.src) { iframe.src = iframe.dataset.src; }
-  }
+function openPdf(event, url) {
+  event.preventDefault();
+  document.getElementById('pdfModalFrame').src = url;
+  document.getElementById('pdfModalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  return false;
 }
-function switchTab(tab) {
-  document.getElementById('tab-td').style.display = tab==='td' ? 'block' : 'none';
-  document.getElementById('tab-chapitres').style.display = tab==='chapitres' ? 'block' : 'none';
-  document.getElementById('btn-td').style.background = tab==='td' ? '#111' : '#ccc';
-  document.getElementById('btn-td').style.color = tab==='td' ? '#fff' : '#111';
-  document.getElementById('btn-chapitres').style.background = tab==='chapitres' ? '#111' : '#ccc';
-  document.getElementById('btn-chapitres').style.color = tab==='chapitres' ? '#fff' : '#111';
+function closePdfModal(event) {
+  if (event) event.stopPropagation();
+  document.getElementById('pdfModalOverlay').classList.remove('open');
+  document.getElementById('pdfModalFrame').src = '';
+  document.body.style.overflow = '';
 }
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closePdfModal(); });
 </script>
 </body>
 </html>
