@@ -3,17 +3,92 @@
   #sidebarContent {
     flex: 1;
   }
+
+  /* ==== Thème sidebar : couleurs + largeur (auto-suffisant, surcharge le CSS des pages) ==== */
+  #mySidebar.w3-sidebar {
+    width: 230px !important;
+    background: #484c53 !important;
+    border-right: none !important;
+    box-shadow: 3px 0 8px rgba(0,0,0,0.35) !important;
+  }
+
+  /* Centre verticalement le menu (desktop + mobile) sans toucher au display
+     du sidebar, pour ne pas interférer avec l'ouverture/fermeture mobile */
+  #sidebarContent {
+    position: absolute !important;
+    top: 50% !important;
+    left: 0 !important;
+    right: 0 !important;
+    transform: translateY(-50%) !important;
+    width: 100% !important;
+  }
+
+  #mySidebar .w3-bar-item.nav-link,
+  #mySidebar .dropdown-btn {
+    font-family: 'Montserrat', Arial, sans-serif !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.06em !important;
+    text-align: center !important;
+    justify-content: center !important;
+    color: #c9ccd1 !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    padding: 20px 16px !important;
+    border-left: none !important;
+    position: relative;
+  }
+
+  #mySidebar .w3-bar-item.nav-link {
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    font-size: 16px !important;
+  }
+
+  #mySidebar .w3-bar-item.nav-link:hover,
+  #mySidebar .dropdown-btn:hover {
+    background-color: rgba(255,255,255,0.07) !important;
+    color: #ffffff !important;
+    border-left: none !important;
+  }
+
+  #mySidebar .dropdown-btn .fa {
+    position: absolute !important;
+    right: 22px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #a3a7ad !important;
+    font-size: 13px !important;
+  }
+  #mySidebar .dropdown-btn.open .fa {
+    transform: translateY(-50%) rotate(90deg) !important;
+  }
+
+  #mySidebar .dropdown-container {
+    background-color: #3e4147 !important;
+  }
+  #mySidebar .dropdown-container a {
+    color: #adb0b6 !important;
+    text-align: center !important;
+    padding: 14px 16px !important;
+    font-size: 13px !important;
+    font-family: 'Montserrat', Arial, sans-serif !important;
+    letter-spacing: 0.04em !important;
+    text-transform: uppercase !important;
+    border-left: none !important;
+  }
+  #mySidebar .dropdown-container a:hover {
+    color: #ffffff !important;
+    background-color: rgba(255,255,255,0.07) !important;
+    border-left: none !important;
+  }
+
+  @media (max-width: 992px) {
+    #mySidebar.w3-sidebar { width: 75% !important; max-width: 260px !important; }
+  }
 </style>
 
 <!-- Sidebar -->
 <nav class="w3-sidebar w3-bar-block w3-collapse w3-top" style="z-index:3;" id="mySidebar">
-  <div class="sidebar-title w3-hide-small">
-    <a href="/index.html" style="display:block; padding:20px 0; text-decoration:none;">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 120" style="width:80px; height:96px; display:block; margin:0 auto;">
-        <text x="50" y="105" font-family="serif" font-size="115" text-anchor="middle" fill="#1a1a1a">Ψ</text>
-      </svg>
-    </a>
-  </div>
 
   <!-- Wrapper du contenu pour le flex -->
   <div id="sidebarContent">
@@ -61,12 +136,12 @@
   </div>
 
   <!-- Copyright mobile -->
-  <div class="w3-hide-large" style="padding:12px 0; text-align:center; font-size:0.65em; color:#bbb; letter-spacing:0.02em;">
+  <div class="w3-hide-large" style="position:absolute; bottom:0; left:0; right:0; padding:12px 0; text-align:center; font-size:0.65em; color:#bbb; letter-spacing:0.02em;">
     &copy; YSA 2026. Tous droits réservés
   </div>
 
   <!-- Copyright desktop -->
-  <div class="w3-hide-small" style="position:fixed; bottom:0; width:inherit; padding:12px 0; text-align:center; font-size:0.65em; color:#aaa; letter-spacing:0.02em;">
+  <div class="w3-hide-small" style="position:fixed; bottom:0; width:inherit; padding:12px 0; text-align:center; font-size:0.65em; color:#999; letter-spacing:0.02em;">
     &copy; YSA 2026. Tous droits réservés
   </div>
 </nav>
@@ -87,19 +162,44 @@
   })();
 </script>
 
+<script>
+  // Recale automatiquement la bande décorative et #main sur la largeur réelle
+  // de la sidebar, pour que la nouvelle largeur/thème ne nécessite aucune
+  // modification des autres pages du site.
+  (function() {
+    function syncLayout() {
+      var sidebar = document.getElementById('mySidebar');
+      var band = document.getElementById('decorative-band');
+      var main = document.getElementById('main');
+      if (!sidebar) return;
+      if (window.innerWidth > 992) {
+        var w = sidebar.getBoundingClientRect().width;
+        var bandWidth = band ? band.getBoundingClientRect().width : 0;
+        if (band) band.style.left = w + 'px';
+        if (main) main.style.marginLeft = (w + bandWidth) + 'px';
+      } else {
+        if (main) main.style.marginLeft = '';
+      }
+    }
+    window.addEventListener('load', syncLayout);
+    window.addEventListener('resize', syncLayout);
+    setTimeout(syncLayout, 50);
+  })();
+</script>
+
 <!-- Bande décorative verticale -->
 <div id="decorative-band">
   <img src="/deco/bandeco.jpg">
 </div>
 
 <!-- Topbar mobile -->
-<div class="w3-top w3-hide-large" style="display:flex; align-items:center; justify-content:space-between; padding:12px 16px; background:#fff; border-bottom:1px solid #ddd; z-index:4;">
+<div class="w3-top w3-hide-large" style="display:flex; align-items:center; justify-content:space-between; padding:12px 16px; background:#484c53; border-bottom:1px solid rgba(255,255,255,0.08); box-shadow:0 1px 6px rgba(0,0,0,0.25); z-index:4;">
   <button onclick="w3_open()" style="background:none; border:none; cursor:pointer; padding:4px;">
-    <span style="display:block; width:22px; height:2px; background:#1a1a1a; margin:5px 0;"></span>
-    <span style="display:block; width:22px; height:2px; background:#1a1a1a; margin:5px 0;"></span>
-    <span style="display:block; width:22px; height:2px; background:#1a1a1a; margin:5px 0;"></span>
+    <span style="display:block; width:22px; height:2px; background:#e6e7e9; margin:5px 0;"></span>
+    <span style="display:block; width:22px; height:2px; background:#e6e7e9; margin:5px 0;"></span>
+    <span style="display:block; width:22px; height:2px; background:#e6e7e9; margin:5px 0;"></span>
   </button>
-  <a href="/index.html" style="font-size:1.5em; text-decoration:none; color:#1a1a1a;">Ψ</a>
+  <a href="/index.html" style="font-size:1.5em; text-decoration:none; color:#e6e7e9;">Ψ</a>
 </div>
 
 <!-- Overlay mobile -->
