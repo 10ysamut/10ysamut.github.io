@@ -66,6 +66,16 @@ p { color:#444; line-height:1.8; margin-bottom:16px; }
 .accord-header { padding:0.8em 1em; cursor:pointer; font-size:1em; display:flex; align-items:center; gap:0.6em; background:#ececec; transition:background 0.15s; }
 .accord-header:hover { background:#e2e2e2; }
 .accord-body { display:none; padding:0; }
+
+.chapgrid { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:20px; margin:2em 0; }
+.chapcard { background:#fff; border:1px solid #e2e2e2; border-radius:14px; padding:26px 28px; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+.chapcard .tag { font-size:0.72em; font-weight:800; letter-spacing:0.09em; color:#999; text-transform:uppercase; margin-bottom:8px; }
+.chapcard h3 { font-size:1.22em; font-weight:800; text-transform:uppercase; letter-spacing:0.01em; margin:0 0 22px 0; line-height:1.3; color:#111; }
+.chapcard .pills { display:flex; flex-wrap:wrap; gap:10px; }
+.chapcard .pill { display:inline-flex; align-items:center; gap:0.5em; border:1.5px solid #ccc; border-radius:999px; padding:9px 18px; font-size:0.83em; font-weight:700; color:#333; text-decoration:none; transition:all 0.15s; background:#fff; }
+.chapcard .pill:hover { background:#111; color:#fff; border-color:#111; }
+.chapcard .pill.disabled { color:#bbb; border-style:dashed; border-color:#ddd; cursor:default; }
+@media (max-width:700px) { .chapgrid { grid-template-columns:1fr; } }
 </style>
 </head>
 <body>
@@ -83,95 +93,243 @@ p { color:#444; line-height:1.8; margin-bottom:16px; }
     <p>Le <a href="../docs/chapitrescpge/book.pdf" style="color:#222;">polycopié de cours</a> dans son intégralité.</p>
 
 
-    <div style="display:flex; gap:1em; margin:2em 0 1em; justify-content:center;">
-      <button onclick="switchTab('td')" id="btn-td" style="padding:0.6em 1.6em; border-radius:8px; border:none; background:#111; color:#fff; font-size:1em; cursor:pointer; font-weight:600;">Feuilles de TD</button>
-      <button onclick="switchTab('corrections')" id="btn-corrections" style="padding:0.6em 1.6em; border-radius:8px; border:none; background:#ccc; color:#111; font-size:1em; cursor:pointer; font-weight:600;">TD corrigés</button>
-      <button onclick="switchTab('chapitres')" id="btn-chapitres" style="padding:0.6em 1.6em; border-radius:8px; border:none; background:#ccc; color:#111; font-size:1em; cursor:pointer; font-weight:600;">Chapitres de cours</button>
-    </div>
-
-    <div id="tab-td" style="max-width:555px; margin:0 auto;">
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD1 – Logique et raisonnement</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD1CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD2 – Droite des nombres réels</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD2CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD3 – Fonctions numériques de la variable réelle</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD3CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD4 – Ensembles et applications</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD4CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD5 – Calculs algébriques</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD5CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD6 – Trigonométrie</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD6CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD7 – Fonctions usuelles</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD7CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD8 – Nombres complexes</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD8CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD9 – Primitives et techniques d'intégration</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD9CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD10 – Équations différentielles</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD10CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD11 – Suites et nombres réels</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD11CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD12 – Continuité</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD12CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD13 – Calcul matriciel et systèmes linéaires</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD13CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD14 – Dérivabilité</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD14CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD15 – Arithmétique</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD15CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD16 – Géométrie du plan</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD16CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD17 – Polynômes</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD17CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD18 – Espaces vectoriels</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD18CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD19 – Analyse asymptotique</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD19CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD20 – Applications linéaires</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD20CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD21 – Intégration</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD21CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD22 – Séries numériques</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD22CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD23 – Dénombrement</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD23CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD24 – Géométrie dans l'espace</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD24CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD25 – Probabilités</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD25CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD26 – Déterminant</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD26CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD27 – Fonctions à deux variables</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD27CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-    </div>
-
-    <div id="tab-chapitres" style="display:none; max-width:555px; margin:0 auto;">
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Chapitre 0 – Mathématiques pour la physique et l'ingénieur</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH0.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Chapitre 1 – Logique et raisonnement</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH1.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Chapitre 2 – Fonctions numériques de la variable réelle</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH2.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Chapitre 3 – Ensembles et applications</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH3.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Chapitre 4 – Calculs algébriques</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH4.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Chapitre 5 – Trigonométrie</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH5.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Chapitre 6 – Fonctions usuelles</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH6.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Chapitre 7 – Nombres complexes</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH7.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Chapitre 8 – Primitives et équations différentielles</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH8.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Chapitre 9 – Suites et nombres réels</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH9.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Chapitre 10 – Continuité</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH10.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Chapitre 11 – Matrices et systèmes linéaires</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH11.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Chapitre 12 – Dérivabilité</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH12.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Chapitre 14 – Géométrie du plan</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH14.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Chapitre 15 – Polynômes</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH15.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Chapitre 16 – Espaces vectoriels</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH16.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Chapitre 17 – Analyse asymptotique</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH17.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Chapitre 18 – Applications linéaires</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH18.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Chapitre 19 – Intégration</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH19.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Chapitre 20 – Séries numériques</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH20.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Chapitre 21 – Dénombrement</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH21.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Chapitre 22 – Géométrie dans l'espace</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH22.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-    </div>
-
-    <div id="tab-corrections" style="display:none; max-width:555px; margin:0 auto;">
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Correction TD1 – Logique et raisonnement</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD1CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Correction TD2 – Droite des nombres réels</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD2CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Correction TD3 – Fonctions numériques de la variable réelle</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD3CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Correction TD4 – Ensembles et applications</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD4CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Correction TD5 – Calculs algébriques</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD5CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Correction TD6 – Trigonométrie</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD6CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Correction TD7 – Fonctions usuelles</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD7CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Correction TD8 – Nombres complexes</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD8CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Correction TD9 – Primitives et techniques d'intégration</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD9CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Correction TD10 – Équations différentielles</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD10CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Correction TD11 – Suites et nombres réels</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD11CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Correction TD12 – Continuité</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD12CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Correction TD13 – Calcul matriciel et systèmes linéaires</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD13CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Correction TD14 – Dérivabilité</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD14CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Correction TD15 – Arithmétique</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD15CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Correction TD16 – Géométrie du plan</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD16CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Correction TD17 – Polynômes</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD17CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Correction TD18 – Espaces vectoriels</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD18CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Correction TD19 – Analyse asymptotique</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD19CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Correction TD20 – Applications linéaires</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD20CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Correction TD21 – Intégration</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD21CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Correction TD22 – Séries numériques</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD22CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Correction TD23 – Dénombrement</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD23CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Correction TD24 – Géométrie dans l'espace</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD24CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Correction TD25 – Probabilités</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD25CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Correction TD26 – Déterminant</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD26CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Correction TD27 – Fonctions à deux variables</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD27CPGE.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
+    <div class="chapgrid">
+      <div class="chapcard">
+        <div class="tag">CHAPITRE 0</div>
+        <h3>Mathématiques pour la physique et l'ingénieur</h3>
+        <div class="pills">
+                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH0.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">CHAPITRE 1</div>
+        <h3>Logique et raisonnement</h3>
+        <div class="pills">
+                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH1.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD1CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 1</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD1CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 1 corrigé</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">CHAPITRE 2</div>
+        <h3>Fonctions numériques de la variable réelle</h3>
+        <div class="pills">
+                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH2.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD2CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 2</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD3CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 3</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD2CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 2 corrigé</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD3CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 3 corrigé</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">CHAPITRE 3</div>
+        <h3>Ensembles et applications</h3>
+        <div class="pills">
+                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH3.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD4CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 4</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD4CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 4 corrigé</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">CHAPITRE 4</div>
+        <h3>Calculs algébriques</h3>
+        <div class="pills">
+                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH4.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD5CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 5</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD5CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 5 corrigé</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">CHAPITRE 5</div>
+        <h3>Trigonométrie</h3>
+        <div class="pills">
+                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH5.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD6CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 6</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD6CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 6 corrigé</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">CHAPITRE 6</div>
+        <h3>Fonctions usuelles</h3>
+        <div class="pills">
+                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH6.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD7CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 7</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD7CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 7 corrigé</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">CHAPITRE 7</div>
+        <h3>Nombres complexes</h3>
+        <div class="pills">
+                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH7.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD8CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 8</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD8CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 8 corrigé</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">CHAPITRE 8</div>
+        <h3>Primitives et équations différentielles</h3>
+        <div class="pills">
+                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH8.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD9CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 9</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD10CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 10</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD9CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 9 corrigé</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD10CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 10 corrigé</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">CHAPITRE 9</div>
+        <h3>Suites et nombres réels</h3>
+        <div class="pills">
+                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH9.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD11CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 11</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD11CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 11 corrigé</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">COMPLÉMENT</div>
+        <h3>Arithmétique</h3>
+        <div class="pills">
+                    <span class="pill disabled"><i class="fa fa-file-pdf-o"></i> Cours (à venir)</span>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD15CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 15</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD15CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 15 corrigé</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">CHAPITRE 10</div>
+        <h3>Continuité</h3>
+        <div class="pills">
+                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH10.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD12CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 12</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD12CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 12 corrigé</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">CHAPITRE 11</div>
+        <h3>Matrices et systèmes linéaires</h3>
+        <div class="pills">
+                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH11.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD13CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 13</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD13CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 13 corrigé</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">CHAPITRE 12</div>
+        <h3>Dérivabilité</h3>
+        <div class="pills">
+                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH12.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD14CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 14</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD14CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 14 corrigé</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">CHAPITRE 14</div>
+        <h3>Géométrie du plan</h3>
+        <div class="pills">
+                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH14.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD16CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 16</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD16CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 16 corrigé</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">CHAPITRE 15</div>
+        <h3>Polynômes</h3>
+        <div class="pills">
+                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH15.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD17CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 17</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD17CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 17 corrigé</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">CHAPITRE 16</div>
+        <h3>Espaces vectoriels</h3>
+        <div class="pills">
+                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH16.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD18CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 18</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD18CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 18 corrigé</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">CHAPITRE 17</div>
+        <h3>Analyse asymptotique</h3>
+        <div class="pills">
+                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH17.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD19CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 19</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD19CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 19 corrigé</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">CHAPITRE 18</div>
+        <h3>Applications linéaires</h3>
+        <div class="pills">
+                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH18.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD20CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 20</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD20CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 20 corrigé</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">CHAPITRE 19</div>
+        <h3>Intégration</h3>
+        <div class="pills">
+                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH19.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD21CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 21</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD21CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 21 corrigé</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">CHAPITRE 20</div>
+        <h3>Séries numériques</h3>
+        <div class="pills">
+                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH20.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD22CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 22</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD22CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 22 corrigé</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">CHAPITRE 21</div>
+        <h3>Dénombrement</h3>
+        <div class="pills">
+                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH21.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD23CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 23</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD23CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 23 corrigé</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">CHAPITRE 22</div>
+        <h3>Géométrie dans l'espace</h3>
+        <div class="pills">
+                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/chapitrescpge/CH22.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD24CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 24</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD24CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 24 corrigé</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">COMPLÉMENT</div>
+        <h3>Probabilités</h3>
+        <div class="pills">
+                    <span class="pill disabled"><i class="fa fa-file-pdf-o"></i> Cours (à venir)</span>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD25CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 25</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD25CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 25 corrigé</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">COMPLÉMENT</div>
+        <h3>Déterminant</h3>
+        <div class="pills">
+                    <span class="pill disabled"><i class="fa fa-file-pdf-o"></i> Cours (à venir)</span>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD26CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 26</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD26CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 26 corrigé</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">COMPLÉMENT</div>
+        <h3>Fonctions à deux variables</h3>
+        <div class="pills">
+                    <span class="pill disabled"><i class="fa fa-file-pdf-o"></i> Cours (à venir)</span>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpge/TD27CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 27</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/tdcpgecorrection/TD27CPGE.pdf" target="_blank" rel="noopener"><i class="fa fa-check-circle-o"></i> TD 27 corrigé</a>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -190,28 +348,6 @@ function toggleDropdown(id, btn) {
   document.querySelectorAll('.dropdown-container').forEach(function(d) { d.style.display="none"; });
   document.querySelectorAll('.dropdown-btn').forEach(function(b) { b.classList.remove('open'); });
   if (!isOpen) { el.style.display="block"; btn.classList.add('open'); }
-}
-function toggleAccord(header) {
-  var body = header.nextElementSibling;
-  var isOpen = body.style.display === 'block';
-  var allBodies = header.closest('[id^="tab-"]').querySelectorAll('.accord-body');
-  allBodies.forEach(function(b) { b.style.display='none'; });
-  if (!isOpen) {
-    body.style.display='block';
-    var iframe = body.querySelector('iframe');
-    if (iframe && !iframe.src) { iframe.src = iframe.dataset.src; }
-  }
-}
-function switchTab(tab) {
-  document.getElementById('tab-td').style.display = tab==='td' ? 'block' : 'none';
-  document.getElementById('tab-chapitres').style.display = tab==='chapitres' ? 'block' : 'none';
-  document.getElementById('tab-corrections').style.display = tab==='corrections' ? 'block' : 'none';
-  document.getElementById('btn-td').style.background = tab==='td' ? '#111' : '#ccc';
-  document.getElementById('btn-td').style.color = tab==='td' ? '#fff' : '#111';
-  document.getElementById('btn-chapitres').style.background = tab==='chapitres' ? '#111' : '#ccc';
-  document.getElementById('btn-chapitres').style.color = tab==='chapitres' ? '#fff' : '#111';
-  document.getElementById('btn-corrections').style.background = tab==='corrections' ? '#111' : '#ccc';
-  document.getElementById('btn-corrections').style.color = tab==='corrections' ? '#fff' : '#111';
 }
 </script>
 </body>

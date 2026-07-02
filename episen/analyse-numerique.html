@@ -62,6 +62,16 @@ p { color:#444; line-height:1.8; margin-bottom:16px; }
 .card-desc { font-size:0.9rem; color:#555; line-height:1.65; margin:0; }
 .card-link { display:inline-block; margin-top:14px; font-size:0.85rem; color:#555; text-decoration:none; border-bottom:1px solid #ddd; padding-bottom:1px; transition:color 0.2s, border-color 0.2s; }
 .card-link:hover { color:#111; border-color:#888; }
+
+.chapgrid { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:20px; margin:2em 0; }
+.chapcard { background:#fff; border:1px solid #e2e2e2; border-radius:14px; padding:26px 28px; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+.chapcard .tag { font-size:0.72em; font-weight:800; letter-spacing:0.09em; color:#999; text-transform:uppercase; margin-bottom:8px; }
+.chapcard h3 { font-size:1.22em; font-weight:800; text-transform:uppercase; letter-spacing:0.01em; margin:0 0 22px 0; line-height:1.3; color:#111; }
+.chapcard .pills { display:flex; flex-wrap:wrap; gap:10px; }
+.chapcard .pill { display:inline-flex; align-items:center; gap:0.5em; border:1.5px solid #ccc; border-radius:999px; padding:9px 18px; font-size:0.83em; font-weight:700; color:#333; text-decoration:none; transition:all 0.15s; background:#fff; }
+.chapcard .pill:hover { background:#111; color:#fff; border-color:#111; }
+.chapcard .pill.disabled { color:#bbb; border-style:dashed; border-color:#ddd; cursor:default; }
+@media (max-width:700px) { .chapgrid { grid-template-columns:1fr; } }
 </style>
 </head>
 <body>
@@ -76,51 +86,59 @@ p { color:#444; line-height:1.8; margin-bottom:16px; }
     <p>Vous trouverez ici mes enseignements dispensés au semestre 2 en analyse numérique et mathématiques à l'école d'ingénieurs EPISEN.</p>
     <p> Ce cours d'analyse numérique a pour vocation de vous fournir un ensemble de méthodes informatiques appliquées aux mathématiques : approximation de fonctions, résolution de systèmes, calcul d'intégrales et résolution d'équations différentielles. Sans entrer dans les détails techniques les plus poussés, nous verrons comment ces méthodes sont construites et pourquoi elles fonctionnent. Nous donnerons également des critères permettant de différencier et de comparer les différentes approches. </p>
 
-    <div style="display:flex; gap:1em; margin:2em 0 1em; justify-content:center;">
-      <button onclick="switchTab('td')" id="btn-td" style="padding:0.6em 1.6em; border-radius:8px; border:none; background:#111; color:#fff; font-size:1em; cursor:pointer; font-weight:600;">Travaux dirigés</button>
-      <button onclick="switchTab('chapitres')" id="btn-chapitres" style="padding:0.6em 1.6em; border-radius:8px; border:none; background:#ccc; color:#111; font-size:1em; cursor:pointer; font-weight:600;">Chapitres de cours</button>
-      <button onclick="switchTab('tp')" id="btn-tp" style="padding:0.6em 1.6em; border-radius:8px; border:none; background:#ccc; color:#111; font-size:1em; cursor:pointer; font-weight:600;">Travaux pratiques</button>
-    </div>
+    <p style="margin: 0 0 0.4em; color:#444;">On utilisera les notebooks Jupyter via Anaconda, téléchargeable <a href="https://www.anaconda.com/download/success?reg=skipped" target="_blank" rel="noopener" style="color:#111; border-bottom:1px solid #aaa; text-decoration:none;">ici</a>.</p>
+    <p style="margin: 0 0 1em; color:#444;">Les étudiants utilisant une tablette Android ou iPadOS peuvent utiliser <a href="https://colab.research.google.com/" target="_blank" rel="noopener" style="color:#111; border-bottom:1px solid #aaa; text-decoration:none;">Google Colab</a>, bien que cela ne soit pas recommandé ; vous serez plus à l'aise sur un ordinateur avec Anaconda.</p>
 
-    <div id="tab-td" style="max-width:555px; margin:0 auto;">
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD1 – Rappels d'analyse matricielle</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/episenS2/TD1episenS2.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD2 – Résolution de systèmes linéaires</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/episenS2/TD2episenS2.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD3 – Résolution de systèmes non-linéaires</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/episenS2/TD3episenS2.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD4 – Approximation polynômiale des fonctions numériques</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/episenS2/TD4episenS2.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD5 – Intégration numérique</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/episenS2/TD5episenS2.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> TD6 – Résolution numérique des équations différentielles</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/episenS2/TD6episenS2.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-    </div>
-
-    <div id="tab-chapitres" style="display:none; max-width:555px; margin:0 auto;">
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Chapitre 1 – Rappels d'analyse matricielle</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/episenS2/CH1episenS2.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Chapitre 2 – Résolution de systèmes linéaires</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/episenS2/CH2episenS2.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Chapitre 3 – Résolution de systèmes non-linéaires</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/episenS2/CH3episenS2.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Chapitre 4 – Approximation polynômiale des fonctions numériques</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/episenS2/CH4episenS2.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Chapitre 5 – Intégration numérique</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/episenS2/CH5episenS2.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-      <div class="accord-item"><div class="accord-header" onclick="toggleAccord(this)"><i class="fa fa-file-pdf-o"></i> Chapitre 6 – Résolution numérique des équations différentielles</div><div class="accord-body"><iframe data-src="../assets/pdfjs/web/viewer.html?file=../../../docs/episenS2/CH6episenS2.pdf" width="555px" height="786px" style="border:none; display:block;"></iframe></div></div>
-    </div>
-
-    <div id="tab-tp" style="display:none;">
-      <p style="margin: 1.5em 0 0.4em; color:#444;">On utilisera les notebooks Jupyter via Anaconda, téléchargeable <a href="https://www.anaconda.com/download/success?reg=skipped" target="_blank" rel="noopener" style="color:#111; border-bottom:1px solid #aaa; text-decoration:none;">ici</a>.</p>
-      <p style="margin: 0 0 1em; color:#444;">Les étudiants utilisant une tablette Android ou iPadOS peuvent utiliser <a href="https://colab.research.google.com/" target="_blank" rel="noopener" style="color:#111; border-bottom:1px solid #aaa; text-decoration:none;">Google Colab</a>, bien que cela ne soit pas recommandé ; vous serez plus à l'aise sur un ordinateur avec Anaconda.</p>
-      <div class="formulaires-grid">
-        <div class="formulaire-card">
-          <div class="card-number">TP 01</div>
-          <div class="card-title">Résolution de systèmes linéaires</div>
-          <p class="card-desc">Implémentation  de méthodes numériques pour la résolution de systèmes linéaires : systèmes triangulaires, méthode de Jacobi et méthode de Gauss-Seidel.</p>
-          <a href="https://github.com/10ysamut/TPanalysenumeriqueEPISEN/blob/main/TP1.ipynb" class="card-link" target="_blank" rel="noopener"><i class="fa fa-github" style="margin-right:5px;"></i>Voir sur GitHub →</a>
+    <div class="chapgrid">
+      <div class="chapcard">
+        <div class="tag">CHAPITRE 1</div>
+        <h3>Rappels d'analyse matricielle</h3>
+        <div class="pills">
+                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/episenS2/CH1episenS2.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/episenS2/TD1episenS2.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 1</a>
         </div>
-        <div class="formulaire-card">
-          <div class="card-number">TP 02</div>
-          <div class="card-title">Intégration numérique</div>
-          <p class="card-desc">Calcul approché d'intégrales par les méthodes des rectangles, des trapèzes et de Simpson, avec analyse de l'erreur et de la convergence.</p>
-          <a href="https://github.com/10ysamut/TPanalysenumeriqueEPISEN/blob/main/TP2.ipynb" class="card-link" target="_blank" rel="noopener"><i class="fa fa-github" style="margin-right:5px;"></i>Voir sur GitHub →</a>
+      </div>
+      <div class="chapcard">
+        <div class="tag">CHAPITRE 2</div>
+        <h3>Résolution de systèmes linéaires</h3>
+        <div class="pills">
+                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/episenS2/CH2episenS2.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/episenS2/TD2episenS2.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 2</a>
+          <a class="pill" href="https://github.com/10ysamut/TPanalysenumeriqueEPISEN/blob/main/TP1.ipynb" target="_blank" rel="noopener"><i class="fa fa-github"></i> TP 1</a>
         </div>
-        <div class="formulaire-card">
-          <div class="card-number">TP 03</div>
-          <div class="card-title">Équations différentielles</div>
-          <p class="card-desc">Résolution numérique d'équations différentielles ordinaires par les méthodes d'Euler explicite, implicite et Runge-Kutta, et visualisation des solutions approchées.</p>
-          <a href="https://github.com/10ysamut/TPanalysenumeriqueEPISEN/blob/main/TP3.ipynb" class="card-link" target="_blank" rel="noopener"><i class="fa fa-github" style="margin-right:5px;"></i>Voir sur GitHub →</a>
+      </div>
+      <div class="chapcard">
+        <div class="tag">CHAPITRE 3</div>
+        <h3>Résolution de systèmes non-linéaires</h3>
+        <div class="pills">
+                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/episenS2/CH3episenS2.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/episenS2/TD3episenS2.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 3</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">CHAPITRE 4</div>
+        <h3>Approximation polynômiale des fonctions numériques</h3>
+        <div class="pills">
+                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/episenS2/CH4episenS2.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/episenS2/TD4episenS2.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 4</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">CHAPITRE 5</div>
+        <h3>Intégration numérique</h3>
+        <div class="pills">
+                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/episenS2/CH5episenS2.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/episenS2/TD5episenS2.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 5</a>
+          <a class="pill" href="https://github.com/10ysamut/TPanalysenumeriqueEPISEN/blob/main/TP2.ipynb" target="_blank" rel="noopener"><i class="fa fa-github"></i> TP 2</a>
+        </div>
+      </div>
+      <div class="chapcard">
+        <div class="tag">CHAPITRE 6</div>
+        <h3>Résolution numérique des équations différentielles</h3>
+        <div class="pills">
+                    <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/episenS2/CH6episenS2.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> Cours</a>
+          <a class="pill" href="../assets/pdfjs/web/viewer.html?file=../../../docs/episenS2/TD6episenS2.pdf" target="_blank" rel="noopener"><i class="fa fa-file-pdf-o"></i> TD 6</a>
+          <a class="pill" href="https://github.com/10ysamut/TPanalysenumeriqueEPISEN/blob/main/TP3.ipynb" target="_blank" rel="noopener"><i class="fa fa-github"></i> TP 3</a>
         </div>
       </div>
     </div>
@@ -142,26 +160,6 @@ function toggleDropdown(id, btn) {
   document.querySelectorAll('.dropdown-container').forEach(function(d) { d.style.display="none"; });
   document.querySelectorAll('.dropdown-btn').forEach(function(b) { b.classList.remove('open'); });
   if (!isOpen) { el.style.display="block"; btn.classList.add('open'); }
-}
-function toggleAccord(header) {
-  var body = header.nextElementSibling;
-  var isOpen = body.style.display === 'block';
-  var allBodies = header.closest('[id^="tab-"]').querySelectorAll('.accord-body');
-  allBodies.forEach(function(b) { b.style.display='none'; });
-  if (!isOpen) {
-    body.style.display='block';
-    var iframe = body.querySelector('iframe');
-    if (iframe && !iframe.src) { iframe.src = iframe.dataset.src; }
-  }
-}
-function switchTab(tab) {
-  document.getElementById('tab-td').style.display = tab==='td' ? 'block' : 'none';
-  document.getElementById('tab-chapitres').style.display = tab==='chapitres' ? 'block' : 'none';
-  document.getElementById('tab-tp').style.display = tab==='tp' ? 'block' : 'none';
-  ['td','chapitres','tp'].forEach(function(t) {
-    document.getElementById('btn-'+t).style.background = tab===t ? '#111' : '#ccc';
-    document.getElementById('btn-'+t).style.color = tab===t ? '#fff' : '#111';
-  });
 }
 </script>
 </body>
