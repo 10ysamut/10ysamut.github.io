@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G8ZET31REK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-G8ZET31REK');
+</script>
+<title>Youri Samut - Devoirs</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="/deco/favicon.png">
+<link rel="stylesheet" href="../css/w3.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/fonts.css">
+<link rel="stylesheet" href="../font-awesome/css/font-awesome.min.css">
+<style>
+body, h1,h2,h3,h4,h5,h6 { font-family: "Computer Modern Bright", sans-serif; }
+body { background-color: #f4f4f4; }
+
+.w3-sidebar { width:200px; background:#ffffff; border-right:none; box-shadow:3px 0 8px rgba(0,0,0,0.15); z-index:4; }
+#decorative-band { position:fixed; top:0; left:200px; width:60px; height:100%; z-index:2; overflow:hidden; box-shadow:3px 0 8px rgba(0,0,0,0.15); }
+#decorative-band img { width:100%; height:100%; object-fit:cover; object-position:center; display:block; }
+#main { margin-left:260px; background-color:#f4f4f4; min-height:100vh; }
+
+@media only screen and (max-width:992px) {
+  #main { margin-left:0; }
+  #decorative-band { display:none; }
+  #mySidebar { padding-top:70px; }
+}
+
+@media (max-width:992px) {
+  html, body { overflow-x:hidden !important; max-width:100vw !important; }
+  .content-section { padding-top:70px; }
+  .content-section { margin:0 !important; padding:16px 8px !important; padding-top:70px !important; }
+  .devoirs-toolbar { flex-direction:column; align-items:stretch !important; }
+  .cal-nav { justify-content:center; }
+}
+
+.w3-sidebar a.w3-bar-item { color:#333; font-size:14px; padding:12px 16px; display:block; text-decoration:none; border-left:3px solid transparent; transition:all 0.2s; }
+.w3-sidebar a.w3-bar-item:hover { background-color:#f0f0f0; color:#000; border-left:3px solid #555; }
+.sidebar-title { padding:32px 16px 24px; text-align:center; border-bottom:1px solid #eee; color:#111; }
+.dropdown-btn { cursor:pointer; display:flex; justify-content:space-between; align-items:center; width:100%; background:none; border:none; font-family:"Montserrat",sans-serif; font-size:14px; font-weight:bold; color:#333; padding:12px 16px; border-left:3px solid transparent; transition:all 0.2s; text-align:left; box-sizing:border-box; }
+.dropdown-btn:hover { background-color:#f0f0f0; color:#000; border-left:3px solid #555; }
+.dropdown-btn .fa { font-size:11px; transition:transform 0.2s; }
+.dropdown-btn.open .fa { transform:rotate(180deg); }
+.dropdown-container { display:none; background-color:#fafafa; border-left:none; }
+.dropdown-container a { padding:10px 16px 10px 28px !important; font-size:13px !important; font-weight:normal !important; color:#555 !important; border-left:3px solid transparent !important; }
+.dropdown-container a:hover { color:#111 !important; background-color:#efefef !important; border-left:3px solid #999 !important; }
+.w3-sidebar .nav-link { font-weight:bold; }
+header { background-color:#ffffff; border-bottom:1px solid #ddd; }
+.content-section { margin:24px; padding:32px; }
+hr.section-rule { border:none; border-top:1px solid #ddd; width:200px; margin:16px auto 24px 0; }
+.breadcrumb { font-size:0.8em; color:#999; text-transform:uppercase; letter-spacing:0.09em; margin-bottom:6px; }
+h2 { font-size:1.55em; font-weight:normal; color:#111; margin:0 0 6px 0; letter-spacing:0.02em; line-height:1.3; }
+p { color:#444; line-height:1.8; margin-bottom:16px; }
+#myNavbar { background:#ffffff !important; border-bottom:1px solid #ddd; }
+#myNavbar a { color:#333 !important; }
+#myNavbar a:hover { background-color:#f0f0f0 !important; }
+
+/* --- Barre d'outils : classe / navigation / vue --- */
+.devoirs-toolbar { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:14px; margin:24px 0 18px; }
+.classe-switch, .view-switch { display:inline-flex; border:1px solid #ddd; border-radius:8px; overflow:hidden; background:#fff; }
+.classe-btn, .view-btn { border:none; background:#fff; color:#555; font-size:0.83em; font-weight:700; padding:9px 16px; cursor:pointer; transition:all .15s; font-family:inherit; }
+.classe-btn:hover, .view-btn:hover { background:#f0f0f0; }
+.classe-btn.active, .view-btn.active { background:#111; color:#fff; }
+.classe-switch .classe-btn:not(:last-child), .view-switch .view-btn:not(:last-child) { border-right:1px solid #ddd; }
+
+.cal-nav { display:flex; align-items:center; gap:10px; }
+.nav-btn { border:1px solid #ddd; background:#fff; width:32px; height:32px; border-radius:50%; cursor:pointer; color:#333; display:inline-flex; align-items:center; justify-content:center; transition:all .15s; }
+.nav-btn:hover { background:#f0f0f0; }
+.cal-label { font-weight:700; font-size:1em; color:#111; min-width:170px; text-align:center; text-transform:capitalize; }
+.today-btn { border:1px solid #ccc; background:#fff; border-radius:999px; padding:7px 16px; font-size:0.8em; font-weight:700; color:#333; cursor:pointer; transition:all .15s; font-family:inherit; }
+.today-btn:hover { background:#111; color:#fff; border-color:#111; }
+
+/* --- Légende --- */
+.legend { display:flex; flex-wrap:wrap; gap:16px; margin-bottom:18px; }
+.legend-item { display:inline-flex; align-items:center; gap:6px; font-size:0.78em; color:#666; }
+.dot { width:9px; height:9px; border-radius:50%; display:inline-block; }
+.dot.dm, .day-badge.dm, .week-devoir-card.dm, .devoir-detail-card.dm { background:#c0392b; }
+.dot.td, .day-badge.td, .week-devoir-card.td, .devoir-detail-card.td { background:#2980b9; }
+.dot.interro, .day-badge.interro, .week-devoir-card.interro, .devoir-detail-card.interro { background:#8e44ad; }
+.dot.tp, .day-badge.tp, .week-devoir-card.tp, .devoir-detail-card.tp { background:#16a085; }
+.dot.colle, .day-badge.colle, .week-devoir-card.colle, .devoir-detail-card.colle { background:#d35400; }
+/* les cartes n'ont besoin que d'une bordure colorée, pas d'un fond plein */
+.week-devoir-card, .devoir-detail-card { background:#fdfdfd !important; }
+.week-devoir-card.dm, .devoir-detail-card.dm { border-left-color:#c0392b; }
+.week-devoir-card.td, .devoir-detail-card.td { border-left-color:#2980b9; }
+.week-devoir-card.interro, .devoir-detail-card.interro { border-left-color:#8e44ad; }
+.week-devoir-card.tp, .devoir-detail-card.tp { border-left-color:#16a085; }
+.week-devoir-card.colle, .devoir-detail-card.colle { border-left-color:#d35400; }
+
+/* --- Vue mois --- */
+.month-grid { display:grid; grid-template-columns:repeat(7,1fr); border:1px solid #e2e2e2; border-radius:10px; overflow:hidden; background:#fff; }
+.month-weekday { padding:10px; text-align:center; font-size:0.7em; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:#999; background:#fafafa; border-bottom:1px solid #eee; }
+.cal-day { min-height:100px; border-right:1px solid #eee; border-bottom:1px solid #eee; padding:8px; cursor:default; position:relative; transition:background .15s; }
+.cal-day:nth-child(7n) { border-right:none; }
+.cal-day.has-devoirs { cursor:pointer; }
+.cal-day.has-devoirs:hover { background:#fafafa; }
+.cal-day.other-month { background:#fbfbfb; }
+.cal-day.other-month .day-num { color:#ccc; }
+.cal-day.today .day-num { background:#111; color:#fff; border-radius:50%; }
+.day-num { display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; font-size:0.85em; font-weight:700; color:#333; }
+.day-badges { margin-top:6px; display:flex; flex-direction:column; gap:3px; }
+.day-badge { font-size:0.68em; padding:3px 6px; border-radius:4px; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.day-more { font-size:0.68em; color:#888; font-weight:700; margin-top:2px; }
+
+@media (max-width:700px) {
+  .cal-day { min-height:64px; padding:5px; }
+  .day-num { width:20px; height:20px; font-size:0.8em; }
+  .day-badges { flex-direction:row; flex-wrap:wrap; margin-top:4px; }
+  .day-badge { font-size:0; padding:0; width:6px; height:6px; min-width:6px; border-radius:50%; }
+  .day-more { display:none; }
+}
+
+/* --- Vue semaine --- */
+.week-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:12px; align-items:start; }
+.week-col { background:#fff; border:1px solid #e2e2e2; border-radius:10px; overflow:hidden; min-height:220px; display:flex; flex-direction:column; }
+.week-col-header { padding:10px; text-align:center; background:#fafafa; border-bottom:1px solid #eee; }
+.week-col.today .week-col-header { background:#111; }
+.week-col-header .wd { font-size:0.66em; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:#999; }
+.week-col.today .week-col-header .wd { color:#ccc; }
+.week-col-header .wn { font-size:1.1em; font-weight:700; color:#111; }
+.week-col.today .week-col-header .wn { color:#fff; }
+.week-col-body { padding:8px; display:flex; flex-direction:column; gap:8px; flex:1; }
+.week-devoir-card { border:1px solid #eee; border-left:4px solid #999; border-radius:6px; padding:8px 10px; cursor:pointer; transition:all .15s; }
+.week-devoir-card:hover { box-shadow:0 1px 4px rgba(0,0,0,0.08); }
+.week-devoir-type { font-size:0.63em; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; color:#888; }
+.week-devoir-title { font-size:0.83em; font-weight:700; color:#111; margin-top:2px; line-height:1.3; }
+.week-empty { font-size:0.78em; color:#bbb; text-align:center; padding:20px 8px; }
+
+@media (max-width:900px) {
+  .week-grid { grid-template-columns:1fr; }
+}
+
+/* --- Modal détail devoir --- */
+#devoirModalOverlay { display:none; position:fixed; top:0; left:260px; right:0; bottom:0; background:rgba(0,0,0,0.55); z-index:9998; align-items:center; justify-content:center; padding:24px; }
+#devoirModalOverlay.open { display:flex; }
+#devoirModalBox { background:#fff; border-radius:10px; max-width:560px; width:100%; max-height:80vh; overflow-y:auto; box-shadow:0 10px 40px rgba(0,0,0,0.3); }
+#devoirModalHeader { display:flex; justify-content:space-between; align-items:center; gap:10px; padding:16px 20px; border-bottom:1px solid #eee; position:sticky; top:0; background:#fff; }
+#devoirModalHeader h3 { margin:0; font-size:1.05em; font-weight:700; color:#111; text-transform:capitalize; }
+#devoirModalClose { cursor:pointer; border:none; background:#111; color:#fff; border-radius:6px; padding:7px 16px; font-size:0.85em; font-weight:600; white-space:nowrap; }
+#devoirModalClose:hover { background:#333; }
+#devoirModalBody { padding:20px; display:flex; flex-direction:column; gap:14px; }
+.devoir-detail-card { border:1px solid #eee; border-left:4px solid #999; border-radius:8px; padding:14px 16px; }
+.devoir-detail-type { font-size:0.68em; font-weight:800; text-transform:uppercase; letter-spacing:0.08em; color:#888; margin-bottom:4px; }
+.devoir-detail-title { font-size:1.02em; font-weight:700; color:#111; margin-bottom:6px; }
+.devoir-detail-desc { font-size:0.88em; color:#555; line-height:1.6; margin-bottom:10px; }
+.devoir-detail-link { display:inline-flex; align-items:center; gap:6px; border:1.5px solid #ccc; border-radius:999px; padding:7px 16px; font-size:0.82em; font-weight:700; color:#333; text-decoration:none; transition:all .15s; background:#fff; }
+.devoir-detail-link:hover { background:#111; color:#fff; border-color:#111; }
+
+@media (max-width:992px) {
+  #devoirModalOverlay { left:0; }
+}
+
+/* --- Modal PDF (identique aux autres pages du site) --- */
+#pdfModalOverlay { display:none; position:fixed; top:0; left:260px; right:0; bottom:0; background:rgba(0,0,0,0.55); z-index:9999; }
+#pdfModalOverlay.open { display:block; }
+#pdfModalBox { position:absolute; top:24px; left:24px; right:24px; bottom:24px; background:#fff; border-radius:8px; overflow:hidden; box-shadow:0 10px 40px rgba(0,0,0,0.3); display:flex; flex-direction:column; }
+#pdfModalHeader { display:flex; justify-content:space-between; align-items:center; gap:10px; padding:10px 14px; background:#484c53; border-bottom:1px solid rgba(255,255,255,0.08); flex-shrink:0; }
+#pdfModalOpenNewTab { display:inline-flex; align-items:center; gap:6px; font-size:0.85em; font-weight:600; color:#e6e7e9; text-decoration:none; white-space:nowrap; }
+#pdfModalOpenNewTab:hover { color:#ffffff; }
+#pdfModalClose { cursor:pointer; border:none; background:#111; color:#fff; border-radius:6px; padding:8px 18px; font-size:0.9em; font-weight:600; display:inline-flex; align-items:center; gap:6px; white-space:nowrap; }
+#pdfModalClose:hover { background:#333; }
+#pdfModalFrame { flex:1; width:100%; border:none; }
+@media (max-width:992px) {
+  #pdfModalOverlay { left:0; }
+  #pdfModalBox { top:0; left:0; right:0; bottom:0; border-radius:0; height:100dvh; }
+  #pdfModalHeader { position:sticky; top:0; z-index:2; padding:12px 14px; padding-top:calc(12px + env(safe-area-inset-top)); box-shadow:0 1px 4px rgba(0,0,0,0.08); }
+  #pdfModalOpenNewTab .label-full { display:none; }
+  #pdfModalClose { padding:10px 18px; font-size:1em; }
+}
+</style>
+</head>
+<body>
+
+<div id="sidebar-container"></div>
+
+<!-- Modal détail d'un devoir -->
+<div id="devoirModalOverlay" onclick="closeDevoirModal(event)">
+  <div id="devoirModalBox" onclick="event.stopPropagation()">
+    <div id="devoirModalHeader">
+      <h3 id="devoirModalTitle"></h3>
+      <button id="devoirModalClose" onclick="closeDevoirModal()"><i class="fa fa-times"></i> Fermer</button>
+    </div>
+    <div id="devoirModalBody"></div>
+  </div>
+</div>
+
+<!-- Modal lecture PDF -->
+<div id="pdfModalOverlay" onclick="closePdfModal(event)">
+  <div id="pdfModalBox" onclick="event.stopPropagation()">
+    <div id="pdfModalHeader">
+      <a id="pdfModalOpenNewTab" href="#" target="_blank" rel="noopener"><i class="fa fa-external-link"></i> <span class="label-full">Ouvrir dans un nouvel onglet</span></a>
+      <button id="pdfModalClose" onclick="closePdfModal()"><i class="fa fa-times"></i> Fermer</button>
+    </div>
+    <iframe id="pdfModalFrame" src="" title="Aper&ccedil;u PDF"></iframe>
+  </div>
+</div>
+
+<div class="w3-padding-large" id="main">
+  <div class="content-section" id="devoirs">
+    <p class="breadcrumb">Espace élèves</p>
+    <h2>Devoirs &amp; emploi du temps</h2>
+    <hr class="section-rule">
+    <p>Retrouvez ici les devoirs, TD, TP, interrogations et colles à venir, pour la classe préparatoire comme pour l'école d'ingénieurs. Cliquez sur un jour pour voir le détail.</p>
+
+    <div class="devoirs-toolbar">
+      <div class="classe-switch">
+        <button class="classe-btn active" data-classe="prepa" onclick="setClasse('prepa', this)">Prépa PTSI</button>
+        <button class="classe-btn" data-classe="episen" onclick="setClasse('episen', this)">École d'ingénieurs</button>
+      </div>
+      <div class="cal-nav">
+        <button class="nav-btn" onclick="navigate(-1)" aria-label="Précédent"><i class="fa fa-chevron-left"></i></button>
+        <span id="calLabel" class="cal-label"></span>
+        <button class="nav-btn" onclick="navigate(1)" aria-label="Suivant"><i class="fa fa-chevron-right"></i></button>
+        <button class="today-btn" onclick="goToday()">Aujourd'hui</button>
+      </div>
+      <div class="view-switch">
+        <button class="view-btn active" data-view="month" onclick="setView('month', this)">Mois</button>
+        <button class="view-btn" data-view="week" onclick="setView('week', this)">Semaine</button>
+      </div>
+    </div>
+
+    <div class="legend">
+      <span class="legend-item"><span class="dot dm"></span> DM</span>
+      <span class="legend-item"><span class="dot td"></span> TD</span>
+      <span class="legend-item"><span class="dot interro"></span> Interrogation</span>
+      <span class="legend-item"><span class="dot tp"></span> TP</span>
+      <span class="legend-item"><span class="dot colle"></span> Colle</span>
+    </div>
+
+    <div id="calendarContainer"></div>
+  </div>
+</div>
+
+<script>
+fetch('/sidebar.html')
+  .then(res => res.text())
+  .then(html => { document.getElementById('sidebar-container').innerHTML = html; })
+  .catch(err => console.error('Erreur chargement sidebar :', err));
+
+function w3_open() { document.getElementById("mySidebar").style.display="block"; document.getElementById("sidebarOverlay").style.display="block"; }
+function w3_close() { document.getElementById("mySidebar").style.display="none"; document.getElementById("sidebarOverlay").style.display="none"; }
+function toggleDropdown(id, btn) {
+  var el = document.getElementById(id);
+  var isOpen = el.style.display === "block";
+  document.querySelectorAll('.dropdown-container').forEach(function(d) { d.style.display="none"; });
+  document.querySelectorAll('.dropdown-btn').forEach(function(b) { b.classList.remove('open'); });
+  if (!isOpen) { el.style.display="block"; btn.classList.add('open'); }
+}
+
+var pdfModalScrollY = 0;
+function openPdf(event, url) {
+  event.preventDefault();
+  var viewerBase = new URL('../assets/pdfjs/web/viewer.html', window.location.href).href;
+  var viewerSrc = viewerBase + '?file=' + encodeURIComponent(url);
+  pdfModalScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+  document.getElementById('pdfModalFrame').src = viewerSrc;
+  document.getElementById('pdfModalOpenNewTab').href = viewerSrc;
+  document.getElementById('pdfModalOverlay').classList.add('open');
+  document.body.style.position = 'fixed';
+  document.body.style.top = '-' + pdfModalScrollY + 'px';
+  document.body.style.left = '0';
+  document.body.style.right = '0';
+  document.body.style.overflow = 'hidden';
+  return false;
+}
+function closePdfModal(event) {
+  if (event) event.stopPropagation();
+  document.getElementById('pdfModalOverlay').classList.remove('open');
+  document.getElementById('pdfModalFrame').src = '';
+  document.body.style.position = '';
+  document.body.style.top = '';
+  document.body.style.left = '';
+  document.body.style.right = '';
+  document.body.style.overflow = '';
+  window.scrollTo(0, pdfModalScrollY);
+}
+
+/* =========================================================================
+   DONNÉES DES DEVOIRS
+   -------------------------------------------------------------------------
+   Pour ajouter un devoir, copiez-collez un bloc { ... } dans le tableau
+   ci-dessous (n'oubliez pas la virgule après l'accolade précédente).
+
+   Champs :
+     classe      : 'prepa'  ou  'episen'
+     type        : 'dm'  |  'td'  |  'interro'  |  'tp'  |  'colle'
+     titre       : court, affiché dans le calendrier
+     date        : format 'AAAA-MM-JJ' (date à laquelle le devoir est dû /
+                   a lieu — c'est ce qui détermine sa position dans le
+                   calendrier)
+     description : texte libre, affiché uniquement dans la fenêtre de détail
+                   (facultatif : mettre '' si rien à préciser)
+     lien        : URL vers un PDF (sujet, énoncé...) ou un lien externe
+                   (facultatif : mettre null si aucun lien)
+   ========================================================================= */
+const devoirs = [
+  {
+    classe: 'prepa',
+    type: 'dm',
+    titre: 'DM n°6 — Séries numériques',
+    date: '2026-07-14',
+    description: "Exercices 3, 5 et 8 du chapitre 20. À rendre en début de séance, rédaction soignée exigée.",
+    lien: '../docs/tdcpge/TD22CPGE.pdf'
+  },
+  {
+    classe: 'prepa',
+    type: 'td',
+    titre: 'TD 22 — Séries numériques',
+    date: '2026-07-13',
+    description: "Préparer les exercices 1 à 6 avant la séance.",
+    lien: '../docs/tdcpge/TD22CPGE.pdf'
+  },
+  {
+    classe: 'prepa',
+    type: 'interro',
+    titre: 'Interrogation — Continuité et dérivabilité',
+    date: '2026-07-16',
+    description: "Interrogation écrite de 30 minutes, sans calculatrice.",
+    lien: null
+  },
+  {
+    classe: 'prepa',
+    type: 'colle',
+    titre: 'Colle — Semaine 29',
+    date: '2026-07-17',
+    description: "Programme : chapitres 17 à 19 (analyse asymptotique, applications linéaires, intégration).",
+    lien: null
+  },
+  {
+    classe: 'prepa',
+    type: 'dm',
+    titre: 'DM n°7 — Dénombrement',
+    date: '2026-07-21',
+    description: "Sujet à venir.",
+    lien: null
+  },
+  {
+    classe: 'episen',
+    type: 'td',
+    titre: 'TD 5 — Intégration numérique',
+    date: '2026-07-13',
+    description: "Méthodes des trapèzes et de Simpson : exercices 1 à 4.",
+    lien: '../docs/episenS2/TD5episenS2.pdf'
+  },
+  {
+    classe: 'episen',
+    type: 'tp',
+    titre: 'TP 2 — Intégration numérique (Python)',
+    date: '2026-07-15',
+    description: "Notebook à rendre sur GitHub Classroom avant 23h59.",
+    lien: 'https://github.com/10ysamut/TPanalysenumeriqueEPISEN/blob/main/TP2.ipynb'
+  },
+  {
+    classe: 'episen',
+    type: 'dm',
+    titre: 'DM — Résolution de systèmes non-linéaires',
+    date: '2026-07-20',
+    description: "Implémentation de la méthode de Newton-Raphson, rapport à rendre au format PDF.",
+    lien: null
+  },
+  {
+    classe: 'episen',
+    type: 'interro',
+    titre: 'Interrogation — Chapitres 1 à 3',
+    date: '2026-07-22',
+    description: "Analyse matricielle, systèmes linéaires et non-linéaires.",
+    lien: null
+  }
+];
+
+/* ========================================================================= */
+
+let currentClasse = 'prepa';
+let currentView = 'month';
+let currentDate = new Date();
+
+function pad(n) { return n < 10 ? '0' + n : '' + n; }
+function dateKey(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+function parseKey(key) { const p = key.split('-').map(Number); return new Date(p[0], p[1] - 1, p[2]); }
+function mondayOf(date) { const d = new Date(date); const day = (d.getDay() + 6) % 7; d.setDate(d.getDate() - day); d.setHours(0,0,0,0); return d; }
+function typeLabel(t) { return { dm:'DM', td:'TD', interro:'Interrogation', tp:'TP', colle:'Colle' }[t] || t; }
+function escapeHtml(s) { const div = document.createElement('div'); div.textContent = s == null ? '' : s; return div.innerHTML; }
+function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+function devoirsForClasse() { return devoirs.filter(d => d.classe === currentClasse); }
+function devoirsOnDate(key) { return devoirsForClasse().filter(d => d.date === key); }
+
+function setClasse(classe, btn) {
+  currentClasse = classe;
+  document.querySelectorAll('.classe-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCalendar();
+}
+function setView(view, btn) {
+  currentView = view;
+  document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCalendar();
+}
+function navigate(delta) {
+  const d = new Date(currentDate);
+  if (currentView === 'month') { d.setMonth(d.getMonth() + delta); }
+  else { d.setDate(d.getDate() + delta * 7); }
+  currentDate = d;
+  renderCalendar();
+}
+function goToday() { currentDate = new Date(); renderCalendar(); }
+
+function renderCalendar() {
+  if (currentView === 'month') renderMonth(); else renderWeek();
+}
+
+function renderMonth() {
+  const year = currentDate.getFullYear(), month = currentDate.getMonth();
+  document.getElementById('calLabel').textContent = capitalize(currentDate.toLocaleDateString('fr-FR', { month:'long', year:'numeric' }));
+
+  const start = mondayOf(new Date(year, month, 1));
+  const todayKey = dateKey(new Date());
+  const weekdays = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
+
+  let html = '<div class="month-grid">';
+  weekdays.forEach(w => html += '<div class="month-weekday">' + w + '</div>');
+
+  for (let i = 0; i < 42; i++) {
+    const d = new Date(start); d.setDate(start.getDate() + i);
+    const key = dateKey(d);
+    const inMonth = d.getMonth() === month;
+    const items = devoirsOnDate(key);
+    let cls = 'cal-day';
+    if (!inMonth) cls += ' other-month';
+    if (key === todayKey) cls += ' today';
+    if (items.length) cls += ' has-devoirs';
+
+    html += '<div class="' + cls + '"' + (items.length ? ' onclick="openDevoirDetail(\'' + key + '\')"' : '') + '>';
+    html += '<span class="day-num">' + d.getDate() + '</span>';
+    if (items.length) {
+      html += '<div class="day-badges">';
+      items.slice(0, 3).forEach(it => {
+        html += '<div class="day-badge ' + it.type + '" title="' + escapeHtml(it.titre) + '">' + escapeHtml(it.titre) + '</div>';
+      });
+      if (items.length > 3) html += '<div class="day-more">+' + (items.length - 3) + ' autre(s)</div>';
+      html += '</div>';
+    }
+    html += '</div>';
+  }
+  html += '</div>';
+  document.getElementById('calendarContainer').innerHTML = html;
+}
+
+function renderWeek() {
+  const monday = mondayOf(currentDate);
+  const days = [];
+  for (let i = 0; i < 7; i++) { const d = new Date(monday); d.setDate(monday.getDate() + i); days.push(d); }
+  const startLabel = days[0].toLocaleDateString('fr-FR', { day:'numeric', month: days[0].getMonth() === days[6].getMonth() ? undefined : 'long' });
+  const endLabel = days[6].toLocaleDateString('fr-FR', { day:'numeric', month:'long', year:'numeric' });
+  document.getElementById('calLabel').textContent = capitalize(startLabel + ' – ' + endLabel);
+
+  const weekdays = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
+  const todayKey = dateKey(new Date());
+
+  let html = '<div class="week-grid">';
+  days.forEach((d, i) => {
+    const key = dateKey(d);
+    const items = devoirsOnDate(key);
+    const isToday = key === todayKey;
+    html += '<div class="week-col' + (isToday ? ' today' : '') + '">';
+    html += '<div class="week-col-header"><div class="wd">' + weekdays[i] + '</div><div class="wn">' + d.getDate() + '</div></div>';
+    html += '<div class="week-col-body">';
+    if (items.length) {
+      items.forEach(it => {
+        html += '<div class="week-devoir-card ' + it.type + '" onclick="openDevoirDetail(\'' + key + '\')">';
+        html += '<div class="week-devoir-type">' + typeLabel(it.type) + '</div>';
+        html += '<div class="week-devoir-title">' + escapeHtml(it.titre) + '</div>';
+        html += '</div>';
+      });
+    } else {
+      html += '<div class="week-empty">—</div>';
+    }
+    html += '</div></div>';
+  });
+  html += '</div>';
+  document.getElementById('calendarContainer').innerHTML = html;
+}
+
+function openDevoirDetail(key) {
+  const items = devoirsOnDate(key);
+  if (!items.length) return;
+  const d = parseKey(key);
+  document.getElementById('devoirModalTitle').textContent = d.toLocaleDateString('fr-FR', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+
+  let html = '';
+  items.forEach(it => {
+    html += '<div class="devoir-detail-card ' + it.type + '">';
+    html += '<div class="devoir-detail-type">' + typeLabel(it.type) + '</div>';
+    html += '<div class="devoir-detail-title">' + escapeHtml(it.titre) + '</div>';
+    if (it.description) html += '<div class="devoir-detail-desc">' + escapeHtml(it.description) + '</div>';
+    if (it.lien) {
+      if (it.lien.toLowerCase().endsWith('.pdf')) {
+        html += '<a class="devoir-detail-link" href="' + it.lien + '" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Voir le sujet</a>';
+      } else {
+        html += '<a class="devoir-detail-link" href="' + it.lien + '" target="_blank" rel="noopener"><i class="fa fa-external-link"></i> Lien</a>';
+      }
+    }
+    html += '</div>';
+  });
+  document.getElementById('devoirModalBody').innerHTML = html;
+  document.getElementById('devoirModalOverlay').classList.add('open');
+}
+function closeDevoirModal(event) {
+  if (event) event.stopPropagation();
+  document.getElementById('devoirModalOverlay').classList.remove('open');
+}
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape') { closeDevoirModal(); closePdfModal(); }
+});
+
+renderCalendar();
+</script>
+</body>
+</html>
