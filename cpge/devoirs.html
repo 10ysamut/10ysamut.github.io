@@ -93,11 +93,30 @@ p { color:#444; line-height:1.8; margin-bottom:16px; }
   #pdfModalOpenNewTab .label-full { display:none; }
   #pdfModalClose { padding:10px 18px; font-size:1em; }
 }
+
+#pwGateOverlay { position:fixed; inset:0; background:#f4f4f4; z-index:100000; display:flex; align-items:center; justify-content:center; padding:16px; }
+#pwGateBox { background:#fff; padding:40px 36px; border-radius:8px; box-shadow:0 4px 24px rgba(0,0,0,0.15); max-width:320px; width:100%; text-align:center; box-sizing:border-box; }
+#pwGateBox .lock-icon { font-size:2em; color:#999; margin-bottom:12px; }
+#pwGateBox h3 { margin:0 0 18px 0; font-size:1.1em; color:#111; font-weight:normal; }
+#pwGateInput { width:100%; box-sizing:border-box; padding:10px 12px; border:1px solid #ccc; border-radius:4px; font-size:1em; margin-bottom:12px; font-family:inherit; }
+#pwGateSubmit { width:100%; padding:10px; border:none; background:#111; color:#fff; border-radius:4px; font-size:1em; cursor:pointer; font-family:inherit; }
+#pwGateSubmit:hover { background:#333; }
+#pwGateError { color:#c0392b; font-size:0.85em; margin:10px 0 0; display:none; }
 </style>
 </head>
 <body>
 
-<div id="sidebar-container"></div>
+<div id="pwGateOverlay">
+  <div id="pwGateBox">
+    <div class="lock-icon"><i class="fa fa-lock"></i></div>
+    <h3>Page protégée par mot de passe</h3>
+    <input type="password" id="pwGateInput" placeholder="Mot de passe" autocomplete="off">
+    <button id="pwGateSubmit" type="button">Valider</button>
+    <p id="pwGateError">Mot de passe incorrect</p>
+  </div>
+</div>
+
+<div id="sidebar-container" style="display:none;"></div>
 
 <div id="pdfModalOverlay" onclick="closePdfModal(event)">
   <div id="pdfModalBox" onclick="event.stopPropagation()">
@@ -109,7 +128,7 @@ p { color:#444; line-height:1.8; margin-bottom:16px; }
   </div>
 </div>
 
-<div class="w3-padding-large" id="main">
+<div class="w3-padding-large" id="main" style="display:none;">
   <div class="content-section" id="cours">
     <p class="breadcrumb">Classe préparatoire</p>
     <h2>Les devoirs en PTSI</h2>
@@ -231,63 +250,58 @@ p { color:#444; line-height:1.8; margin-bottom:16px; }
     </div>  </div>
 </div>
 
-<style>
-#password-overlay {
-  position:fixed; top:0; left:260px; right:0; bottom:0; background:#f4f4f4;
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  z-index:3;
-}
-@media only screen and (max-width:992px) {
-  #password-overlay { left:0; top:50px; z-index:1; }
-}
-#password-overlay h2 { color:#111; margin-bottom:0.5em; }
-#password-overlay p { color:#666; margin-bottom:1.5em; font-size:0.95em; }
-#password-overlay input {
-  padding:0.6em 1em; font-size:1em; border:1px solid #ccc;
-  border-radius:6px; margin-bottom:0.8em; width:min(220px, 80vw); text-align:center;
-  font-family:"Computer Modern Bright", sans-serif;
-}
-#password-overlay button {
-  padding:0.6em 1.6em; background:#111; color:#fff;
-  border:none; border-radius:6px; font-size:1em; cursor:pointer;
-}
-#password-error { color:red; font-size:0.9em; margin-top:0.6em; display:none; }
-</style>
-
-<div id="password-overlay">
-  <h2>Accès protégé</h2>
-  <p>Entrez le mot de passe pour accéder aux devoirs.</p>
-  <input type="password" id="password-input" placeholder="Mot de passe"
-    onkeydown="if(event.key==='Enter') checkPassword()">
-  <button onclick="checkPassword()">Entrer</button>
-  <div id="password-error">Mot de passe incorrect.</div>
-</div>
-
 <script>
-function checkPassword() {
-  var input = document.getElementById('password-input').value;
-  var hash = 0;
-  for (var i = 0; i < input.length; i++) {
-    hash = (Math.imul(31, hash) + input.charCodeAt(i)) | 0;
+(function() {
+  var CORRECT_HASH = "19d2576a4242b63dd076c4cc4dd701080fc8ec1660bb4e573ad4aee438eb4dbe";
+  var STORAGE_KEY = "pwGateOK_devoirs_ptsi";
+
+  async function sha256Hex(str) {
+    var enc = new TextEncoder().encode(str);
+    var buf = await crypto.subtle.digest('SHA-256', enc);
+    return Array.from(new Uint8Array(buf)).map(function(b){ return b.toString(16).padStart(2, '0'); }).join('');
   }
-  if (hash === -1401434984) {
-    document.getElementById('password-overlay').style.display = 'none';
-    sessionStorage.setItem('auth', '1');
+
+  function unlockPage() {
+    document.getElementById('pwGateOverlay').style.display = 'none';
+    document.getElementById('main').style.display = '';
+    document.getElementById('sidebar-container').style.display = '';
+    loadSidebar();
+  }
+
+  function loadSidebar() {
+    fetch('/sidebar.html')
+      .then(function(res) { return res.text(); })
+      .then(function(html) { document.getElementById('sidebar-container').innerHTML = html; })
+      .catch(function(err) { console.error('Erreur chargement sidebar :', err); });
+  }
+
+  async function tryUnlock() {
+    var input = document.getElementById('pwGateInput');
+    var errorEl = document.getElementById('pwGateError');
+    var hash = await sha256Hex(input.value);
+    if (hash === CORRECT_HASH) {
+      try { sessionStorage.setItem(STORAGE_KEY, '1'); } catch (e) {}
+      unlockPage();
+    } else {
+      errorEl.style.display = 'block';
+      input.value = '';
+      input.focus();
+    }
+  }
+
+  var alreadyUnlocked = false;
+  try { alreadyUnlocked = sessionStorage.getItem(STORAGE_KEY) === '1'; } catch (e) {}
+
+  if (alreadyUnlocked) {
+    unlockPage();
   } else {
-    document.getElementById('password-error').style.display = 'block';
-    document.getElementById('password-input').value = '';
+    document.getElementById('pwGateSubmit').addEventListener('click', tryUnlock);
+    document.getElementById('pwGateInput').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') tryUnlock();
+    });
+    document.getElementById('pwGateInput').focus();
   }
-}
-if (sessionStorage.getItem('auth') === '1') {
-  document.getElementById('password-overlay').style.display = 'none';
-}
-</script>
-
-<script>
-fetch('/sidebar.html')
-  .then(res => res.text())
-  .then(html => { document.getElementById('sidebar-container').innerHTML = html; })
-  .catch(err => console.error('Erreur chargement sidebar :', err));
+})();
 
 function w3_open() { document.getElementById("mySidebar").style.display="block"; document.getElementById("sidebarOverlay").style.display="block"; }
 function w3_close() { document.getElementById("mySidebar").style.display="none"; document.getElementById("sidebarOverlay").style.display="none"; }
