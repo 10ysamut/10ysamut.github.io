@@ -1,413 +1,209 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-450HGK36PQ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-450HGK36PQ');
-</script>
-<title>Youri Samut - Mathématiques</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" type="image/png" href="/deco/favicon.png">
-<link rel="stylesheet" href="../css/w3.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/fonts.css">
-<link rel="stylesheet" href="../font-awesome/css/font-awesome.min.css">
-<style>
-body, h1,h2,h3,h4,h5,h6 { font-family: "Computer Modern Bright", sans-serif; }
-body { background-color: #f4f4f4; }
-
-.w3-sidebar { width:200px; background:#ffffff; border-right:none; box-shadow:3px 0 8px rgba(0,0,0,0.15); z-index:4; }
-#decorative-band { position:fixed; top:0; left:200px; width:60px; height:100%; z-index:2; overflow:hidden; box-shadow:3px 0 8px rgba(0,0,0,0.15); }
-#decorative-band img { width:100%; height:100%; object-fit:cover; object-position:center; display:block; }
-#main { margin-left:260px; background-color:#f4f4f4; min-height:100vh; }
-
-@media only screen and (max-width:992px) {
-  #main { margin-left:0; }
-  #decorative-band { display:none; }
-  #mySidebar { padding-top:70px; }
-}
-
-@media (max-width:992px) {
-  html, body { overflow-x:hidden !important; max-width:100vw !important; }
-  .content-section { padding-top:70px; }
-  #tab-td, #tab-chapitres { max-width:100% !important; margin:0 !important; }
-  .accord-body { width:100% !important; overflow:hidden !important; }
-  .accord-body iframe { display:block !important; width:100% !important; max-width:100% !important; height:calc(100vw * 1.414) !important; }
-  .content-section { margin:0 !important; padding:16px 8px !important; padding-top:70px !important; }
-}
-
-.w3-sidebar a.w3-bar-item { color:#333; font-size:14px; padding:12px 16px; display:block; text-decoration:none; border-left:3px solid transparent; transition:all 0.2s; }
-.w3-sidebar a.w3-bar-item:hover { background-color:#f0f0f0; color:#000; border-left:3px solid #555; }
-.sidebar-title { padding:32px 16px 24px; text-align:center; border-bottom:1px solid #eee; color:#111; }
-.dropdown-btn { cursor:pointer; display:flex; justify-content:space-between; align-items:center; width:100%; background:none; border:none; font-family:"Montserrat",sans-serif; font-size:14px; font-weight:bold; color:#333; padding:12px 16px; border-left:3px solid transparent; transition:all 0.2s; text-align:left; box-sizing:border-box; }
-.dropdown-btn:hover { background-color:#f0f0f0; color:#000; border-left:3px solid #555; }
-.dropdown-btn .fa { font-size:11px; transition:transform 0.2s; }
-.dropdown-btn.open .fa { transform:rotate(180deg); }
-.dropdown-container { display:none; background-color:#fafafa; border-left:none; }
-.dropdown-container a { padding:10px 16px 10px 28px !important; font-size:13px !important; font-weight:normal !important; color:#555 !important; border-left:3px solid transparent !important; }
-.dropdown-container a:hover { color:#111 !important; background-color:#efefef !important; border-left:3px solid #999 !important; }
-.w3-sidebar .nav-link { font-weight:bold; }
-header { background-color:#ffffff; border-bottom:1px solid #ddd; }
-.content-section { margin:24px; padding:32px; }
-hr.section-rule { border:none; border-top:1px solid #ddd; width:200px; margin:16px auto 24px 0; }
-.breadcrumb { font-size:0.8em; color:#999; text-transform:uppercase; letter-spacing:0.09em; margin-bottom:6px; }
-h2 { font-size:1.55em; font-weight:normal; color:#111; margin:0 0 6px 0; letter-spacing:0.02em; line-height:1.3; }
-p { color:#444; line-height:1.8; margin-bottom:16px; }
-#myNavbar { background:#ffffff !important; border-bottom:1px solid #ddd; }
-#myNavbar a { color:#333 !important; }
-#myNavbar a:hover { background-color:#f0f0f0 !important; }
-
-.accord-item { border:0.5px solid #ddd; margin-bottom:4px; border-radius:4px; overflow:hidden; }
-.accord-header { padding:0.8em 1em; cursor:pointer; font-size:1em; display:flex; align-items:center; gap:0.6em; background:#ececec; transition:background 0.15s; }
-.accord-header:hover { background:#e2e2e2; }
-.accord-body { display:none; padding:0; }
-
-.chapgrid { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:20px; margin:2em 0; }
-.chapcard { background:#fff; border:1px solid #e2e2e2; border-radius:14px; padding:26px 28px; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
-.chapcard .tag { font-size:0.72em; font-weight:800; letter-spacing:0.09em; color:#999; text-transform:uppercase; margin-bottom:8px; }
-.chapcard h3 { font-size:1.22em; font-weight:800; text-transform:uppercase; letter-spacing:0.01em; margin:0 0 22px 0; line-height:1.3; color:#111; }
-.chapcard .pills { display:flex; flex-wrap:wrap; gap:10px; }
-.chapcard .pill { display:inline-flex; align-items:center; gap:0.5em; border:1.5px solid #ccc; border-radius:999px; padding:9px 18px; font-size:0.83em; font-weight:700; color:#333; text-decoration:none; transition:all 0.15s; background:#fff; }
-.chapcard .pill:hover { background:#111; color:#fff; border-color:#111; }
-.chapcard .pill.disabled { color:#bbb; border-style:dashed; border-color:#ddd; cursor:default; }
-@media (max-width:700px) { .chapgrid { grid-template-columns:1fr; } }
-
-#pdfModalOverlay { display:none; position:fixed; top:0; left:260px; right:0; bottom:0; background:rgba(0,0,0,0.55); z-index:9999; }
-#pdfModalOverlay.open { display:block; }
-#pdfModalBox { position:absolute; top:24px; left:24px; right:24px; bottom:24px; background:#fff; border-radius:8px; overflow:hidden; box-shadow:0 10px 40px rgba(0,0,0,0.3); display:flex; flex-direction:column; }
-#pdfModalHeader { display:flex; justify-content:space-between; align-items:center; gap:10px; padding:10px 14px; background:#484c53; border-bottom:1px solid rgba(255,255,255,0.08); flex-shrink:0; }
-#pdfModalOpenNewTab { display:inline-flex; align-items:center; gap:6px; font-size:0.85em; font-weight:600; color:#e6e7e9; text-decoration:none; white-space:nowrap; }
-#pdfModalOpenNewTab:hover { color:#ffffff; }
-#pdfModalClose { cursor:pointer; border:none; background:#111; color:#fff; border-radius:6px; padding:8px 18px; font-size:0.9em; font-weight:600; display:inline-flex; align-items:center; gap:6px; white-space:nowrap; }
-#pdfModalClose:hover { background:#333; }
-#pdfModalFrame { flex:1; width:100%; border:none; }
-@media (max-width:992px) {
-  #pdfModalOverlay { left:0; }
-  #pdfModalBox { top:0; left:0; right:0; bottom:0; border-radius:0; height:100dvh; }
-  #pdfModalHeader { position:sticky; top:0; z-index:2; padding:12px 14px; padding-top:calc(12px + env(safe-area-inset-top)); box-shadow:0 1px 4px rgba(0,0,0,0.08); }
-  #pdfModalOpenNewTab .label-full { display:none; }
-  #pdfModalClose { padding:10px 18px; font-size:1em; }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mathématiques - PTSI - Youri Samut</title>
+  <link rel="icon" type="image/png" href="../deco/favicon.png">
+  <link rel="stylesheet" href="../assets/site.css?v=6">
+  <script>
+    (function () {
+      var t = null; try { t = localStorage.getItem("theme"); } catch (e) {}
+      if (t === "dark" || (!t && window.matchMedia("(prefers-color-scheme: dark)").matches))
+        document.documentElement.setAttribute("data-theme", "dark");
+    })();
+  </script>
 </head>
-<body>
+<body data-section="cpge" data-page="cpge/mathematiques.html">
 
-<div id="sidebar-container"></div>
-
-<div id="pdfModalOverlay" onclick="closePdfModal(event)">
-  <div id="pdfModalBox" onclick="event.stopPropagation()">
-    <div id="pdfModalHeader">
-      <a id="pdfModalOpenNewTab" href="#" target="_blank" rel="noopener"><i class="fa fa-external-link"></i> <span class="label-full">Ouvrir dans un nouvel onglet</span></a>
-      <button id="pdfModalClose" onclick="closePdfModal()"><i class="fa fa-times"></i> Fermer</button>
-    </div>
-    <iframe id="pdfModalFrame" src="" title="Aper&ccedil;u PDF"></iframe>
-  </div>
-</div>
-
-<div class="w3-padding-large" id="main">
-  <div class="content-section" id="cours">
-    <p class="breadcrumb">Classe préparatoire</p>
-    <h2>Cours de mathématiques en PTSI</h2>
-    <hr class="section-rule">
+<main class="content">
+  <p class="eyebrow">Classe préparatoire</p>
+  <h1>Cours de mathématiques en PTSI</h1>
+  <div class="intro">
     <p>Ces notes de cours ne sont qu'un support utilisé en classe : certaines démonstrations sont absentes et les exemples parfois peu détaillés.</p>
     <p>Elles ne sauraient se substituer à une présence assidue en cours, où j'apporte les détails et éclaircissements qui complètent ce support volontairement succinct.</p>
     <p>Il est probable que quelques coquilles se soient glissées dans les polycopiés. J'essaie de les corriger au fil des années.</p>
-    <p>Le <a href="../docs/chapitrescpge/book.pdf" style="color:#222;">polycopié de cours</a> dans son intégralité.</p>
-
-
-    <div class="chapgrid">
-      <div class="chapcard">
-        <div class="tag">CHAPITRE 0</div>
-        <h3>Mathématiques pour la physique et l'ingénieur</h3>
-        <div class="pills">
-                    <a class="pill" href="../docs/chapitrescpge/CH0.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
-        </div>
-      </div>
-      <div class="chapcard">
-        <div class="tag">CHAPITRE 1</div>
-        <h3>Logique et raisonnement</h3>
-        <div class="pills">
-                    <a class="pill" href="../docs/chapitrescpge/CH1.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../docs/tdcpge/TD1CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 1</a>
-          <a class="pill" href="../docs/tdcpgecorrection/TD1CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 1 corrigé</a>
-        </div>
-      </div>
-      <div class="chapcard">
-        <div class="tag">CHAPITRE 2</div>
-        <h3>Fonctions numériques de la variable réelle</h3>
-        <div class="pills">
-                    <a class="pill" href="../docs/chapitrescpge/CH2.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../docs/tdcpge/TD2CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 2</a>
-          <a class="pill" href="../docs/tdcpge/TD3CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 3</a>
-          <a class="pill" href="../docs/tdcpgecorrection/TD2CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 2 corrigé</a>
-          <a class="pill" href="../docs/tdcpgecorrection/TD3CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 3 corrigé</a>
-        </div>
-      </div>
-      <div class="chapcard">
-        <div class="tag">CHAPITRE 3</div>
-        <h3>Ensembles et applications</h3>
-        <div class="pills">
-                    <a class="pill" href="../docs/chapitrescpge/CH3.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../docs/tdcpge/TD4CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 4</a>
-          <a class="pill" href="../docs/tdcpgecorrection/TD4CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 4 corrigé</a>
-        </div>
-      </div>
-      <div class="chapcard">
-        <div class="tag">CHAPITRE 4</div>
-        <h3>Calculs algébriques</h3>
-        <div class="pills">
-                    <a class="pill" href="../docs/chapitrescpge/CH4.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../docs/tdcpge/TD5CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 5</a>
-          <a class="pill" href="../docs/tdcpgecorrection/TD5CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 5 corrigé</a>
-        </div>
-      </div>
-      <div class="chapcard">
-        <div class="tag">CHAPITRE 5</div>
-        <h3>Trigonométrie</h3>
-        <div class="pills">
-                    <a class="pill" href="../docs/chapitrescpge/CH5.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../docs/tdcpge/TD6CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 6</a>
-          <a class="pill" href="../docs/tdcpgecorrection/TD6CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 6 corrigé</a>
-        </div>
-      </div>
-      <div class="chapcard">
-        <div class="tag">CHAPITRE 6</div>
-        <h3>Fonctions usuelles</h3>
-        <div class="pills">
-                    <a class="pill" href="../docs/chapitrescpge/CH6.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../docs/tdcpge/TD7CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 7</a>
-          <a class="pill" href="../docs/tdcpgecorrection/TD7CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 7 corrigé</a>
-        </div>
-      </div>
-      <div class="chapcard">
-        <div class="tag">CHAPITRE 7</div>
-        <h3>Nombres complexes</h3>
-        <div class="pills">
-                    <a class="pill" href="../docs/chapitrescpge/CH7.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../docs/tdcpge/TD8CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 8</a>
-          <a class="pill" href="../docs/tdcpgecorrection/TD8CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 8 corrigé</a>
-        </div>
-      </div>
-      <div class="chapcard">
-        <div class="tag">CHAPITRE 8</div>
-        <h3>Primitives et équations différentielles</h3>
-        <div class="pills">
-                    <a class="pill" href="../docs/chapitrescpge/CH8.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../docs/tdcpge/TD9CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 9</a>
-          <a class="pill" href="../docs/tdcpge/TD10CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 10</a>
-          <a class="pill" href="../docs/tdcpgecorrection/TD9CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 9 corrigé</a>
-          <a class="pill" href="../docs/tdcpgecorrection/TD10CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 10 corrigé</a>
-        </div>
-      </div>
-      <div class="chapcard">
-        <div class="tag">CHAPITRE 9</div>
-        <h3>Suites et nombres réels</h3>
-        <div class="pills">
-                    <a class="pill" href="../docs/chapitrescpge/CH9.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../docs/tdcpge/TD11CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 11</a>
-          <a class="pill" href="../docs/tdcpgecorrection/TD11CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 11 corrigé</a>
-        </div>
-      </div>
-      <div class="chapcard">
-        <div class="tag">CHAPITRE 10</div>
-        <h3>Continuité</h3>
-        <div class="pills">
-                    <a class="pill" href="../docs/chapitrescpge/CH10.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../docs/tdcpge/TD12CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 12</a>
-          <a class="pill" href="../docs/tdcpgecorrection/TD12CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 12 corrigé</a>
-        </div>
-      </div>
-      <div class="chapcard">
-        <div class="tag">CHAPITRE 11</div>
-        <h3>Matrices et systèmes linéaires</h3>
-        <div class="pills">
-                    <a class="pill" href="../docs/chapitrescpge/CH11.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../docs/tdcpge/TD13CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 13</a>
-          <a class="pill" href="../docs/tdcpgecorrection/TD13CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 13 corrigé</a>
-        </div>
-      </div>
-      <div class="chapcard">
-        <div class="tag">CHAPITRE 12</div>
-        <h3>Dérivabilité</h3>
-        <div class="pills">
-                    <a class="pill" href="../docs/chapitrescpge/CH12.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../docs/tdcpge/TD14CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 14</a>
-          <a class="pill" href="../docs/tdcpgecorrection/TD14CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 14 corrigé</a>
-        </div>
-      </div>
-      <div class="chapcard">
-        <div class="tag">CHAPITRE 13</div>
-        <h3>Arithmétique</h3>
-        <div class="pills">
-                    <a class="pill" href="../docs/chapitrescpge/CH13.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../docs/tdcpge/TD15CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 15</a>
-          <a class="pill" href="../docs/tdcpgecorrection/TD15CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 15 corrigé</a>
-        </div>
-      </div>
-      <div class="chapcard">
-        <div class="tag">CHAPITRE 14</div>
-        <h3>Géométrie du plan</h3>
-        <div class="pills">
-                    <a class="pill" href="../docs/chapitrescpge/CH14.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../docs/tdcpge/TD16CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 16</a>
-          <a class="pill" href="../docs/tdcpgecorrection/TD16CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 16 corrigé</a>
-        </div>
-      </div>
-      <div class="chapcard">
-        <div class="tag">CHAPITRE 15</div>
-        <h3>Polynômes</h3>
-        <div class="pills">
-                    <a class="pill" href="../docs/chapitrescpge/CH15.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../docs/tdcpge/TD17CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 17</a>
-          <a class="pill" href="../docs/tdcpgecorrection/TD17CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 17 corrigé</a>
-        </div>
-      </div>
-      <div class="chapcard">
-        <div class="tag">CHAPITRE 16</div>
-        <h3>Espaces vectoriels</h3>
-        <div class="pills">
-                    <a class="pill" href="../docs/chapitrescpge/CH16.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../docs/tdcpge/TD18CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 18</a>
-          <a class="pill" href="../docs/tdcpgecorrection/TD18CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 18 corrigé</a>
-        </div>
-      </div>
-      <div class="chapcard">
-        <div class="tag">CHAPITRE 17</div>
-        <h3>Analyse asymptotique</h3>
-        <div class="pills">
-                    <a class="pill" href="../docs/chapitrescpge/CH17.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../docs/tdcpge/TD19CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 19</a>
-          <a class="pill" href="../docs/tdcpgecorrection/TD19CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 19 corrigé</a>
-        </div>
-      </div>
-      <div class="chapcard">
-        <div class="tag">CHAPITRE 18</div>
-        <h3>Applications linéaires</h3>
-        <div class="pills">
-                    <a class="pill" href="../docs/chapitrescpge/CH18.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../docs/tdcpge/TD20CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 20</a>
-          <a class="pill" href="../docs/tdcpgecorrection/TD20CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 20 corrigé</a>
-        </div>
-      </div>
-      <div class="chapcard">
-        <div class="tag">CHAPITRE 19</div>
-        <h3>Intégration</h3>
-        <div class="pills">
-                    <a class="pill" href="../docs/chapitrescpge/CH19.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../docs/tdcpge/TD21CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 21</a>
-          <a class="pill" href="../docs/tdcpgecorrection/TD21CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 21 corrigé</a>
-        </div>
-      </div>
-      <div class="chapcard">
-        <div class="tag">CHAPITRE 20</div>
-        <h3>Séries numériques</h3>
-        <div class="pills">
-                    <a class="pill" href="../docs/chapitrescpge/CH20.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../docs/tdcpge/TD22CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 22</a>
-          <a class="pill" href="../docs/tdcpgecorrection/TD22CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 22 corrigé</a>
-        </div>
-      </div>
-      <div class="chapcard">
-        <div class="tag">CHAPITRE 21</div>
-        <h3>Dénombrement</h3>
-        <div class="pills">
-                    <a class="pill" href="../docs/chapitrescpge/CH21.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../docs/tdcpge/TD23CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 23</a>
-          <a class="pill" href="../docs/tdcpgecorrection/TD23CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 23 corrigé</a>
-        </div>
-      </div>
-      <div class="chapcard">
-        <div class="tag">CHAPITRE 22</div>
-        <h3>Géométrie dans l'espace</h3>
-        <div class="pills">
-                    <a class="pill" href="../docs/chapitrescpge/CH22.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../docs/tdcpge/TD24CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 24</a>
-          <a class="pill" href="../docs/tdcpgecorrection/TD24CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 24 corrigé</a>
-        </div>
-      </div>
-      <div class="chapcard">
-        <div class="tag">CHAPITRE 23</div>
-        <h3>Probabilités</h3>
-        <div class="pills">
-                    <a class="pill" href="../docs/chapitrescpge/CH23.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../docs/tdcpge/TD25CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 25</a>
-          <a class="pill" href="../docs/tdcpgecorrection/TD25CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 25 corrigé</a>
-        </div>
-      </div>
-       <div class="chapcard">
-        <div class="tag">CHAPITRE 24</div>
-        <h3>Variables aléatoires</h3>
-        <div class="pills">
-                    <a class="pill" href="../docs/chapitrescpge/CH24.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../docs/tdcpge/TD26CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 26</a>
-          <a class="pill" href="../docs/tdcpgecorrection/TD26CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 26 corrigé</a>
-        </div>
-      </div>
-      <div class="chapcard">
-        <div class="tag">CHAPITRE 25</div>
-        <h3>Déterminant</h3>
-        <div class="pills">
-                    <a class="pill" href="../docs/chapitrescpge/CH24.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> Cours</a>
-          <a class="pill" href="../docs/tdcpge/TD27CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-file-pdf-o"></i> TD 27</a>
-          <a class="pill" href="../docs/tdcpgecorrection/TD27CPGE.pdf" onclick="return openPdf(event, this.href)"><i class="fa fa-check-circle-o"></i> TD 27 corrigé</a>
-        </div>
-      </div>
-    </div>
+    <p>Le <a href="../docs/chapitrescpge/book.pdf">polycopié de cours</a> dans son intégralité.</p>
   </div>
-</div>
+  <ul class="list">
+      <li class="row">
+        <div class="row-main">
+          <span class="row-kicker">Chapitre 0</span>
+          <span class="row-title">Mathématiques pour la physique et l&#x27;ingénieur</span>
+        </div>
+        <div class="row-links"><a class="doc" href="../docs/chapitrescpge/CH0.pdf">Cours</a></div>
+      </li>
+      <li class="row">
+        <div class="row-main">
+          <span class="row-kicker">Chapitre 1</span>
+          <span class="row-title">Logique et raisonnement</span>
+        </div>
+        <div class="row-links"><a class="doc" href="../docs/chapitrescpge/CH1.pdf">Cours</a> <span class="doc-pair"><a class="doc" href="../docs/tdcpge/TD1CPGE.pdf">TD 1</a><a class="doc corr" href="../docs/tdcpgecorrection/TD1CPGE.pdf" title="Corrigé">corrigé</a></span></div>
+      </li>
+      <li class="row">
+        <div class="row-main">
+          <span class="row-kicker">Chapitre 2</span>
+          <span class="row-title">Fonctions numériques de la variable réelle</span>
+        </div>
+        <div class="row-links"><a class="doc" href="../docs/chapitrescpge/CH2.pdf">Cours</a> <span class="doc-pair"><a class="doc" href="../docs/tdcpge/TD2CPGE.pdf">TD 2</a><a class="doc corr" href="../docs/tdcpgecorrection/TD2CPGE.pdf" title="Corrigé">corrigé</a></span> <span class="doc-pair"><a class="doc" href="../docs/tdcpge/TD3CPGE.pdf">TD 3</a><a class="doc corr" href="../docs/tdcpgecorrection/TD3CPGE.pdf" title="Corrigé">corrigé</a></span></div>
+      </li>
+      <li class="row">
+        <div class="row-main">
+          <span class="row-kicker">Chapitre 3</span>
+          <span class="row-title">Ensembles et applications</span>
+        </div>
+        <div class="row-links"><a class="doc" href="../docs/chapitrescpge/CH3.pdf">Cours</a> <span class="doc-pair"><a class="doc" href="../docs/tdcpge/TD4CPGE.pdf">TD 4</a><a class="doc corr" href="../docs/tdcpgecorrection/TD4CPGE.pdf" title="Corrigé">corrigé</a></span></div>
+      </li>
+      <li class="row">
+        <div class="row-main">
+          <span class="row-kicker">Chapitre 4</span>
+          <span class="row-title">Calculs algébriques</span>
+        </div>
+        <div class="row-links"><a class="doc" href="../docs/chapitrescpge/CH4.pdf">Cours</a> <span class="doc-pair"><a class="doc" href="../docs/tdcpge/TD5CPGE.pdf">TD 5</a><a class="doc corr" href="../docs/tdcpgecorrection/TD5CPGE.pdf" title="Corrigé">corrigé</a></span></div>
+      </li>
+      <li class="row">
+        <div class="row-main">
+          <span class="row-kicker">Chapitre 5</span>
+          <span class="row-title">Trigonométrie</span>
+        </div>
+        <div class="row-links"><a class="doc" href="../docs/chapitrescpge/CH5.pdf">Cours</a> <span class="doc-pair"><a class="doc" href="../docs/tdcpge/TD6CPGE.pdf">TD 6</a><a class="doc corr" href="../docs/tdcpgecorrection/TD6CPGE.pdf" title="Corrigé">corrigé</a></span></div>
+      </li>
+      <li class="row">
+        <div class="row-main">
+          <span class="row-kicker">Chapitre 6</span>
+          <span class="row-title">Fonctions usuelles</span>
+        </div>
+        <div class="row-links"><a class="doc" href="../docs/chapitrescpge/CH6.pdf">Cours</a> <span class="doc-pair"><a class="doc" href="../docs/tdcpge/TD7CPGE.pdf">TD 7</a><a class="doc corr" href="../docs/tdcpgecorrection/TD7CPGE.pdf" title="Corrigé">corrigé</a></span></div>
+      </li>
+      <li class="row">
+        <div class="row-main">
+          <span class="row-kicker">Chapitre 7</span>
+          <span class="row-title">Nombres complexes</span>
+        </div>
+        <div class="row-links"><a class="doc" href="../docs/chapitrescpge/CH7.pdf">Cours</a> <span class="doc-pair"><a class="doc" href="../docs/tdcpge/TD8CPGE.pdf">TD 8</a><a class="doc corr" href="../docs/tdcpgecorrection/TD8CPGE.pdf" title="Corrigé">corrigé</a></span></div>
+      </li>
+      <li class="row">
+        <div class="row-main">
+          <span class="row-kicker">Chapitre 8</span>
+          <span class="row-title">Primitives et équations différentielles</span>
+        </div>
+        <div class="row-links"><a class="doc" href="../docs/chapitrescpge/CH8.pdf">Cours</a> <span class="doc-pair"><a class="doc" href="../docs/tdcpge/TD9CPGE.pdf">TD 9</a><a class="doc corr" href="../docs/tdcpgecorrection/TD9CPGE.pdf" title="Corrigé">corrigé</a></span> <span class="doc-pair"><a class="doc" href="../docs/tdcpge/TD10CPGE.pdf">TD 10</a><a class="doc corr" href="../docs/tdcpgecorrection/TD10CPGE.pdf" title="Corrigé">corrigé</a></span></div>
+      </li>
+      <li class="row">
+        <div class="row-main">
+          <span class="row-kicker">Chapitre 9</span>
+          <span class="row-title">Suites et nombres réels</span>
+        </div>
+        <div class="row-links"><a class="doc" href="../docs/chapitrescpge/CH9.pdf">Cours</a> <span class="doc-pair"><a class="doc" href="../docs/tdcpge/TD11CPGE.pdf">TD 11</a><a class="doc corr" href="../docs/tdcpgecorrection/TD11CPGE.pdf" title="Corrigé">corrigé</a></span></div>
+      </li>
+      <li class="row">
+        <div class="row-main">
+          <span class="row-kicker">Chapitre 10</span>
+          <span class="row-title">Continuité</span>
+        </div>
+        <div class="row-links"><a class="doc" href="../docs/chapitrescpge/CH10.pdf">Cours</a> <span class="doc-pair"><a class="doc" href="../docs/tdcpge/TD12CPGE.pdf">TD 12</a><a class="doc corr" href="../docs/tdcpgecorrection/TD12CPGE.pdf" title="Corrigé">corrigé</a></span></div>
+      </li>
+      <li class="row">
+        <div class="row-main">
+          <span class="row-kicker">Chapitre 11</span>
+          <span class="row-title">Matrices et systèmes linéaires</span>
+        </div>
+        <div class="row-links"><a class="doc" href="../docs/chapitrescpge/CH11.pdf">Cours</a> <span class="doc-pair"><a class="doc" href="../docs/tdcpge/TD13CPGE.pdf">TD 13</a><a class="doc corr" href="../docs/tdcpgecorrection/TD13CPGE.pdf" title="Corrigé">corrigé</a></span></div>
+      </li>
+      <li class="row">
+        <div class="row-main">
+          <span class="row-kicker">Chapitre 12</span>
+          <span class="row-title">Dérivabilité</span>
+        </div>
+        <div class="row-links"><a class="doc" href="../docs/chapitrescpge/CH12.pdf">Cours</a> <span class="doc-pair"><a class="doc" href="../docs/tdcpge/TD14CPGE.pdf">TD 14</a><a class="doc corr" href="../docs/tdcpgecorrection/TD14CPGE.pdf" title="Corrigé">corrigé</a></span></div>
+      </li>
+      <li class="row">
+        <div class="row-main">
+          <span class="row-kicker">Chapitre 13</span>
+          <span class="row-title">Arithmétique</span>
+        </div>
+        <div class="row-links"><a class="doc" href="../docs/chapitrescpge/CH13.pdf">Cours</a> <span class="doc-pair"><a class="doc" href="../docs/tdcpge/TD15CPGE.pdf">TD 15</a><a class="doc corr" href="../docs/tdcpgecorrection/TD15CPGE.pdf" title="Corrigé">corrigé</a></span></div>
+      </li>
+      <li class="row">
+        <div class="row-main">
+          <span class="row-kicker">Chapitre 14</span>
+          <span class="row-title">Géométrie du plan</span>
+        </div>
+        <div class="row-links"><a class="doc" href="../docs/chapitrescpge/CH14.pdf">Cours</a> <span class="doc-pair"><a class="doc" href="../docs/tdcpge/TD16CPGE.pdf">TD 16</a><a class="doc corr" href="../docs/tdcpgecorrection/TD16CPGE.pdf" title="Corrigé">corrigé</a></span></div>
+      </li>
+      <li class="row">
+        <div class="row-main">
+          <span class="row-kicker">Chapitre 15</span>
+          <span class="row-title">Polynômes</span>
+        </div>
+        <div class="row-links"><a class="doc" href="../docs/chapitrescpge/CH15.pdf">Cours</a> <span class="doc-pair"><a class="doc" href="../docs/tdcpge/TD17CPGE.pdf">TD 17</a><a class="doc corr" href="../docs/tdcpgecorrection/TD17CPGE.pdf" title="Corrigé">corrigé</a></span></div>
+      </li>
+      <li class="row">
+        <div class="row-main">
+          <span class="row-kicker">Chapitre 16</span>
+          <span class="row-title">Espaces vectoriels</span>
+        </div>
+        <div class="row-links"><a class="doc" href="../docs/chapitrescpge/CH16.pdf">Cours</a> <span class="doc-pair"><a class="doc" href="../docs/tdcpge/TD18CPGE.pdf">TD 18</a><a class="doc corr" href="../docs/tdcpgecorrection/TD18CPGE.pdf" title="Corrigé">corrigé</a></span></div>
+      </li>
+      <li class="row">
+        <div class="row-main">
+          <span class="row-kicker">Chapitre 17</span>
+          <span class="row-title">Analyse asymptotique</span>
+        </div>
+        <div class="row-links"><a class="doc" href="../docs/chapitrescpge/CH17.pdf">Cours</a> <span class="doc-pair"><a class="doc" href="../docs/tdcpge/TD19CPGE.pdf">TD 19</a><a class="doc corr" href="../docs/tdcpgecorrection/TD19CPGE.pdf" title="Corrigé">corrigé</a></span></div>
+      </li>
+      <li class="row">
+        <div class="row-main">
+          <span class="row-kicker">Chapitre 18</span>
+          <span class="row-title">Applications linéaires</span>
+        </div>
+        <div class="row-links"><a class="doc" href="../docs/chapitrescpge/CH18.pdf">Cours</a> <span class="doc-pair"><a class="doc" href="../docs/tdcpge/TD20CPGE.pdf">TD 20</a><a class="doc corr" href="../docs/tdcpgecorrection/TD20CPGE.pdf" title="Corrigé">corrigé</a></span></div>
+      </li>
+      <li class="row">
+        <div class="row-main">
+          <span class="row-kicker">Chapitre 19</span>
+          <span class="row-title">Intégration</span>
+        </div>
+        <div class="row-links"><a class="doc" href="../docs/chapitrescpge/CH19.pdf">Cours</a> <span class="doc-pair"><a class="doc" href="../docs/tdcpge/TD21CPGE.pdf">TD 21</a><a class="doc corr" href="../docs/tdcpgecorrection/TD21CPGE.pdf" title="Corrigé">corrigé</a></span></div>
+      </li>
+      <li class="row">
+        <div class="row-main">
+          <span class="row-kicker">Chapitre 20</span>
+          <span class="row-title">Séries numériques</span>
+        </div>
+        <div class="row-links"><a class="doc" href="../docs/chapitrescpge/CH20.pdf">Cours</a> <span class="doc-pair"><a class="doc" href="../docs/tdcpge/TD22CPGE.pdf">TD 22</a><a class="doc corr" href="../docs/tdcpgecorrection/TD22CPGE.pdf" title="Corrigé">corrigé</a></span></div>
+      </li>
+      <li class="row">
+        <div class="row-main">
+          <span class="row-kicker">Chapitre 21</span>
+          <span class="row-title">Dénombrement</span>
+        </div>
+        <div class="row-links"><a class="doc" href="../docs/chapitrescpge/CH21.pdf">Cours</a> <span class="doc-pair"><a class="doc" href="../docs/tdcpge/TD23CPGE.pdf">TD 23</a><a class="doc corr" href="../docs/tdcpgecorrection/TD23CPGE.pdf" title="Corrigé">corrigé</a></span></div>
+      </li>
+      <li class="row">
+        <div class="row-main">
+          <span class="row-kicker">Chapitre 22</span>
+          <span class="row-title">Géométrie dans l&#x27;espace</span>
+        </div>
+        <div class="row-links"><a class="doc" href="../docs/chapitrescpge/CH22.pdf">Cours</a> <span class="doc-pair"><a class="doc" href="../docs/tdcpge/TD24CPGE.pdf">TD 24</a><a class="doc corr" href="../docs/tdcpgecorrection/TD24CPGE.pdf" title="Corrigé">corrigé</a></span></div>
+      </li>
+      <li class="row">
+        <div class="row-main">
+          <span class="row-kicker">Chapitre 23</span>
+          <span class="row-title">Probabilités</span>
+        </div>
+        <div class="row-links"><a class="doc" href="../docs/chapitrescpge/CH23.pdf">Cours</a> <span class="doc-pair"><a class="doc" href="../docs/tdcpge/TD25CPGE.pdf">TD 25</a><a class="doc corr" href="../docs/tdcpgecorrection/TD25CPGE.pdf" title="Corrigé">corrigé</a></span></div>
+      </li>
+      <li class="row">
+        <div class="row-main">
+          <span class="row-kicker">Chapitre 24</span>
+          <span class="row-title">Variables aléatoires</span>
+        </div>
+        <div class="row-links"><a class="doc" href="../docs/chapitrescpge/CH24.pdf">Cours</a> <span class="doc-pair"><a class="doc" href="../docs/tdcpge/TD26CPGE.pdf">TD 26</a><a class="doc corr" href="../docs/tdcpgecorrection/TD26CPGE.pdf" title="Corrigé">corrigé</a></span></div>
+      </li>
+  </ul>
+</main>
 
-<script>
-fetch('/sidebar.html')
-  .then(res => res.text())
-  .then(html => { document.getElementById('sidebar-container').innerHTML = html; })
-  .catch(err => console.error('Erreur chargement sidebar :', err));
-
-function w3_open() { document.getElementById("mySidebar").style.display="block"; document.getElementById("sidebarOverlay").style.display="block"; }
-function w3_close() { document.getElementById("mySidebar").style.display="none"; document.getElementById("sidebarOverlay").style.display="none"; }
-function toggleDropdown(id, btn) {
-  var el = document.getElementById(id);
-  var isOpen = el.style.display === "block";
-  document.querySelectorAll('.dropdown-container').forEach(function(d) { d.style.display="none"; });
-  document.querySelectorAll('.dropdown-btn').forEach(function(b) { b.classList.remove('open'); });
-  if (!isOpen) { el.style.display="block"; btn.classList.add('open'); }
-}
-
-var pdfModalScrollY = 0;
-function openPdf(event, url) {
-  event.preventDefault();
-  // On affiche le PDF via la liseuse pdf.js (celle utilisee a l'origine sur le site),
-  // qui gere son propre scroll tactile, plutot que de compter sur le lecteur natif
-  // du navigateur dans une iframe (peu fiable au toucher sur mobile).
-  var viewerBase = new URL('../assets/pdfjs/web/viewer.html', window.location.href).href;
-  var viewerSrc = viewerBase + '?file=' + encodeURIComponent(url);
-  pdfModalScrollY = window.scrollY || document.documentElement.scrollTop || 0;
-  document.getElementById('pdfModalFrame').src = viewerSrc;
-  document.getElementById('pdfModalOpenNewTab').href = viewerSrc;
-  document.getElementById('pdfModalOverlay').classList.add('open');
-  document.body.style.position = 'fixed';
-  document.body.style.top = '-' + pdfModalScrollY + 'px';
-  document.body.style.left = '0';
-  document.body.style.right = '0';
-  document.body.style.overflow = 'hidden';
-  return false;
-}
-function closePdfModal(event) {
-  if (event) event.stopPropagation();
-  document.getElementById('pdfModalOverlay').classList.remove('open');
-  document.getElementById('pdfModalFrame').src = '';
-  document.body.style.position = '';
-  document.body.style.top = '';
-  document.body.style.left = '';
-  document.body.style.right = '';
-  document.body.style.overflow = '';
-  window.scrollTo(0, pdfModalScrollY);
-}
-document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closePdfModal(); });
-</script>
+<script src="../assets/site.js?v=6" data-root="../"></script>
 </body>
 </html>

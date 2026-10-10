@@ -1,105 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-450HGK36PQ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-450HGK36PQ');
-</script>
-<title>Youri Samut - Mathématiques</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" type="image/png" href="/deco/favicon.png">
-<link rel="stylesheet" href="../css/w3.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/fonts.css">
-<link rel="stylesheet" href="../font-awesome/css/font-awesome.min.css">
-<style>
-body, h1,h2,h3,h4,h5,h6 { font-family: "Computer Modern Bright", sans-serif; }
-body { background-color: #f4f4f4; }
-.w3-sidebar { width:200px; background:#ffffff; border-right:none; box-shadow:3px 0 8px rgba(0,0,0,0.15); z-index:4; }
-#decorative-band { position:fixed; top:0; left:200px; width:60px; height:100%; z-index:2; overflow:hidden; box-shadow:3px 0 8px rgba(0,0,0,0.15); }
-#decorative-band img { width:100%; height:100%; object-fit:cover; object-position:center; display:block; }
-#main { margin-left:260px; background-color:#f4f4f4; min-height:100vh; }
-@media only screen and (max-width:992px) { #main { margin-left:0; } #decorative-band { display:none; } #mySidebar { padding-top:70px; } } @media (max-width:992px) { .content-section { padding-top:70px; } }
-.w3-sidebar a.w3-bar-item { color:#333; font-size:14px; padding:12px 16px; display:block; text-decoration:none; border-left:3px solid transparent; transition:all 0.2s; }
-.w3-sidebar a.w3-bar-item:hover { background-color:#f0f0f0; color:#000; border-left:3px solid #555; }
-.sidebar-title { padding:32px 16px 24px; text-align:center; border-bottom:1px solid #eee; color:#111; }
-.dropdown-btn { cursor:pointer; display:flex; justify-content:space-between; align-items:center; width:100%; background:none; border:none; font-family:"Montserrat",sans-serif; font-size:14px; font-weight:bold; color:#333; padding:12px 16px; border-left:3px solid transparent; transition:all 0.2s; text-align:left; box-sizing:border-box; }
-.dropdown-btn:hover { background-color:#f0f0f0; color:#000; border-left:3px solid #555; }
-.dropdown-btn .fa { font-size:11px; transition:transform 0.2s; }
-.dropdown-btn.open .fa { transform:rotate(180deg); }
-.dropdown-container { display:none; background-color:#fafafa; border-left:none; }
-.dropdown-container a { padding:10px 16px 10px 28px !important; font-size:13px !important; font-weight:normal !important; color:#555 !important; border-left:3px solid transparent !important; }
-.dropdown-container a:hover { color:#111 !important; background-color:#efefef !important; border-left:3px solid #999 !important; }
-.w3-sidebar .nav-link { font-weight:bold; }
-.content-section { max-width:720px; padding:32px 24px; }
-@media only screen and (max-width:600px) { .content-section { padding:20px 12px; } .content-section { padding-top:70px; } }
-hr.section-rule { border:none; border-top:1px solid #ddd; width:200px; margin:14px 0 28px 0; }
-h1 { font-size:1.55em; font-weight:normal; color:#111; margin:0 0 6px 0; letter-spacing:0.02em; line-height:1.3; }
-p { color:#444; line-height:1.8; margin-bottom:16px; }
-ul { color:#444; line-height:1.9; padding-left:22px; margin:16px 0; }
-ul li { margin-bottom:6px; }
-.breadcrumb { font-size:0.82em; color:#999; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px; }
-.callout { background:#ffffff; border-left:3px solid #aaa; padding:20px 24px; margin:28px 0; border-radius:0 2px 2px 0; }
-.callout-title { font-size:0.82em; font-weight:bold; color:#777; text-transform:uppercase; letter-spacing:0.08em; margin:0 0 12px 0; }
-.callout ul { margin:0; padding-left:20px; }
-.reference { margin-top:40px; font-size:0.82em; color:#999; border-top:1px solid #ccc; padding-top:16px; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Soit ou soient ? - Youri Samut</title>
+  <link rel="icon" type="image/png" href="../deco/favicon.png">
+  <link rel="stylesheet" href="../assets/site.css?v=6">
+  <script>
+    (function () {
+      var t = null; try { t = localStorage.getItem("theme"); } catch (e) {}
+      if (t === "dark" || (!t && window.matchMedia("(prefers-color-scheme: dark)").matches))
+        document.documentElement.setAttribute("data-theme", "dark");
+    })();
+  </script>
 </head>
-<body>
+<body data-section="divers" data-page="divers/soit-ou-soient.html">
 
-<div id="sidebar-container"></div>
-
-<div class="w3-padding-large" id="main">
-  <div class="content-section" id="cours">
-    <p class="breadcrumb">Divers</p>
-    <h1>« Soit A et B » ou « Soient A et B » ?</h1>
-    <hr class="section-rule">
-
-    <p>En mathématiques, on rencontre souvent des formulations du type :</p>
-    <ul>
-      <li><em>Soit A et B deux objets…</em></li>
-      <li><em>Soient A et B deux objets…</em></li>
-    </ul>
-
-    <p>La question se pose : faut-il écrire <strong>soit</strong> ou <strong>soient</strong> ?</p>
-
-    <p>Le <em>Bon Usage</em> de Grevisse et Goosse (13<sup>e</sup> éd., § 901, d–e) apporte une réponse éclairante. Lorsque <em>soit</em> a le sens de <em>« supposons, prenons »</em>, il joue le rôle d'<strong>introducteur</strong> et sa valeur verbale est estompée. On le laisse alors <strong>invariable</strong>, ce qui justifie l'usage de <em>soit A et B…</em></p>
-
-    <p>Cependant, certains auteurs dans le domaine mathématique préfèrent traiter <em>soit</em> comme un véritable verbe, et l'accorder au pluriel devant plusieurs sujets : <em>soient A et B…</em></p>
-
-    <div class="callout">
-      <p class="callout-title">En résumé</p>
-      <ul>
-        <strong>« Soit A et B »</strong> et <strong>« Soient A et B »</strong> sont deux formulations parfaitement correctes.
-      </ul>
-    </div>
-
-    <p>Les deux graphies sont donc recevables, et le choix relève davantage de la préférence stylistique que d'une règle absolue.</p>
-
-    <p class="reference">Référence : Grevisse &amp; Goosse, <em>Le Bon Usage</em>, 13<sup>e</sup> éd., § 901, d–e.</p>
+<main class="content">
+  <p class="eyebrow">Divers</p>
+  <h1>« Soit A et B » ou « Soient A et B » ?</h1>
+  <p>En mathématiques, on rencontre souvent des formulations du type :</p>
+  <ul>
+    <li><em>Soit A et B deux objets…</em></li>
+    <li><em>Soient A et B deux objets…</em></li>
+  </ul>
+  <p>La question se pose : faut-il écrire <strong>soit</strong> ou <strong>soient</strong> ?</p>
+  <p>Le <em>Bon Usage</em> de Grevisse et Goosse (13<sup>e</sup> éd., § 901, d–e) apporte une réponse éclairante. Lorsque <em>soit</em> a le sens de <em>« supposons, prenons »</em>, il joue le rôle d'<strong>introducteur</strong> et sa valeur verbale est estompée. On le laisse alors <strong>invariable</strong>, ce qui justifie l'usage de <em>soit A et B…</em></p>
+  <p>Cependant, certains auteurs dans le domaine mathématique préfèrent traiter <em>soit</em> comme un véritable verbe, et l'accorder au pluriel devant plusieurs sujets : <em>soient A et B…</em></p>
+  <div class="callout">
+    <p class="callout-title">En résumé</p>
+    <p><strong>« Soit A et B »</strong> et <strong>« Soient A et B »</strong> sont deux formulations parfaitement correctes.</p>
   </div>
-</div>
+  <p>Les deux graphies sont donc recevables, et le choix relève davantage de la préférence stylistique que d'une règle absolue.</p>
+  <p class="reference">Référence : Grevisse &amp; Goosse, <em>Le Bon Usage</em>, 13<sup>e</sup> éd., § 901, d–e.</p>
+</main>
 
-<script>
-fetch('/sidebar.html')
-  .then(res => res.text())
-  .then(html => { document.getElementById('sidebar-container').innerHTML = html; })
-  .catch(err => console.error('Erreur chargement sidebar :', err));
-
-function w3_open() { document.getElementById("mySidebar").style.display="block"; document.getElementById("sidebarOverlay").style.display="block"; }
-function w3_close() { document.getElementById("mySidebar").style.display="none"; document.getElementById("sidebarOverlay").style.display="none"; }
-function toggleDropdown(id, btn) {
-  var el = document.getElementById(id);
-  var isOpen = el.style.display === "block";
-  document.querySelectorAll('.dropdown-container').forEach(function(d) { d.style.display="none"; });
-  document.querySelectorAll('.dropdown-btn').forEach(function(b) { b.classList.remove('open'); });
-  if (!isOpen) { el.style.display="block"; btn.classList.add('open'); }
-}
-</script>
+<script src="../assets/site.js?v=6" data-root="../"></script>
 </body>
 </html>

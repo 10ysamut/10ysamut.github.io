@@ -1,0 +1,267 @@
+/* =========================================================
+   ysamut.fr — feuille de style commune
+   ========================================================= */
+
+/* ---------- Polices Computer Modern (licence OFL) ---------- */
+@font-face { font-family: "Computer Modern Bright"; src: url("fonts/cmunbmr.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Computer Modern Bright"; src: url("fonts/cmunbmo.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "Computer Modern Bright"; src: url("fonts/cmunbbx.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Computer Modern Bright"; src: url("fonts/cmunbxo.woff2") format("woff2"); font-weight: 700; font-style: italic; font-display: swap; }
+@font-face { font-family: "Computer Modern Typewriter"; src: url("fonts/cmuntt.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+
+/* ---------- Couleurs ---------- */
+:root {
+  --bg: #F7F7F5;
+  --surface: #FFFFFF;
+  --text: #2A2A28;
+  --strong: #1A1A18;
+  --muted: #6E6D68;
+  --border: #E5E4E0;
+  --accent: #1A1A18;
+  --accent-fg: #FFFFFF;
+  --hover: #F0EFEC;
+  --shadow: 0 1px 2px rgba(20,20,20,.05), 0 8px 24px rgba(20,20,20,.04);
+  --radius: 12px;
+  --maxw: 52rem;
+  --font-text: "Computer Modern Bright", "CMU Bright", "Helvetica Neue", Arial, sans-serif;
+  --font-serif: var(--font-text);
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --bg: #141413;
+  --surface: #1C1C1B;
+  --text: #E6E5E1;
+  --strong: #F5F4F0;
+  --muted: #A09F99;
+  --border: #2D2C2A;
+  --accent: #EDECE8;
+  --accent-fg: #141413;
+  --hover: #252523;
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.3);
+  color-scheme: dark;
+}
+
+/* ---------- Base ---------- */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: var(--font-text); font-size: 17px; line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh; display: flex; flex-direction: column;
+}
+main { flex: 1; }
+h1, h2 { font-family: var(--font-text); font-weight: 700; color: var(--strong); line-height: 1.25; }
+h1 { font-size: 1.9rem; font-weight: 400; letter-spacing: .01em; margin: 0 0 .5rem; }
+h2 { font-size: 1.3rem; margin: 2.25rem 0 .9rem; }
+p { margin: 0 0 1rem; }
+a { color: var(--strong); text-underline-offset: 3px; text-decoration-color: color-mix(in srgb, currentColor 40%, transparent); }
+a:hover { text-decoration-color: currentColor; }
+strong { color: var(--strong); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } html { scroll-behavior: auto; } }
+
+/* ---------- Barre du haut ---------- */
+.topbar {
+  position: sticky; top: 0; z-index: 20;
+  width: 100%; max-width: var(--maxw); margin: 0 auto;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 2px rgba(20,20,20,.06), 0 6px 18px rgba(20,20,20,.06);
+}
+:root[data-theme="dark"] .topbar { box-shadow: 0 1px 2px rgba(0,0,0,.4), 0 6px 18px rgba(0,0,0,.35); }
+.topbar-inner {
+  padding: .7rem 1.25rem;
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+}
+.brand { flex: 1; }
+.top-actions { display: flex; align-items: center; gap: .5rem; }
+
+.nav {
+  display: flex; align-items: center; gap: .1rem;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 999px; padding: .22rem;
+}
+.nav > a, .nav-group > button {
+  font: inherit; font-size: .93rem; color: var(--muted); background: none; border: 0; cursor: pointer;
+  padding: .36rem .85rem; border-radius: 999px; text-decoration: none; white-space: nowrap;
+  display: inline-flex; align-items: center; gap: .35rem;
+}
+.nav > a:hover, .nav-group > button:hover { color: var(--strong); background: var(--hover); }
+.nav > a.active, .nav-group.active > button { background: var(--accent); color: var(--accent-fg); }
+.nav-group { position: relative; }
+.nav-group > button svg { width: .7rem; height: .7rem; transition: transform .15s; }
+.nav-group.open > button svg { transform: rotate(180deg); }
+.nav-menu {
+  position: absolute; top: calc(100% + .45rem); left: 50%; transform: translateX(-50%);
+  min-width: 15rem; padding: .35rem; display: none;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow);
+}
+.nav-group.open .nav-menu { display: block; }
+.nav-menu a { display: block; padding: .5rem .75rem; border-radius: 8px; color: var(--text); text-decoration: none; font-size: .93rem; }
+.nav-menu a:hover { background: var(--hover); }
+.nav-menu a.active { color: var(--strong); font-weight: 700; background: var(--hover); }
+
+.icon-btn {
+  width: 2.1rem; height: 2.1rem; flex: 0 0 auto; padding: 0; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid var(--border); background: var(--surface); color: var(--strong); border-radius: 8px;
+}
+.icon-btn:hover { border-color: var(--muted); }
+.icon-btn svg { width: 1.05rem; height: 1.05rem; }
+.nav-toggle { display: none; }
+
+@media (max-width: 44rem) {
+  .nav-toggle { display: inline-flex; }
+  .nav {
+    position: absolute; top: calc(100% + .3rem); left: .75rem; right: .75rem;
+    flex-direction: column; align-items: stretch; gap: 0; display: none;
+    border-radius: var(--radius); padding: .4rem; box-shadow: var(--shadow);
+    max-height: calc(100vh - 5rem); overflow-y: auto;
+  }
+  .topbar.nav-open .nav { display: flex; }
+  .nav > a, .nav-group > button { border-radius: 8px; padding: .6rem .75rem; justify-content: space-between; width: 100%; }
+  .nav-menu { position: static; transform: none; box-shadow: none; border: 0; padding: 0 0 .3rem .5rem; min-width: 0; }
+  .nav > a.active, .nav-group.active > button { background: var(--hover); color: var(--strong); font-weight: 700; }
+}
+
+/* ---------- Contenu ---------- */
+.content { max-width: var(--maxw); width: 100%; margin: 0 auto; padding: 2.25rem 1.25rem 4rem; }
+.eyebrow { margin: 0 0 .35rem; font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; color: var(--muted); }
+.lede { color: var(--muted); font-size: 1.08rem; margin: 0 0 1.5rem; }
+.intro { margin: 0 0 1.75rem; }
+.intro p { color: var(--text); }
+
+/* ---------- Listes de documents ---------- */
+.list {
+  list-style: none; margin: 0; padding: 0;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  box-shadow: var(--shadow); overflow: hidden;
+}
+.row {
+  display: flex; align-items: center; justify-content: space-between; gap: .6rem 1.5rem;
+  padding: 1rem 1.25rem; border-top: 1px solid var(--border);
+}
+.row:first-child { border-top: 0; }
+.row[hidden] { display: none; }
+.row-main { flex: 1 1 auto; min-width: 0; }
+.row-kicker { display: block; font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: .1rem; }
+.row-title { display: block; color: var(--strong); font-weight: 700; }
+.row-title a { color: inherit; text-decoration: none; }
+.row-title a:hover { text-decoration: underline; }
+.row-desc { color: var(--muted); font-size: .92rem; margin: .2rem 0 0; }
+.row-note { color: var(--muted); font-size: .85rem; margin: .2rem 0 0; }
+.row-links { flex: 0 0 auto; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .45rem; max-width: 60%; }
+@media (max-width: 40rem) {
+  .row { flex-direction: column; align-items: stretch; }
+  .row-links { justify-content: flex-start; max-width: none; }
+}
+
+/* Énoncé + corrigé collés */
+.doc-pair { display: inline-flex; }
+.doc-pair .doc:first-child { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+.doc-pair .doc.corr { border-top-left-radius: 0; border-bottom-left-radius: 0; margin-left: -1px; color: var(--muted); }
+.doc-pair .doc.corr:hover { color: var(--accent-fg); }
+
+.doc {
+  display: inline-flex; align-items: center; gap: .4rem;
+  padding: .3rem .8rem; border-radius: 8px; border: 1px solid var(--border); background: var(--surface);
+  color: var(--strong); text-decoration: none; font-size: .9rem; line-height: 1.4;
+  transition: background .12s, border-color .12s, color .12s;
+}
+.doc:hover { background: var(--accent); border-color: var(--accent); color: var(--accent-fg); text-decoration: none; }
+.doc.disabled { color: var(--muted); border-style: dashed; pointer-events: none; }
+
+/* Onglets */
+.tabs {
+  display: inline-flex; flex-wrap: wrap; gap: .15rem; margin: .5rem 0 1.25rem;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: .22rem;
+}
+.tabs button { font: inherit; font-size: .93rem; border: 0; background: none; color: var(--muted); padding: .4rem 1rem; border-radius: 999px; cursor: pointer; }
+.tabs button:hover { color: var(--strong); background: var(--hover); }
+.tabs button[aria-selected="true"] { background: var(--accent); color: var(--accent-fg); }
+.tab-panel[hidden] { display: none; }
+@media (max-width: 30rem) {
+  .tabs { display: flex; border-radius: var(--radius); }
+  .tabs button { flex: 1 1 auto; border-radius: 8px; }
+}
+
+/* Encadré (page « Soit ou soient ») */
+.callout { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.25rem; margin: 1.5rem 0; }
+.callout-title { font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; color: var(--muted); margin: 0 0 .5rem; }
+.callout p:last-child { margin: 0; }
+.reference { margin-top: 2.5rem; padding-top: .9rem; border-top: 1px solid var(--border); color: var(--muted); font-size: .88rem; }
+
+/* Liens utiles */
+.link-url { display: block; color: var(--muted); font-size: .85rem; font-family: "Computer Modern Typewriter", ui-monospace, monospace; word-break: break-all; }
+
+/* ---------- Accueil ---------- */
+.profile { display: flex; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap; margin-top: 1rem; }
+.profile img { width: 96px; height: 96px; object-fit: cover; border-radius: 50%; flex: 0 0 auto; border: 1px solid var(--border); }
+.profile-body { flex: 1; min-width: 14rem; }
+.profile-name { font-family: var(--font-text); font-weight: 400; font-size: 1.5rem; color: var(--strong); margin: 0 0 .15rem; }
+.profile-role { color: var(--muted); margin: 0 0 1rem; line-height: 1.5; }
+.social { display: flex; gap: .5rem; }
+.social a {
+  width: 2.2rem; height: 2.2rem; display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid var(--border); border-radius: 8px; background: var(--surface); color: var(--muted);
+}
+.social a:hover { color: var(--strong); border-color: var(--muted); }
+.social svg { width: 1rem; height: 1rem; }
+
+/* ---------- Pied de page ---------- */
+.site-footer { text-align: center; color: var(--muted); font-size: .8rem; padding: 1.25rem 1rem 1.5rem; }
+
+/* ---------- Liseuse PDF (fenêtre sur la page, comme l'ancien site) ---------- */
+#pdfModalOverlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 9999; }
+#pdfModalOverlay.open { display: block; }
+#pdfModalBox {
+  position: absolute; top: 24px; left: 24px; right: 24px; bottom: 24px;
+  background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,.3);
+  display: flex; flex-direction: column;
+}
+#pdfModalHeader {
+  display: flex; justify-content: space-between; align-items: center; gap: 10px;
+  padding: 10px 14px; background: #484c53; border-bottom: 1px solid rgba(255,255,255,.08); flex-shrink: 0;
+}
+#pdfModalOpenNewTab {
+  display: inline-flex; align-items: center; gap: 6px; font-size: .85em; font-weight: 600;
+  color: #e6e7e9; text-decoration: none; white-space: nowrap;
+}
+#pdfModalOpenNewTab:hover { color: #fff; }
+#pdfModalOpenNewTab svg, #pdfModalClose svg { width: 14px; height: 14px; }
+#pdfModalClose {
+  font: inherit; cursor: pointer; border: none; background: #111; color: #fff; border-radius: 6px;
+  padding: 8px 18px; font-size: .9em; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;
+}
+#pdfModalClose:hover { background: #333; }
+#pdfModalFrame { flex: 1; width: 100%; border: none; background: #525659; }
+@media (max-width: 992px) {
+  #pdfModalBox { top: 0; left: 0; right: 0; bottom: 0; border-radius: 0; height: 100dvh; }
+  #pdfModalHeader { position: sticky; top: 0; z-index: 2; padding: 12px 14px; padding-top: calc(12px + env(safe-area-inset-top)); }
+  #pdfModalOpenNewTab .label-full { display: none; }
+  #pdfModalClose { padding: 10px 18px; font-size: 1em; }
+}
+
+/* ---------- Pages protégées ---------- */
+.gate {
+  max-width: 24rem; margin: 2.5rem auto; text-align: center;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: 1.75rem 1.5rem;
+}
+.gate svg { width: 1.6rem; height: 1.6rem; color: var(--muted); }
+.gate h3 { font-size: 1.05rem; margin: .5rem 0 1rem; color: var(--strong); }
+.gate form { display: flex; gap: .5rem; }
+.gate input { flex: 1; min-width: 0; font: inherit; padding: .5rem .75rem; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text); }
+.gate input:focus { outline: none; border-color: var(--muted); }
+.gate button { font: inherit; padding: .5rem 1rem; border-radius: 8px; cursor: pointer; border: 0; background: var(--accent); color: var(--accent-fg); }
+.gate-error { color: #B3261E; font-size: .9rem; margin: .75rem 0 0; display: none; }
+:root[data-theme="dark"] .gate-error { color: #F2B8B5; }
+.protected[hidden] { display: none; }
+
+@media (max-width: 30rem) {
+  body { font-size: 16px; }
+  .content { padding: 1.25rem 1rem 3rem; }
+  .topbar-inner { padding-left: 1rem; padding-right: 1rem; }
+  h1 { font-size: 1.6rem; }
+  .row { padding: .9rem 1rem; }
+}
