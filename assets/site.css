@@ -212,34 +212,35 @@ strong { color: var(--strong); }
 .site-footer { text-align: center; color: var(--muted); font-size: .8rem; padding: 1.25rem 1rem 1.5rem; }
 
 /* ---------- Liseuse PDF (fenêtre sur la page, comme l'ancien site) ---------- */
-#pdfModalOverlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 9999; }
+#pdfModalOverlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 9999; }
+:root[data-theme="dark"] #pdfModalOverlay { background: rgba(0,0,0,.7); }
 #pdfModalOverlay.open { display: block; }
 #pdfModalBox {
-  position: absolute; top: 24px; left: 24px; right: 24px; bottom: 24px;
-  background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,.3);
-  display: flex; flex-direction: column;
+  position: absolute; top: 24px; left: 24px; right: 24px; bottom: 24px; max-width: 70rem; margin: 0 auto;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0,0,0,.3); display: flex; flex-direction: column;
 }
 #pdfModalHeader {
   display: flex; justify-content: space-between; align-items: center; gap: 10px;
-  padding: 10px 14px; background: #484c53; border-bottom: 1px solid rgba(255,255,255,.08); flex-shrink: 0;
+  padding: .55rem .75rem .55rem 1.1rem; background: var(--surface); border-bottom: 1px solid var(--border); flex-shrink: 0;
 }
 #pdfModalOpenNewTab {
-  display: inline-flex; align-items: center; gap: 6px; font-size: .85em; font-weight: 600;
-  color: #e6e7e9; text-decoration: none; white-space: nowrap;
+  display: inline-flex; align-items: center; gap: 6px; font-size: .9rem;
+  color: var(--muted); text-decoration: none; white-space: nowrap;
 }
-#pdfModalOpenNewTab:hover { color: #fff; }
+#pdfModalOpenNewTab:hover { color: var(--strong); }
 #pdfModalOpenNewTab svg, #pdfModalClose svg { width: 14px; height: 14px; }
 #pdfModalClose {
-  font: inherit; cursor: pointer; border: none; background: #111; color: #fff; border-radius: 6px;
-  padding: 8px 18px; font-size: .9em; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;
+  font: inherit; font-size: .9rem; cursor: pointer; border: 1px solid var(--accent); background: var(--accent); color: var(--accent-fg);
+  border-radius: 8px; padding: .35rem 1rem; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;
 }
-#pdfModalClose:hover { background: #333; }
-#pdfModalFrame { flex: 1; width: 100%; border: none; background: #525659; }
+#pdfModalClose:hover { opacity: .85; }
+#pdfModalFrame { flex: 1; width: 100%; border: none; background: var(--bg); }
 @media (max-width: 992px) {
-  #pdfModalBox { top: 0; left: 0; right: 0; bottom: 0; border-radius: 0; height: 100dvh; }
-  #pdfModalHeader { position: sticky; top: 0; z-index: 2; padding: 12px 14px; padding-top: calc(12px + env(safe-area-inset-top)); }
+  #pdfModalBox { top: 0; left: 0; right: 0; bottom: 0; border: 0; border-radius: 0; height: 100dvh; }
+  #pdfModalHeader { position: sticky; top: 0; z-index: 2; padding: .7rem 1rem; padding-top: calc(.7rem + env(safe-area-inset-top)); }
   #pdfModalOpenNewTab .label-full { display: none; }
-  #pdfModalClose { padding: 10px 18px; font-size: 1em; }
+  #pdfModalClose { padding: .5rem 1.1rem; font-size: 1rem; }
 }
 
 /* ---------- Pages protégées ---------- */

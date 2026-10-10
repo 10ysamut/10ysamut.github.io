@@ -171,6 +171,35 @@
     var useViewer = location.protocol !== "file:";
     var viewerBase = new URL(ROOT + "assets/pdfjs/web/viewer.html", location.href).href;
 
+    // Accorde la liseuse pdf.js (même origine) aux couleurs et au thème jour/nuit du site
+    function themeViewer() {
+      var doc;
+      try { doc = frame.contentDocument; } catch (e) { return; }
+      if (!doc || !doc.documentElement || !useViewer) return;
+      var dark = document.documentElement.getAttribute("data-theme") === "dark";
+      var c = dark
+        ? { bg: "#141413", bar: "#1C1C1B", border: "#2D2C2A", text: "#E6E5E1", field: "#252523" }
+        : { bg: "#E9E8E4", bar: "#FFFFFF", border: "#E5E4E0", text: "#2A2A28", field: "#F7F7F5" };
+      doc.documentElement.style.setProperty("color-scheme", dark ? "dark" : "light");
+      var st = doc.getElementById("ysa-theme");
+      if (!st) { st = doc.createElement("style"); st.id = "ysa-theme"; (doc.head || doc.documentElement).appendChild(st); }
+      st.textContent = ":root{" +
+        "--body-bg-color:" + c.bg + ";" +
+        "--toolbar-bg-color:" + c.bar + ";" +
+        "--sidebar-toolbar-bg-color:" + c.bar + ";" +
+        "--toolbar-border-color:" + c.border + ";" +
+        "--toolbar-box-shadow:0 1px 0 " + c.border + ";" +
+        "--doorhanger-bg-color:" + c.bar + ";" +
+        "--main-color:" + c.text + ";" +
+        "--field-bg-color:" + c.field + ";" +
+        "--field-border-color:" + c.border + ";" +
+        "--dropdown-btn-bg-color:" + c.field + ";" +
+        "--sidebar-narrow-bg-color:" + c.bg + ";" +
+      "}";
+    }
+    frame.addEventListener("load", themeViewer);
+    new MutationObserver(themeViewer).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
     function open(url) {
       var src = useViewer ? viewerBase + "?file=" + encodeURIComponent(url) : url;
       scrollY = window.scrollY || document.documentElement.scrollTop || 0;
