@@ -274,6 +274,26 @@
     input.focus();
   }
 
+  /* ---------- Documents pas encore en ligne ----------
+     Chaque lien vers un PDF du site est vérifié : si le fichier n'existe pas encore,
+     le bouton passe en pointillés (« à venir ») et n'est plus cliquable.
+     Dès que le PDF est déposé, le lien redevient actif tout seul. */
+  function markMissingDocs() {
+    if (location.protocol === "file:" || !window.fetch) return;
+    document.querySelectorAll("a.doc[href]").forEach(function (a) {
+      var url;
+      try { url = new URL(a.getAttribute("href"), location.href); } catch (e) { return; }
+      if (url.origin !== location.origin || !/\.pdf$/i.test(url.pathname)) return;
+      fetch(url.href, { method: "HEAD", cache: "no-cache" }).then(function (r) {
+        if (r.status !== 404) return;
+        a.classList.add("disabled");
+        a.setAttribute("aria-disabled", "true");
+        a.setAttribute("tabindex", "-1");
+        a.setAttribute("title", "Bientôt disponible");
+      }).catch(function () {});
+    });
+  }
+
   /* ---------- Mesure d'audience (Google Analytics) ---------- */
   function setupAnalytics() {
     if (location.protocol === "file:" || /^(localhost|127\.0\.0\.1)$/.test(location.hostname)) return;
@@ -291,5 +311,6 @@
   setupTabs();
   setupPdf();
   setupGate();
+  markMissingDocs();
   setupAnalytics();
 })();
