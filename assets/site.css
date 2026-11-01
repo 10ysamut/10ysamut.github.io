@@ -2,6 +2,17 @@
    ysamut.fr — feuille de style commune
    ========================================================= */
 
+/* ---------- Polices : Fira Sans (texte, comme les TD et les cours) ---------- */
+/* Light pour le texte, Regular pour les titres, Medium pour les étiquettes,
+   SemiBold pour le gras (licence OFL, voir fonts/OFL-FiraSans.txt) */
+@font-face { font-family: "Fira Sans"; src: url("fonts/fira-sans-latin-300-normal.woff2") format("woff2"); font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: "Fira Sans"; src: url("fonts/fira-sans-latin-300-italic.woff2") format("woff2"); font-weight: 300; font-style: italic; font-display: swap; }
+@font-face { font-family: "Fira Sans"; src: url("fonts/fira-sans-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Fira Sans"; src: url("fonts/fira-sans-latin-400-italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "Fira Sans"; src: url("fonts/fira-sans-latin-500-normal.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "Fira Sans"; src: url("fonts/fira-sans-latin-600-normal.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: "Fira Sans"; src: url("fonts/fira-sans-latin-600-italic.woff2") format("woff2"); font-weight: 600; font-style: italic; font-display: swap; }
+
 /* ---------- Polices Computer Modern (licence OFL) ---------- */
 @font-face { font-family: "Computer Modern Bright"; src: url("fonts/cmunbmr.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
 @font-face { font-family: "Computer Modern Bright"; src: url("fonts/cmunbmo.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
@@ -23,7 +34,7 @@
   --shadow: 0 1px 2px rgba(20,20,20,.05), 0 8px 24px rgba(20,20,20,.04);
   --radius: 12px;
   --maxw: 52rem;
-  --font-text: "Computer Modern Bright", "CMU Bright", "Helvetica Neue", Arial, sans-serif;
+  --font-text: "Fira Sans", "Computer Modern Bright", "Helvetica Neue", Arial, sans-serif;
   --font-serif: var(--font-text);
   color-scheme: light;
 }
@@ -46,18 +57,18 @@
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 body {
   margin: 0; background: var(--bg); color: var(--text);
-  font-family: var(--font-text); font-size: 17px; line-height: 1.65;
+  font-family: var(--font-text); font-weight: 300; font-size: 17px; line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh; display: flex; flex-direction: column;
 }
 main { flex: 1; }
-h1, h2 { font-family: var(--font-text); font-weight: 700; color: var(--strong); line-height: 1.25; }
+h1, h2 { font-family: var(--font-text); font-weight: 400; color: var(--strong); line-height: 1.25; }
 h1 { font-size: 1.9rem; font-weight: 400; letter-spacing: .01em; margin: 0 0 .5rem; }
 h2 { font-size: 1.3rem; margin: 2.25rem 0 .9rem; }
 p { margin: 0 0 1rem; }
 a { color: var(--strong); text-underline-offset: 3px; text-decoration-color: color-mix(in srgb, currentColor 40%, transparent); }
 a:hover { text-decoration-color: currentColor; }
-strong { color: var(--strong); }
+strong, b { color: var(--strong); font-weight: 600; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } html { scroll-behavior: auto; } }
 
@@ -99,7 +110,7 @@ strong { color: var(--strong); }
 .nav-group.open .nav-menu { display: block; }
 .nav-menu a { display: block; padding: .5rem .75rem; border-radius: 8px; color: var(--text); text-decoration: none; font-size: .93rem; }
 .nav-menu a:hover { background: var(--hover); }
-.nav-menu a.active { color: var(--strong); font-weight: 700; background: var(--hover); }
+.nav-menu a.active { color: var(--strong); font-weight: 500; background: var(--hover); }
 
 .icon-btn {
   width: 2.1rem; height: 2.1rem; flex: 0 0 auto; padding: 0; cursor: pointer;
@@ -121,12 +132,12 @@ strong { color: var(--strong); }
   .topbar.nav-open .nav { display: flex; }
   .nav > a, .nav-group > button { border-radius: 8px; padding: .6rem .75rem; justify-content: space-between; width: 100%; }
   .nav-menu { position: static; transform: none; box-shadow: none; border: 0; padding: 0 0 .3rem .5rem; min-width: 0; }
-  .nav > a.active, .nav-group.active > button { background: var(--hover); color: var(--strong); font-weight: 700; }
+  .nav > a.active, .nav-group.active > button { background: var(--hover); color: var(--strong); font-weight: 500; }
 }
 
 /* ---------- Contenu ---------- */
 .content { max-width: var(--maxw); width: 100%; margin: 0 auto; padding: 2.25rem 1.25rem 4rem; }
-.eyebrow { margin: 0 0 .35rem; font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; color: var(--muted); }
+.eyebrow { margin: 0 0 .35rem; font-size: .78rem; font-weight: 400; text-transform: uppercase; letter-spacing: .09em; color: var(--muted); }
 .lede { color: var(--muted); font-size: 1.08rem; margin: 0 0 1.5rem; }
 .intro { margin: 0 0 1.75rem; }
 .intro p { color: var(--text); }
@@ -144,8 +155,8 @@ strong { color: var(--strong); }
 .row:first-child { border-top: 0; }
 .row[hidden] { display: none; }
 .row-main { flex: 1 1 auto; min-width: 0; }
-.row-kicker { display: block; font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: .1rem; }
-.row-title { display: block; color: var(--strong); font-weight: 700; }
+.row-kicker { display: block; font-size: .78rem; font-weight: 400; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: .1rem; }
+.row-title { display: block; color: var(--strong); font-weight: 500; }
 .row-title a { color: inherit; text-decoration: none; }
 .row-title a:hover { text-decoration: underline; }
 .row-desc { color: var(--muted); font-size: .92rem; margin: .2rem 0 0; }
@@ -189,7 +200,7 @@ strong { color: var(--strong); }
 
 /* Encadré (page « Soit ou soient ») */
 .callout { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.25rem; margin: 1.5rem 0; }
-.callout-title { font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; color: var(--muted); margin: 0 0 .5rem; }
+.callout-title { font-size: .78rem; font-weight: 400; text-transform: uppercase; letter-spacing: .09em; color: var(--muted); margin: 0 0 .5rem; }
 .callout p:last-child { margin: 0; }
 .reference { margin-top: 2.5rem; padding-top: .9rem; border-top: 1px solid var(--border); color: var(--muted); font-size: .88rem; }
 
