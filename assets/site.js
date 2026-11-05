@@ -26,7 +26,7 @@
       { label: "Analyse numérique", href: "episen/analyse-numerique.html" }
     ]},
     { id: "divers", label: "Divers", items: [
-      { label: "Banque d'exercices", href: "docs/bookexo.pdf" },
+      { label: "Recueil d'exercices", href: "divers/recueil-exercices.html" },
       { label: "Formulaires", href: "divers/formulaires-mathematiques.html" },
       { label: "Papiers de mathématiques", href: "divers/papiers-mathematiques.html" },
       { label: "Liens utiles", href: "divers/liens-utiles.html" },
