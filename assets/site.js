@@ -26,10 +26,8 @@
       { label: "Analyse numérique", href: "episen/analyse-numerique.html" }
     ]},
     { id: "divers", label: "Divers", items: [
-      { label: "Recueil d'exercices", href: "docs/bookexo.pdf", lock: "recueil" },
       { label: "Formulaires", href: "divers/formulaires-mathematiques.html" },
       { label: "Papiers de mathématiques", href: "divers/papiers-mathematiques.html" },
-      { label: "Liens utiles", href: "divers/liens-utiles.html" },
       { label: "Soit ou soient ?", href: "divers/soit-ou-soient.html" }
     ]}
   ];

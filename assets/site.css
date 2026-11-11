@@ -362,8 +362,18 @@ strong, b { color: var(--strong); font-weight: 600; }
   .topbar-inner { padding-left: 1rem; padding-right: 1rem; }
   h1, .content h1 { font-size: 1.75rem; }
   .hero h1 { font-size: 2.1rem; }
-  .hero-photo { order: -1; justify-content: flex-start; }
   .social { margin-left: -.6rem; }
-  .hero-photo img { width: 112px; height: 128px; border-radius: 14px; }
+  /* Accueil sur téléphone : pas de nom dans la barre (doublon avec le titre),
+     photo plus petite, centrée sous le titre */
+  body[data-section="accueil"] .brand { visibility: hidden; }
+  .hero { flex-direction: column; align-items: stretch; flex-wrap: nowrap; gap: 0; }
+  .hero-body { display: contents; }
+  .hero-kicker { order: 1; }
+  .hero h1 { order: 2; }
+  .hero-photo { order: 3; flex: 0 0 auto; justify-content: center; margin: .75rem 0 1.25rem; }
+  .hero-role { order: 4; }
+  .hero-text { order: 5; }
+  .hero-actions { order: 6; }
+  .hero-photo img { width: 96px; height: 110px; border-radius: 12px; box-shadow: 0 10px 24px rgba(31,58,110,.12); }
   .row { padding: .9rem 1rem; }
 }
