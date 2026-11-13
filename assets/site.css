@@ -192,8 +192,13 @@ strong, b { color: var(--strong); font-weight: 600; }
 }
 .row:not([hidden]) ~ .row:not([hidden]) { border-top: 1px solid var(--border); }
 .row-num {
-  flex: 0 0 2.75rem; align-self: center; text-align: right;
+  flex: 0 0 4.25rem; align-self: center;
+  display: flex; flex-direction: column; align-items: flex-end;
   font-size: 1.6rem; font-weight: 300; line-height: 1; color: var(--faint); font-variant-numeric: tabular-nums;
+}
+.row-num-label {
+  font-size: .66rem; font-weight: 400; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: .3rem;
 }
 .row[hidden] { display: none; }
 .row-main { flex: 1 1 auto; min-width: 0; }
@@ -208,7 +213,8 @@ strong, b { color: var(--strong); font-weight: 600; }
 .row-links { flex: 0 0 auto; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .45rem; max-width: 60%; }
 @media (max-width: 40rem) {
   .row { flex-direction: column; align-items: stretch; }
-  .row-num { text-align: left; align-self: flex-start; flex-basis: auto; font-size: 1.3rem; }
+  .row-num { flex-direction: row; align-items: baseline; gap: .5rem; align-self: flex-start; flex-basis: auto; font-size: 1.3rem; }
+  .row-num-label { margin-bottom: 0; }
   .filters { position: static; }
   .row-links { justify-content: flex-start; max-width: none; }
 }
