@@ -58,7 +58,8 @@
     f.className = "site-footer";
     f.innerHTML = '<div class="site-footer-inner">' +
       '<span>© Youri Samut ' + new Date().getFullYear() + '</span>' +
-      '<nav aria-label="Liens du pied de page"><a href="mailto:samut.youri@hotmail.fr">Contact</a>' +
+      '<nav aria-label="Liens du pied de page"><a href="' + ROOT + 'index.html#liens-utiles">Liens utiles</a>' +
+      '<a href="mailto:samut.youri@hotmail.fr">Contact</a>' +
       '<a href="https://www.linkedin.com/in/youri-samut-8949b3149/" target="_blank" rel="noopener">LinkedIn</a>' +
       '<a href="https://github.com/10ysamut" target="_blank" rel="noopener">GitHub</a></nav></div>';
     document.body.appendChild(f);
@@ -70,7 +71,20 @@
   function setupTabs() {
     document.querySelectorAll(".tabs, .menu").forEach(function (bar) {
       var btns = bar.querySelectorAll("button[aria-controls]");
+      // Panneaux sans onglet (ex. Liens utiles), ouverts seulement depuis le pied de page
+      var extras = document.querySelectorAll(".tab-panel[data-hors-menu]");
+      function showExtra(p) {
+        btns.forEach(function (b) {
+          b.setAttribute("aria-selected", "false");
+          var q = document.getElementById(b.getAttribute("aria-controls"));
+          if (q) q.hidden = true;
+        });
+        extras.forEach(function (x) { x.hidden = x !== p; });
+        var top = menuTop();
+        if (window.scrollY > top) window.scrollTo(0, top);
+      }
       function select(btn, keepHash) {
+        extras.forEach(function (x) { x.hidden = true; });
         btns.forEach(function (b) {
           var on = b === btn;
           b.setAttribute("aria-selected", on ? "true" : "false");
@@ -83,6 +97,8 @@
       function fromHash() {
         var id = decodeURIComponent(location.hash.slice(1));
         if (!id) return false;
+        var extra = document.getElementById(id);
+        if (extra && extra.hasAttribute("data-hors-menu")) { showExtra(extra); return true; }
         var direct = bar.querySelector('button[aria-controls="' + id + '"]');
         if (direct) { select(direct, true); return true; }
         var target = document.getElementById(id);
@@ -93,13 +109,66 @@
         setTimeout(function () { target.scrollIntoView(); }, 0);
         return true;
       }
+      // Menu de l'accueil : un onglet dont le panneau porte data-sous-menu ouvre la liste de ses rubriques
+      var isMenu = bar.classList.contains("menu");
+      // Hauteur où le menu se colle en haut (mesurée sur l'élément qui le précède, le menu étant « sticky »)
+      function menuTop() {
+        var prev = (bar.closest(".menu-bar") || bar).previousElementSibling;
+        return prev ? prev.getBoundingClientRect().bottom + window.scrollY : 0;
+      }
+      function closeDrops(except) {
+        bar.querySelectorAll(".menu-item.open").forEach(function (m) {
+          if (m === except) return;
+          m.classList.remove("open"); m.querySelector("button").setAttribute("aria-expanded", "false");
+        });
+      }
+      function goTo(id) {
+        if (history.replaceState) history.replaceState(null, "", "#" + id);
+        fromHash();
+      }
       btns.forEach(function (b) {
-        b.addEventListener("click", function () {
+        var panel = document.getElementById(b.getAttribute("aria-controls"));
+        var secs = isMenu && panel && panel.hasAttribute("data-sous-menu") ? panel.querySelectorAll("section[id]") : [];
+        if (secs.length) {
+          var wrap = document.createElement("div");
+          wrap.className = "menu-item";
+          b.parentNode.insertBefore(wrap, b);
+          wrap.appendChild(b);
+          b.setAttribute("aria-haspopup", "true");
+          b.setAttribute("aria-expanded", "false");
+          b.insertAdjacentHTML("beforeend", ICON.chevron);
+          var drop = document.createElement("div");
+          drop.className = "menu-drop";
+          drop.innerHTML = Array.prototype.map.call(secs, function (s) {
+            var h = s.querySelector("h2");
+            return '<a href="#' + s.id + '">' + (h ? h.textContent.trim() : s.id) + (s.querySelector(".protected") ? ICON.lock : "") + '</a>';
+          }).join("");
+          wrap.appendChild(drop);
+          drop.addEventListener("click", function (e) {
+            var a = e.target.closest("a"); if (!a) return;
+            e.preventDefault();
+            closeDrops();
+            goTo(a.getAttribute("href").slice(1));
+          });
+        }
+        b.addEventListener("click", function (e) {
+          e.stopPropagation();
           select(b);
-          var top = bar.getBoundingClientRect().top + window.scrollY - 1;
-          if (bar.classList.contains("menu") && window.scrollY > top) window.scrollTo(0, top);
+          var top = menuTop();
+          if (isMenu && window.scrollY > top) window.scrollTo(0, top);
+          var m = b.closest(".menu-item");
+          if (m) {
+            var open = !m.classList.contains("open");
+            closeDrops(m);
+            m.classList.toggle("open", open);
+            b.setAttribute("aria-expanded", open ? "true" : "false");
+          }
         });
       });
+      if (isMenu) {
+        document.addEventListener("click", function (e) { if (!bar.contains(e.target)) closeDrops(); });
+        document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeDrops(); });
+      }
       bar.addEventListener("keydown", function (e) {
         if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
         var list = Array.prototype.slice.call(btns), i = list.indexOf(document.activeElement);
