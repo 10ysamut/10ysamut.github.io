@@ -546,3 +546,7 @@ body { border-top: 4px solid var(--accent); }
 
 /* ---------- Corrigé en icône seule, collé à son TD ---------- */
 .items .doc.corr.icon-only { padding-left: .5rem; padding-right: .5rem; }
+
+/* ---------- Khôlles : programmes précédents repliés ---------- */
+.items li.old { display: none; }
+.items.show-old li.old { display: flex; }

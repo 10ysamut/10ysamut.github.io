@@ -289,8 +289,7 @@
       if (ok) { box.hidden = false; return; }
       var gate = document.createElement("div");
       gate.className = "gate";
-      gate.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>' +
-        '<h3>Réservé à la classe</h3>' +
+      gate.innerHTML = '<h3>Réservé à la classe</h3>' +
         '<form><input type="password" placeholder="Mot de passe" autocomplete="off" aria-label="Mot de passe"><button type="submit">Valider</button></form>' +
         '<p class="gate-error" role="alert">Mot de passe incorrect</p>';
       box.parentNode.insertBefore(gate, box);
@@ -447,6 +446,40 @@
     });
   }
 
+  /* ---------- Khôlles : « Je prépare ma khôlle », le dernier programme, puis un bouton
+     qui déplie les programmes précédents du plus récent au plus ancien ---------- */
+  function setupKholles() {
+    var list = document.querySelector("#kholles .items");
+    if (!list) return;
+    var rows = Array.prototype.filter.call(list.children, function (li) { return li.querySelector(".ty"); });
+    var online = rows.filter(function (li) { var d = li.querySelector(".ds .doc"); return d && !d.classList.contains("disabled"); });
+    var last = online[online.length - 1];
+    if (!last) return;
+    var before = rows.slice(0, rows.indexOf(last)).reverse();
+    var after = rows.slice(rows.indexOf(last) + 1);
+    // ordre : (Je prépare ma khôlle) · dernier programme · bouton · précédents (n-1, n-2, …, 1)
+    var anchor = rows[0];
+    list.insertBefore(last, anchor);
+    function fold(group, cls, more, less) {
+      if (!group.length) return;
+      var t = document.createElement("li");
+      t.className = "soon-toggle";
+      t.innerHTML = '<button type="button" aria-expanded="false"></button>';
+      var btn = t.firstChild, n = group.length;
+      function label(open) { btn.textContent = open ? less : more.replace("%n", n); }
+      label(false);
+      list.appendChild(t);
+      group.forEach(function (li) { li.classList.add(cls); list.appendChild(li); });
+      btn.addEventListener("click", function () {
+        var open = list.classList.toggle("show-" + cls);
+        btn.setAttribute("aria-expanded", open ? "true" : "false");
+        label(open);
+      });
+    }
+    fold(before, "old", before.length === 1 ? "Voir le programme précédent ▾" : "Voir les %n programmes précédents ▾", "Masquer les programmes précédents ▴");
+    fold(after, "soon", "Voir les %n programmes à venir ▾", "Masquer les programmes à venir ▴");
+  }
+
   /* ---------- Bouton « retour en haut » ---------- */
   function setupToTop() {
     var b = document.createElement("button");
@@ -482,6 +515,6 @@
   setupLocks();
   setupGate();
   setupToTop();
-  markMissingDocs().then(setupFold);
+  markMissingDocs().then(function () { setupFold(); setupKholles(); });
   setupAnalytics();
 })();
