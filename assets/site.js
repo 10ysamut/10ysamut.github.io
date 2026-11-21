@@ -71,6 +71,11 @@
   function setupTabs() {
     document.querySelectorAll(".tabs, .menu").forEach(function (bar) {
       var btns = bar.querySelectorAll("button[aria-controls]");
+      // Sous-titre sous le nom, propre à chaque onglet (attribut data-sous-titre du panneau)
+      function setSubtitle(p) {
+        var st = document.getElementById("sous-titre");
+        if (st && p.hasAttribute("data-sous-titre")) st.textContent = p.getAttribute("data-sous-titre");
+      }
       // Panneaux sans onglet (ex. Liens utiles), ouverts seulement depuis le pied de page
       var extras = document.querySelectorAll(".tab-panel[data-hors-menu]");
       function showExtra(p) {
@@ -80,6 +85,7 @@
           if (q) q.hidden = true;
         });
         extras.forEach(function (x) { x.hidden = x !== p; });
+        setSubtitle(p);
         var top = menuTop();
         if (window.scrollY > top) window.scrollTo(0, top);
       }
@@ -91,6 +97,7 @@
           b.tabIndex = on ? 0 : -1;
           var p = document.getElementById(b.getAttribute("aria-controls"));
           if (p) p.hidden = !on;
+          if (on && p) setSubtitle(p);
         });
         if (!keepHash && history.replaceState) history.replaceState(null, "", "#" + btn.getAttribute("aria-controls"));
       }
@@ -113,7 +120,6 @@
       var isMenu = bar.classList.contains("menu");
       // Hauteur où le menu se colle en haut (mesurée sur l'élément qui le précède, le menu étant « sticky »)
       function menuTop() {
-        if (bar.closest(".topnav")) return 0;
         var prev = (bar.closest(".menu-bar") || bar).previousElementSibling;
         return prev ? prev.getBoundingClientRect().bottom + window.scrollY : 0;
       }

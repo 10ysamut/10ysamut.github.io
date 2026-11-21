@@ -509,3 +509,6 @@ strong, b { color: var(--strong); font-weight: 600; }
 .items .ty { width: 4rem; font-size: .8rem; color: var(--muted); }
 .items .ty b { font-size: 1.55rem; font-weight: 300; color: var(--muted); }
 @media (max-width: 34rem) { .items .ty { width: 3rem; } .items .ds { padding-left: 3.8rem; } .items .ty b { font-size: 1.4rem; } }
+
+/* Seul le menu reste collé en haut ; le nom et le sous-titre défilent */
+.masthead { display: contents; }
