@@ -447,30 +447,6 @@
     });
   }
 
-  /* ---------- Encadré « En ce moment » en haut de Prépa PTSI ---------- */
-  function setupNow() {
-    var panel = document.getElementById("ptsi");
-    if (!panel) return;
-    function lastAvailable(sel) {
-      var rows = Array.prototype.filter.call(document.querySelectorAll(sel), function (li) {
-        var d = li.querySelector(".ds .doc");
-        return li.querySelector(".ty") && d && !d.classList.contains("disabled");
-      });
-      return rows[rows.length - 1];
-    }
-    var ch = lastAvailable("#mathematiques .items > li");
-    var kh = lastAvailable("#kholles .items > li");
-    if (!ch && !kh) return;
-    var title = function (li) { return li.querySelector(".tt").firstChild.textContent.trim(); };
-    var html = "";
-    if (ch) html += '<a href="' + ch.querySelector(".doc-main").getAttribute("href") + '"><small>Dernier chapitre en ligne</small><b>Ch. ' + ch.querySelector(".ty b").textContent + " · " + title(ch) + "</b></a>";
-    if (kh) html += '<a href="' + kh.querySelector(".ds .doc").getAttribute("href") + '"><small>Khôlles · ' + title(kh).replace("Semaine du ", "semaine du ") + "</small><b>" + kh.querySelector(".tt small").textContent + "</b></a>";
-    var box = document.createElement("div");
-    box.className = "now-box";
-    box.innerHTML = html;
-    panel.insertBefore(box, panel.firstChild);
-  }
-
   /* ---------- Bouton « retour en haut » ---------- */
   function setupToTop() {
     var b = document.createElement("button");
@@ -506,6 +482,6 @@
   setupLocks();
   setupGate();
   setupToTop();
-  markMissingDocs().then(function () { setupFold(); setupNow(); });
+  markMissingDocs().then(setupFold);
   setupAnalytics();
 })();
