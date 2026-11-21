@@ -512,3 +512,51 @@ strong, b { color: var(--strong); font-weight: 600; }
 
 /* Seul le menu reste collé en haut ; le nom et le sous-titre défilent */
 .masthead { display: contents; }
+
+/* ---------- Encadré « En ce moment » ---------- */
+.now-box { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: .6rem; margin: 1.6rem 0 -.6rem; }
+.now-box a { display: block; text-decoration: none; color: inherit; background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 12px; padding: .7rem .9rem; }
+.now-box a:hover { background: var(--hover); }
+.now-box small { display: block; font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.now-box b { display: block; color: var(--strong); font-weight: 500; line-height: 1.3; margin-top: .15rem; }
+
+/* ---------- Chapitres à venir repliés ---------- */
+.items li.soon { display: none; }
+.items.show-soon li.soon { display: flex; }
+.items li.soon-toggle { justify-content: center; padding: .45rem 1rem; }
+.items li.soon-toggle:hover { background: none; }
+.soon-toggle button { font: inherit; font-size: .9rem; color: var(--accent); background: none; border: 0; cursor: pointer; padding: .3rem .6rem; border-radius: 8px; }
+.soon-toggle button:hover { background: var(--hover); }
+
+/* ---------- Liseré en haut et nom en bleu ---------- */
+body { border-top: 4px solid var(--accent); }
+.intro-hero h1 { color: var(--accent); font-weight: 500; }
+.menu button[aria-selected="true"] { background: color-mix(in srgb, var(--accent) 8%, transparent); border-radius: 8px 8px 0 0; }
+
+/* ---------- Retour en haut ---------- */
+.to-top {
+  position: fixed; left: 1rem; bottom: 1rem; z-index: 40; width: 2.75rem; height: 2.75rem; border-radius: 50%;
+  border: 1px solid var(--border-strong); background: var(--surface); color: var(--accent); box-shadow: var(--shadow);
+  display: none; align-items: center; justify-content: center; cursor: pointer;
+}
+.to-top.on { display: flex; }
+.to-top:hover { background: var(--hover); }
+.to-top svg { width: 1rem; height: 1rem; }
+
+/* ---------- Icônes des boutons (toque = cours, feuille = TD/sujet, fiole = TP, coche = corrigé) ---------- */
+.doc .ico { width: .95rem; height: .95rem; flex: none; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.items .doc { gap: .35rem; }
+
+/* ---------- Chapitres à deux TD : un seul bloc « TD 2 | a | b | corrigés | a | b » ---------- */
+.items .doc-multi .doc { border-radius: 0; margin-left: -1px; padding-left: .55rem; padding-right: .55rem; }
+.items .doc-multi .doc:first-child { border-radius: 7px 0 0 7px; margin-left: 0; padding-left: .65rem; }
+.items .doc-multi .doc:last-child { border-radius: 0 7px 7px 0; }
+.items .doc-multi .lbl { pointer-events: none; color: var(--muted); background: var(--tint); }
+.items .doc-multi .lbl:not(.corr) { color: var(--accent); background: var(--surface); padding-right: .35rem; }
+.items .doc-multi a.doc { min-width: 1.9rem; justify-content: center; }
+@media (max-width: 34rem) {
+  .items .doc-multi .doc { padding-left: .4rem; padding-right: .4rem; }
+  .items .doc-multi a.doc { min-width: 1.6rem; }
+  .items .ds { gap: .25rem; }
+}
+@media (max-width: 34rem) { .items .doc-multi .lbl-n { display: none; } }

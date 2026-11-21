@@ -405,19 +405,84 @@
      le bouton passe en pointillés (« à venir ») et n'est plus cliquable.
      Dès que le PDF est déposé, le lien redevient actif tout seul. */
   function markMissingDocs() {
-    if (location.protocol === "file:" || !window.fetch) return;
+    if (location.protocol === "file:" || !window.fetch) return Promise.resolve();
+    var checks = [];
     document.querySelectorAll("a.doc[href]").forEach(function (a) {
       var url;
       try { url = new URL(a.getAttribute("href"), location.href); } catch (e) { return; }
       if (url.origin !== location.origin || !/\.pdf$/i.test(url.pathname)) return;
-      fetch(url.href, { method: "HEAD", cache: "no-cache" }).then(function (r) {
+      checks.push(fetch(url.href, { method: "HEAD", cache: "no-cache" }).then(function (r) {
         if (r.status !== 404) return;
         a.classList.add("disabled");
         a.setAttribute("aria-disabled", "true");
         a.setAttribute("tabindex", "-1");
         a.setAttribute("title", "Bientôt disponible");
-      }).catch(function () {});
+      }).catch(function () {}));
     });
+    return Promise.all(checks);
+  }
+
+  /* ---------- Cours de PTSI : chapitres pas encore en ligne repliés ---------- */
+  function setupFold() {
+    var list = document.querySelector("#mathematiques .items");
+    if (!list) return;
+    var soon = Array.prototype.filter.call(list.children, function (li) {
+      var c = li.querySelector(".doc-main");
+      return c && c.classList.contains("disabled");
+    });
+    if (!soon.length) return;
+    soon.forEach(function (li) { li.classList.add("soon"); });
+    var n = soon.length;
+    var t = document.createElement("li");
+    t.className = "soon-toggle";
+    t.innerHTML = '<button type="button" aria-expanded="false"></button>';
+    var btn = t.firstChild;
+    function label(open) { btn.textContent = open ? "Masquer les chapitres à venir ▴" : "Voir les " + n + " chapitres à venir ▾"; }
+    label(false);
+    soon[0].parentNode.insertBefore(t, soon[0]);
+    btn.addEventListener("click", function () {
+      var open = list.classList.toggle("show-soon");
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      label(open);
+    });
+  }
+
+  /* ---------- Encadré « En ce moment » en haut de Prépa PTSI ---------- */
+  function setupNow() {
+    var panel = document.getElementById("ptsi");
+    if (!panel) return;
+    function lastAvailable(sel) {
+      var rows = Array.prototype.filter.call(document.querySelectorAll(sel), function (li) {
+        var d = li.querySelector(".ds .doc");
+        return li.querySelector(".ty") && d && !d.classList.contains("disabled");
+      });
+      return rows[rows.length - 1];
+    }
+    var ch = lastAvailable("#mathematiques .items > li");
+    var kh = lastAvailable("#kholles .items > li");
+    if (!ch && !kh) return;
+    var title = function (li) { return li.querySelector(".tt").firstChild.textContent.trim(); };
+    var html = "";
+    if (ch) html += '<a href="' + ch.querySelector(".doc-main").getAttribute("href") + '"><small>Dernier chapitre en ligne</small><b>Ch. ' + ch.querySelector(".ty b").textContent + " · " + title(ch) + "</b></a>";
+    if (kh) html += '<a href="' + kh.querySelector(".ds .doc").getAttribute("href") + '"><small>Khôlles · ' + title(kh).replace("Semaine du ", "semaine du ") + "</small><b>" + kh.querySelector(".tt small").textContent + "</b></a>";
+    var box = document.createElement("div");
+    box.className = "now-box";
+    box.innerHTML = html;
+    panel.insertBefore(box, panel.firstChild);
+  }
+
+  /* ---------- Bouton « retour en haut » ---------- */
+  function setupToTop() {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "to-top";
+    b.setAttribute("aria-label", "Retour en haut de la page");
+    b.innerHTML = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M3.5 7.5L8 3l4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    b.addEventListener("click", function () { window.scrollTo(0, 0); });
+    document.body.appendChild(b);
+    function check() { b.classList.toggle("on", window.scrollY > 900); }
+    window.addEventListener("scroll", check, { passive: true });
+    check();
   }
 
   /* ---------- Mesure d'audience (Google Analytics) ---------- */
@@ -440,6 +505,7 @@
   setupPdf();
   setupLocks();
   setupGate();
-  markMissingDocs();
+  setupToTop();
+  markMissingDocs().then(function () { setupFold(); setupNow(); });
   setupAnalytics();
 })();
