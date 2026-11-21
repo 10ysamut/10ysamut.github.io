@@ -1,8 +1,8 @@
 /* =========================================================
    ysamut.fr — script commun
-   - en-tête et pied de page (une seule source pour tout le site)
+   - bouton thème et pied de page
    - thème clair / sombre
-   - recherche dans les listes, onglets
+   - onglets (menu horizontal de l'accueil)
    - visionneuse PDF (pdf.js), pages protégées
    Fonctionne aussi en ouvrant les fichiers directement (file://).
    ========================================================= */
@@ -12,25 +12,6 @@
   var script = document.currentScript;
   var ROOT = (script && script.getAttribute("data-root")) || "";
 
-  /* ---------- Menu : à modifier ici pour tout le site ---------- */
-  var NAV = [
-    { id: "accueil", label: "Accueil", href: "index.html" },
-    { id: "cpge", label: "Prépa PTSI", items: [
-      { label: "Mathématiques", href: "cpge/mathematiques.html" },
-      { label: "Informatique pour tous", href: "cpge/informatique.html" },
-      { label: "Programmes de khôlles", href: "cpge/kholles.html" },
-      { label: "Devoirs", href: "cpge/devoirs.html" }
-    ]},
-    { id: "episen", label: "EPISEN", items: [
-      { label: "Outils mathématiques", href: "episen/outils-mathematiques.html" },
-      { label: "Analyse numérique", href: "episen/analyse-numerique.html" }
-    ]},
-    { id: "divers", label: "Divers", items: [
-      { label: "Formulaires", href: "divers/formulaires-mathematiques.html" },
-      { label: "Papiers de mathématiques", href: "divers/papiers-mathematiques.html" },
-      { label: "Soit ou soient ?", href: "divers/soit-ou-soient.html" }
-    ]}
-  ];
   var GA_ID = "G-450HGK36PQ";
 
   /* ---------- Documents protégés par mot de passe ----------
@@ -61,73 +42,13 @@
     try { localStorage.setItem("theme", dark ? "dark" : "light"); } catch (e) {}
   }
 
-  /* ---------- En-tête ---------- */
+  /* ---------- En-tête : bouton thème clair / sombre ---------- */
   function buildHeader() {
-    var html = '<div class="topbar-inner">' +
-      '<a class="brand" href="' + ROOT + 'index.html"><span class="brand-name">Youri Samut</span><span class="brand-sub">Mathématiques en CPGE</span></a>' +
-      '<div class="top-actions">' +
-        '<nav class="nav" id="nav-principal" aria-label="Menu principal">';
-    NAV.forEach(function (g) {
-      if (!g.items) {
-        html += '<a href="' + ROOT + g.href + '"' + (section === g.id ? ' class="active" aria-current="page"' : '') + '>' + g.label + '</a>';
-        return;
-      }
-      html += '<div class="nav-group' + (section === g.id ? ' active' : '') + '">' +
-        '<button type="button" aria-expanded="false">' + g.label + ICON.chevron + '</button>' +
-        '<div class="nav-menu">';
-      g.items.forEach(function (it) {
-        var cur = it.href === page;
-        html += '<a href="' + ROOT + it.href + '"' + (cur ? ' class="active" aria-current="page"' : '') +
-          (it.lock ? ' data-lock="' + it.lock + '" title="Protégé par mot de passe"' : '') + '>' + it.label + (it.lock ? ICON.lock : '') + '</a>';
+    document.querySelectorAll(".theme-toggle").forEach(function (b) {
+      b.innerHTML = ICON.theme;
+      b.addEventListener("click", function () {
+        setTheme(document.documentElement.getAttribute("data-theme") !== "dark");
       });
-      html += '</div></div>';
-    });
-    html += '</nav>' +
-        '<button type="button" class="icon-btn theme-toggle" aria-label="Basculer le thème clair / sombre" title="Thème clair / sombre">' + ICON.theme + '</button>' +
-        '<button type="button" class="icon-btn nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-principal">' + ICON.menu + '</button>' +
-      '</div></div>';
-
-    var header = document.createElement("header");
-    header.className = "topbar";
-    header.innerHTML = html;
-    document.body.insertBefore(header, document.body.firstChild);
-
-    // Sous-menus
-    var groups = header.querySelectorAll(".nav-group");
-    function closeAll(except) {
-      groups.forEach(function (g) {
-        if (g !== except) { g.classList.remove("open"); g.querySelector("button").setAttribute("aria-expanded", "false"); }
-      });
-    }
-    groups.forEach(function (g) {
-      var btn = g.querySelector("button");
-      btn.addEventListener("click", function (e) {
-        e.stopPropagation();
-        var open = !g.classList.contains("open");
-        closeAll(g);
-        g.classList.toggle("open", open);
-        btn.setAttribute("aria-expanded", open ? "true" : "false");
-      });
-    });
-    document.addEventListener("click", function (e) { if (!header.contains(e.target)) { closeAll(); closeMobile(); } });
-    document.addEventListener("keydown", function (e) { if (e.key === "Escape") { closeAll(); closeMobile(); } });
-
-    // Menu mobile
-    var toggle = header.querySelector(".nav-toggle");
-    function closeMobile() { header.classList.remove("nav-open"); toggle.setAttribute("aria-expanded", "false"); }
-    toggle.addEventListener("click", function (e) {
-      e.stopPropagation();
-      var open = !header.classList.contains("nav-open");
-      header.classList.toggle("nav-open", open);
-      toggle.setAttribute("aria-expanded", open ? "true" : "false");
-      if (open) { // ouvre directement la rubrique courante
-        var cur = header.querySelector(".nav-group.active");
-        if (cur) { cur.classList.add("open"); cur.querySelector("button").setAttribute("aria-expanded", "true"); }
-      }
-    });
-
-    header.querySelector(".theme-toggle").addEventListener("click", function () {
-      setTheme(document.documentElement.getAttribute("data-theme") !== "dark");
     });
   }
 
@@ -137,16 +58,19 @@
     f.className = "site-footer";
     f.innerHTML = '<div class="site-footer-inner">' +
       '<span>© Youri Samut ' + new Date().getFullYear() + '</span>' +
-      '<nav aria-label="Liens du pied de page"><a href="' + ROOT + 'divers/liens-utiles.html">Liens utiles</a>' +
-      '<a href="mailto:samut.youri@hotmail.fr">Contact</a></nav></div>';
+      '<nav aria-label="Liens du pied de page"><a href="mailto:samut.youri@hotmail.fr">Contact</a>' +
+      '<a href="https://www.linkedin.com/in/youri-samut-8949b3149/" target="_blank" rel="noopener">LinkedIn</a>' +
+      '<a href="https://github.com/10ysamut" target="_blank" rel="noopener">GitHub</a></nav></div>';
     document.body.appendChild(f);
   }
 
-  /* ---------- Onglets ---------- */
+  /* ---------- Onglets ----------
+     L'adresse garde l'onglet ouvert (#ptsi, #episen…). Une ancre vers une rubrique
+     (#devoirs, #formulaires…) ouvre le bon onglet puis descend jusqu'à elle. */
   function setupTabs() {
-    document.querySelectorAll(".tabs").forEach(function (bar) {
+    document.querySelectorAll(".tabs, .menu").forEach(function (bar) {
       var btns = bar.querySelectorAll("button[aria-controls]");
-      function select(btn) {
+      function select(btn, keepHash) {
         btns.forEach(function (b) {
           var on = b === btn;
           b.setAttribute("aria-selected", on ? "true" : "false");
@@ -154,10 +78,37 @@
           var p = document.getElementById(b.getAttribute("aria-controls"));
           if (p) p.hidden = !on;
         });
+        if (!keepHash && history.replaceState) history.replaceState(null, "", "#" + btn.getAttribute("aria-controls"));
       }
-      btns.forEach(function (b) { b.addEventListener("click", function () { select(b); }); });
-      var initial = location.hash && bar.querySelector('button[aria-controls="' + location.hash.slice(1) + '"]');
-      select(initial || btns[0]);
+      function fromHash() {
+        var id = decodeURIComponent(location.hash.slice(1));
+        if (!id) return false;
+        var direct = bar.querySelector('button[aria-controls="' + id + '"]');
+        if (direct) { select(direct, true); return true; }
+        var target = document.getElementById(id);
+        var panel = target && target.closest(".tab-panel");
+        var b = panel && bar.querySelector('button[aria-controls="' + panel.id + '"]');
+        if (!b) return false;
+        select(b, true);
+        setTimeout(function () { target.scrollIntoView(); }, 0);
+        return true;
+      }
+      btns.forEach(function (b) {
+        b.addEventListener("click", function () {
+          select(b);
+          var top = bar.getBoundingClientRect().top + window.scrollY - 1;
+          if (bar.classList.contains("menu") && window.scrollY > top) window.scrollTo(0, top);
+        });
+      });
+      bar.addEventListener("keydown", function (e) {
+        if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+        var list = Array.prototype.slice.call(btns), i = list.indexOf(document.activeElement);
+        if (i < 0) return;
+        var n = list[(i + (e.key === "ArrowRight" ? 1 : list.length - 1)) % list.length];
+        n.focus(); select(n);
+      });
+      if (!fromHash()) select(btns[0], true);
+      window.addEventListener("hashchange", fromHash);
     });
   }
 
@@ -255,36 +206,35 @@
     });
   }
   function setupGate() {
-    var box = document.querySelector(".protected[data-hash]");
-    if (!box) return;
-    var key = box.getAttribute("data-key");
-    var ok = false;
-    try { ok = sessionStorage.getItem(key) === "1"; } catch (e) {}
-    if (ok) { box.hidden = false; return; }
-    var gate = document.createElement("div");
-    gate.className = "gate";
-    gate.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>' +
-      '<h3>Page protégée par mot de passe</h3>' +
-      '<form><input type="password" placeholder="Mot de passe" autocomplete="off" aria-label="Mot de passe"><button type="submit">Valider</button></form>' +
-      '<p class="gate-error" role="alert">Mot de passe incorrect</p>';
-    box.parentNode.insertBefore(gate, box);
-    var input = gate.querySelector("input");
-    if (!window.crypto || !crypto.subtle) {
-      gate.querySelector(".gate-error").textContent = "Ouvrez le site via https pour déverrouiller cette page.";
-    }
-    gate.querySelector("form").addEventListener("submit", function (e) {
-      e.preventDefault();
-      sha256Hex(input.value).then(function (h) {
-        if (h === box.getAttribute("data-hash")) {
-          try { sessionStorage.setItem(key, "1"); } catch (err) {}
-          gate.remove(); box.hidden = false;
-        } else {
-          gate.querySelector(".gate-error").style.display = "block";
-          input.value = ""; input.focus();
-        }
-      }).catch(function () { gate.querySelector(".gate-error").style.display = "block"; });
+    document.querySelectorAll(".protected[data-hash]").forEach(function (box) {
+      var key = box.getAttribute("data-key");
+      var ok = false;
+      try { ok = sessionStorage.getItem(key) === "1"; } catch (e) {}
+      if (ok) { box.hidden = false; return; }
+      var gate = document.createElement("div");
+      gate.className = "gate";
+      gate.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>' +
+        '<h3>Réservé à la classe</h3>' +
+        '<form><input type="password" placeholder="Mot de passe" autocomplete="off" aria-label="Mot de passe"><button type="submit">Valider</button></form>' +
+        '<p class="gate-error" role="alert">Mot de passe incorrect</p>';
+      box.parentNode.insertBefore(gate, box);
+      var input = gate.querySelector("input");
+      if (!window.crypto || !crypto.subtle) {
+        gate.querySelector(".gate-error").textContent = "Ouvrez le site via https pour déverrouiller cette rubrique.";
+      }
+      gate.querySelector("form").addEventListener("submit", function (e) {
+        e.preventDefault();
+        sha256Hex(input.value).then(function (h) {
+          if (h === box.getAttribute("data-hash")) {
+            try { sessionStorage.setItem(key, "1"); } catch (err) {}
+            gate.remove(); box.hidden = false;
+          } else {
+            gate.querySelector(".gate-error").style.display = "block";
+            input.value = ""; input.focus();
+          }
+        }).catch(function () { gate.querySelector(".gate-error").style.display = "block"; });
+      });
     });
-    input.focus();
   }
 
   /* ---------- Filtres par thème (liste avec data-theme sur chaque ligne) ---------- */
