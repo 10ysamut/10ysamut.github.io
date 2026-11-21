@@ -57,11 +57,11 @@
     var f = document.createElement("footer");
     f.className = "site-footer";
     f.innerHTML = '<div class="site-footer-inner">' +
-      '<span>© Youri Samut ' + new Date().getFullYear() + '</span>' +
-      '<nav aria-label="Liens du pied de page"><a href="' + ROOT + 'index.html#liens-utiles">Liens utiles</a>' +
-      '<a href="mailto:samut.youri@hotmail.fr">Contact</a>' +
-      '<a href="https://www.linkedin.com/in/youri-samut-8949b3149/" target="_blank" rel="noopener">LinkedIn</a>' +
-      '<a href="https://github.com/10ysamut" target="_blank" rel="noopener">GitHub</a></nav></div>';
+      '<span>© <span class="foot-long">Youri Samut</span><span class="foot-short">YSA</span> ' + new Date().getFullYear() + '</span>' +
+      '<nav aria-label="Liens du pied de page"><a class="foot-icon" href="' + ROOT + 'index.html#liens-utiles" title="Liens utiles" aria-label="Liens utiles"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.8 9.2a3 3 0 0 0 4.3 0l2.3-2.3a3 3 0 0 0-4.3-4.3l-1 1M9.2 6.8a3 3 0 0 0-4.3 0L2.6 9.1a3 3 0 0 0 4.3 4.3l1-1" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>' +
+      '<a class="foot-icon" href="mailto:samut.youri@hotmail.fr" title="M\'écrire" aria-label="E-mail"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 3.5h13v9h-13z M1.5 3.5L8 9l6.5-5.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></a>' +
+      '<a class="foot-icon" href="https://www.linkedin.com/in/youri-samut-8949b3149/" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M1 1.8C1 1.4 1.4 1 1.8 1h12.4c.4 0 .8.4.8.8v12.4c0 .4-.4.8-.8.8H1.8c-.4 0-.8-.4-.8-.8zm3.3 11V6.3H2.2v6.5zM3.2 5.4c.7 0 1.2-.5 1.2-1.1 0-.7-.5-1.2-1.2-1.2S2 3.6 2 4.3c0 .6.5 1.1 1.2 1.1zm4.1 7.4V9.2c0-.2 0-.4.1-.5.2-.4.5-.8 1.1-.8.8 0 1.1.6 1.1 1.5v3.4h2.1V9.1c0-2-1-2.9-2.4-2.9-1.1 0-1.6.6-1.9 1.1V6.3H5.3c0 .6 0 6.5 0 6.5z"/></svg></a>' +
+      '<a class="foot-icon" href="https://github.com/10ysamut" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 .2a8 8 0 0 0-2.5 15.6c.4 0 .5-.2.5-.4v-1.5c-2.2.5-2.7-1-2.7-1-.4-.9-.9-1.2-.9-1.2-.7-.5.1-.5.1-.5.8.1 1.2.8 1.2.8.7 1.3 1.9.9 2.4.7 0-.5.3-.9.5-1.1-1.8-.2-3.6-.9-3.6-4 0-.9.3-1.6.8-2.1-.1-.2-.4-1 .1-2.1 0 0 .7-.2 2.2.8a7.5 7.5 0 0 1 4 0c1.5-1 2.2-.8 2.2-.8.4 1.1.2 1.9.1 2.1.5.6.8 1.3.8 2.1 0 3.1-1.9 3.8-3.7 4 .3.3.6.8.6 1.5v2.2c0 .2.1.5.6.4A8 8 0 0 0 8 .2z"/></svg></a></nav></div>';
     document.body.appendChild(f);
   }
 
@@ -113,6 +113,7 @@
       var isMenu = bar.classList.contains("menu");
       // Hauteur où le menu se colle en haut (mesurée sur l'élément qui le précède, le menu étant « sticky »)
       function menuTop() {
+        if (bar.closest(".topnav")) return 0;
         var prev = (bar.closest(".menu-bar") || bar).previousElementSibling;
         return prev ? prev.getBoundingClientRect().bottom + window.scrollY : 0;
       }
