@@ -307,20 +307,36 @@
      Dès que le PDF est déposé, le lien redevient actif tout seul. */
   function markMissingDocs() {
     if (location.protocol === "file:" || !window.fetch) return Promise.resolve();
-    var checks = [];
-    document.querySelectorAll("a.doc[href]").forEach(function (a) {
-      var url;
-      try { url = new URL(a.getAttribute("href"), location.href); } catch (e) { return; }
-      if (url.origin !== location.origin || !/\.pdf$/i.test(url.pathname)) return;
-      checks.push(fetch(url.href, { method: "HEAD", cache: "no-cache" }).then(function (r) {
-        if (r.status !== 404) return;
-        a.classList.add("disabled");
-        a.setAttribute("aria-disabled", "true");
-        a.setAttribute("tabindex", "-1");
-        a.setAttribute("title", "Bientôt disponible");
-      }).catch(function () {}));
+    var links = Array.prototype.filter.call(document.querySelectorAll("a.doc[href]"), function (a) {
+      try { var u = new URL(a.getAttribute("href"), location.href); return u.origin === location.origin && /\.pdf$/i.test(u.pathname); }
+      catch (e) { return false; }
     });
-    return Promise.all(checks);
+    function mark(a) {
+      a.classList.add("disabled");
+      a.setAttribute("aria-disabled", "true");
+      a.setAttribute("tabindex", "-1");
+      a.setAttribute("title", "Bientôt disponible");
+    }
+    // Vérifie un PDF ; en cas d'échec réseau on réessaie, et sans réponse fiable on le considère absent
+    function check(a, essai) {
+      var url = new URL(a.getAttribute("href"), location.href).href;
+      return fetch(url, { method: "HEAD", cache: "no-cache" }).then(function (r) {
+        if (!r.ok) mark(a);
+      }).catch(function () {
+        if (essai < 2) return new Promise(function (ok) { setTimeout(ok, 400 * (essai + 1)); }).then(function () { return check(a, essai + 1); });
+        mark(a);
+      });
+    }
+    // Pas plus de 6 vérifications à la fois (au-delà, certaines requêtes échouaient)
+    var i = 0;
+    function worker() {
+      if (i >= links.length) return Promise.resolve();
+      var a = links[i++];
+      return check(a, 0).then(worker);
+    }
+    var pool = [];
+    for (var k = 0; k < 6; k++) pool.push(worker());
+    return Promise.all(pool);
   }
 
   /* ---------- Cours de PTSI : chapitres pas encore en ligne repliés ---------- */
