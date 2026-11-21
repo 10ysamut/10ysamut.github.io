@@ -14,26 +14,15 @@
 
   var GA_ID = "G-450HGK36PQ";
 
-  /* ---------- Documents protégés par mot de passe ----------
-     Un lien <a href="…pdf" data-lock="recueil"> demande le mot de passe
-     puis ouvre directement le PDF (empreinte SHA-256 du mot de passe). */
-  var LOCKS = {
-    recueil: { key: "pwGateOK_recueil_exercices", hash: "9d347712c8ecb172fcae9b90eb212f6849b6bfef525276355cebdcf6656ebd5f" }
-  };
-
   /* ---------- Icônes ---------- */
   var ICON = {
     chevron: '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-    menu: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
     ext: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M9 2h5v5M14 2L7 9M12 9.5V14H2V4h4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
     theme: '<svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M8 1.8a6.2 6.2 0 0 1 0 12.4z" fill="currentColor"/></svg>',
     lock: '<svg class="lock" viewBox="0 0 16 16" aria-hidden="true"><rect x="3.5" y="7" width="9" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>',
-    doc: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 2h7l3 3v9H3z M10 2v3h3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>',
     close: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>'
   };
 
-  var page = document.body.getAttribute("data-page") || "";
-  var section = document.body.getAttribute("data-section") || "";
 
   /* ---------- Thème ---------- */
   function setTheme(dark) {
@@ -312,93 +301,6 @@
     });
   }
 
-  /* ---------- Filtres par thème (liste avec data-theme sur chaque ligne) ---------- */
-  function setupFilters() {
-    document.querySelectorAll(".filters[data-for]").forEach(function (bar) {
-      var list = document.getElementById(bar.getAttribute("data-for"));
-      if (!list) return;
-      var rows = list.querySelectorAll(".row[data-theme]");
-      var themes = ["Tout"];
-      rows.forEach(function (r) { var t = r.getAttribute("data-theme"); if (themes.indexOf(t) < 0) themes.push(t); });
-      bar.setAttribute("role", "group");
-      bar.innerHTML = themes.map(function (t) { return '<button type="button" aria-pressed="false">' + t + '</button>'; }).join("");
-      var btns = bar.querySelectorAll("button");
-      function select(btn) {
-        var t = btn.textContent;
-        btns.forEach(function (b) { b.setAttribute("aria-pressed", b === btn ? "true" : "false"); });
-        rows.forEach(function (r) { r.hidden = t !== "Tout" && r.getAttribute("data-theme") !== t; });
-      }
-      btns.forEach(function (b) { b.addEventListener("click", function () { select(b); }); });
-      select(btns[0]);
-    });
-  }
-
-  /* ---------- Chiffres clés calculés depuis la liste ---------- */
-  function setupCounts() {
-    document.querySelectorAll("[data-count]").forEach(function (el) {
-      var list = document.getElementById(el.getAttribute("data-list"));
-      if (!list) return;
-      var sel = el.getAttribute("data-count") === "td" ? ".doc-pair" : ".row";
-      el.textContent = list.querySelectorAll(sel).length;
-    });
-  }
-
-  /* ---------- Documents protégés : mot de passe puis ouverture directe ---------- */
-  function setupLocks() {
-    var dlg = null, pending = null;
-    function unlocked(lock) { try { return sessionStorage.getItem(lock.key) === "1"; } catch (e) { return false; } }
-    function hide() { if (dlg) dlg.classList.remove("open"); pending = null; }
-    function ask(lock, url) {
-      if (!dlg) {
-        dlg = document.createElement("div");
-        dlg.id = "pwDialog";
-        dlg.innerHTML = '<div class="gate" role="dialog" aria-modal="true" aria-labelledby="pwTitle">' +
-          '<button type="button" class="pw-close" aria-label="Fermer">' + ICON.close + '</button>' +
-          '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>' +
-          '<h3 id="pwTitle">Document protégé par mot de passe</h3>' +
-          '<form><input type="password" placeholder="Mot de passe" autocomplete="off" aria-label="Mot de passe"><button type="submit">Ouvrir</button></form>' +
-          '<p class="gate-error" role="alert">Mot de passe incorrect</p></div>';
-        document.body.appendChild(dlg);
-        dlg.addEventListener("click", function (e) { if (e.target === dlg) hide(); });
-        dlg.querySelector(".pw-close").addEventListener("click", hide);
-        document.addEventListener("keydown", function (e) { if (e.key === "Escape") hide(); });
-        dlg.querySelector("form").addEventListener("submit", function (e) {
-          e.preventDefault();
-          var input = dlg.querySelector("input"), err = dlg.querySelector(".gate-error");
-          if (!pending) return;
-          var p = pending;
-          if (!window.crypto || !crypto.subtle) { err.textContent = "Ouvrez le site via https pour déverrouiller ce document."; err.style.display = "block"; return; }
-          sha256Hex(input.value).then(function (h) {
-            if (h === p.lock.hash) {
-              try { sessionStorage.setItem(p.lock.key, "1"); } catch (x) {}
-              hide(); openPdf(p.url);
-            } else {
-              err.textContent = "Mot de passe incorrect"; err.style.display = "block";
-              input.value = ""; input.focus();
-            }
-          });
-        });
-      }
-      pending = { lock: lock, url: url };
-      dlg.querySelector(".gate-error").style.display = "none";
-      dlg.querySelector("input").value = "";
-      dlg.classList.add("open");
-      dlg.querySelector("input").focus();
-    }
-    // capture : passe avant la liseuse PDF
-    document.addEventListener("click", function (e) {
-      var a = e.target.closest && e.target.closest("a[data-lock]");
-      if (!a) return;
-      var lock = LOCKS[a.getAttribute("data-lock")];
-      if (!lock) return;
-      e.preventDefault(); e.stopPropagation();
-      document.querySelectorAll(".nav-group.open").forEach(function (g) { g.classList.remove("open"); g.querySelector("button").setAttribute("aria-expanded", "false"); });
-      if (a.closest(".topbar")) a.closest(".topbar").classList.remove("nav-open");
-      var url = new URL(a.getAttribute("href"), location.href).href;
-      if (unlocked(lock)) openPdf(url); else ask(lock, url);
-    }, true);
-  }
-
   /* ---------- Documents pas encore en ligne ----------
      Chaque lien vers un PDF du site est vérifié : si le fichier n'existe pas encore,
      le bouton passe en pointillés (« à venir ») et n'est plus cliquable.
@@ -480,6 +382,30 @@
     fold(after, "soon", "Voir les %n programmes à venir ▾", "Masquer les programmes à venir ▴");
   }
 
+  /* ---------- Date de mise à jour = date du dernier commit sur GitHub (automatique) ---------- */
+  function setupUpdated() {
+    var span = document.querySelector(".site-footer-inner > span");
+    if (!span || !window.fetch) return;
+    function show(iso) {
+      var d = new Date(iso);
+      if (isNaN(d)) return;
+      var long = d.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
+      var court = d.toLocaleDateString("fr-FR", { day: "2-digit", month: "2-digit", year: "2-digit" });
+      span.insertAdjacentHTML("beforeend", '<span class="maj"> · <span class="foot-long">mis à jour le ' + long + '</span><span class="foot-short">màj ' + court + '</span></span>');
+    }
+    var KEY = "ysa-derniere-maj";
+    try { var c = sessionStorage.getItem(KEY); if (c) { show(c); return; } } catch (e) {}
+    fetch("https://api.github.com/repos/10ysamut/10ysamut.github.io/commits?per_page=1", { headers: { Accept: "application/vnd.github+json" } })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) {
+        var iso = j && j[0] && j[0].commit && j[0].commit.committer && j[0].commit.committer.date;
+        if (!iso) return;
+        try { sessionStorage.setItem(KEY, iso); } catch (e) {}
+        show(iso);
+      })
+      .catch(function () {});
+  }
+
   /* ---------- Bouton « retour en haut » ---------- */
   function setupToTop() {
     var b = document.createElement("button");
@@ -489,7 +415,12 @@
     b.innerHTML = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M3.5 7.5L8 3l4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     b.addEventListener("click", function () { window.scrollTo(0, 0); });
     document.body.appendChild(b);
-    function check() { b.classList.toggle("on", window.scrollY > 900); }
+    // caché tant qu'on est en haut, et quand le pied de page est visible (pour ne rien masquer)
+    function check() {
+      var f = document.querySelector(".site-footer");
+      var footVisible = f && f.getBoundingClientRect().top < window.innerHeight;
+      b.classList.toggle("on", window.scrollY > 900 && !footVisible);
+    }
     window.addEventListener("scroll", check, { passive: true });
     check();
   }
@@ -509,12 +440,10 @@
   buildHeader();
   buildFooter();
   setupTabs();
-  setupFilters();
-  setupCounts();
   setupPdf();
-  setupLocks();
   setupGate();
   setupToTop();
+  setupUpdated();
   markMissingDocs().then(function () { setupFold(); setupKholles(); });
   setupAnalytics();
 })();
