@@ -382,3 +382,32 @@ body { border-top: 4px solid var(--accent); }
   .intro-hero { padding-top: 1.5rem; padding-bottom: .75rem; }
   .intro-hero p { margin-top: .2rem; }
 }
+
+/* Icône à la place du numéro (« Je prépare ma khôlle ») */
+.items .ty .tyico { display: block; width: 1.9rem; height: 1.9rem; fill: none; stroke: var(--muted); stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; margin-top: .1rem; }
+
+/* ---------- Mot de passe : bouton cadenas dans le titre, champ qui apparaît à côté ---------- */
+.sec-title { flex-wrap: wrap; row-gap: .4rem; }
+.lock-btn {
+  display: inline-flex; align-items: center; gap: .35rem; margin-left: .35rem;
+  font: inherit; font-size: .8rem; font-weight: 500; letter-spacing: .01em;
+  color: var(--accent); background: color-mix(in srgb, var(--accent) 9%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent); border-radius: 999px;
+  padding: .28rem .75rem .28rem .6rem; cursor: pointer; line-height: 1.2;
+  transition: background .15s, color .15s, border-color .15s;
+}
+.lock-btn svg { width: .95rem; height: .95rem; }
+.lock-btn:hover, .lock-btn:focus-visible { background: var(--accent); border-color: var(--accent); color: var(--accent-fg); }
+.lock-form { display: inline-flex; align-items: center; gap: .3rem; margin-left: .35rem; border: 1px solid var(--border-strong); border-radius: 999px; background: var(--surface); padding: .12rem .12rem .12rem .85rem; }
+.lock-form[hidden], .lock-btn[hidden] { display: none; }
+.lock-form:focus-within { border-color: var(--accent); }
+.lock-form input { width: 11rem; border: 0; background: none; padding: .2rem 0; font: inherit; font-size: 16px; font-weight: 300; color: var(--text); }
+.lock-form input:focus { outline: none; }
+.lock-form button { display: inline-flex; align-items: center; justify-content: center; width: 1.85rem; height: 1.85rem; padding: 0; border: 0; border-radius: 999px; background: var(--accent); color: var(--accent-fg); cursor: pointer; flex: none; }
+.lock-form button svg { width: .85rem; height: .85rem; }
+.sections .gate-error { display: none; color: #B3261E; font-size: .85rem; margin: -.2rem 0 .4rem; }
+:root[data-theme="dark"] .sections .gate-error { color: #F2B8B5; }
+@media (max-width: 34rem) {
+  .lock-form { order: 3; width: 100%; margin-left: 0; }
+  .lock-form input { flex: 1; width: auto; }
+}

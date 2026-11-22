@@ -270,36 +270,60 @@
       return Array.prototype.map.call(new Uint8Array(buf), function (b) { return b.toString(16).padStart(2, "0"); }).join("");
     });
   }
+  // Rubrique protégée : un bouton « cadenas » dans le titre ; un clic fait apparaître
+  // le champ du mot de passe juste à côté. Une fois déverrouillée, le cadenas disparaît.
   function setupGate() {
+    var LOCKSVG = '<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3.5" y="7" width="9" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>';
+    var ARROW = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     document.querySelectorAll(".protected[data-hash]").forEach(function (box) {
       var key = box.getAttribute("data-key");
+      var sec = box.closest("section");
+      var title = sec && sec.querySelector(".sec-title");
+      var oldLock = title && title.querySelector(".lock");
       var ok = false;
       try { ok = sessionStorage.getItem(key) === "1"; } catch (e) {}
-      if (ok) { box.hidden = false; return; }
-      var gate = document.createElement("div");
-      gate.className = "gate";
-      gate.innerHTML = '<h3>Réservé à la classe</h3>' +
-        '<form><input type="password" placeholder="Mot de passe" autocomplete="off" aria-label="Mot de passe"><button type="submit">Valider</button></form>' +
-        '<p class="gate-error" role="alert">Mot de passe incorrect</p>';
-      box.parentNode.insertBefore(gate, box);
-      var input = gate.querySelector("input");
-      if (!window.crypto || !crypto.subtle) {
-        gate.querySelector(".gate-error").textContent = "Ouvrez le site via https pour déverrouiller cette rubrique.";
-      }
-      gate.querySelector("form").addEventListener("submit", function (e) {
+      if (ok) { box.hidden = false; if (oldLock) oldLock.remove(); return; }
+
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "lock-btn";
+      btn.title = "Entrer le mot de passe";
+      btn.setAttribute("aria-expanded", "false");
+      btn.innerHTML = LOCKSVG + '<span>Déverrouiller</span>';
+      var form = document.createElement("form");
+      form.className = "lock-form";
+      form.hidden = true;
+      form.innerHTML = '<input type="password" placeholder="Mot de passe" autocomplete="off" aria-label="Mot de passe">' +
+        '<button type="submit" aria-label="Valider" title="Valider">' + ARROW + '</button>';
+      var err = document.createElement("p");
+      err.className = "gate-error";
+      err.setAttribute("role", "alert");
+      err.textContent = (!window.crypto || !crypto.subtle) ? "Ouvrez le site via https pour déverrouiller cette rubrique." : "Mot de passe incorrect";
+      if (oldLock) oldLock.replaceWith(btn); else if (title) title.appendChild(btn);
+      btn.after(form);
+      box.parentNode.insertBefore(err, box);
+      var input = form.querySelector("input");
+
+      function open() { btn.hidden = true; form.hidden = false; btn.setAttribute("aria-expanded", "true"); input.focus(); }
+      function close() { if (input.value) return; form.hidden = true; btn.hidden = false; err.style.display = "none"; btn.setAttribute("aria-expanded", "false"); }
+      btn.addEventListener("click", open);
+      input.addEventListener("keydown", function (e) { if (e.key === "Escape") { input.value = ""; close(); btn.focus(); } });
+      document.addEventListener("click", function (e) { if (!form.hidden && !form.contains(e.target) && e.target !== btn && !btn.contains(e.target)) close(); });
+      form.addEventListener("submit", function (e) {
         e.preventDefault();
         sha256Hex(input.value).then(function (h) {
           if (h === box.getAttribute("data-hash")) {
-            try { sessionStorage.setItem(key, "1"); } catch (err) {}
-            gate.remove(); box.hidden = false;
+            try { sessionStorage.setItem(key, "1"); } catch (x) {}
+            form.remove(); btn.remove(); err.remove(); box.hidden = false;
           } else {
-            gate.querySelector(".gate-error").style.display = "block";
+            err.style.display = "block";
             input.value = ""; input.focus();
           }
-        }).catch(function () { gate.querySelector(".gate-error").style.display = "block"; });
+        }).catch(function () { err.style.display = "block"; });
       });
     });
   }
+
 
   /* ---------- Documents pas encore en ligne ----------
      Chaque lien vers un PDF du site est vérifié : si le fichier n'existe pas encore,
@@ -369,7 +393,7 @@
   function setupKholles() {
     var list = document.querySelector("#kholles .items");
     if (!list) return;
-    var rows = Array.prototype.filter.call(list.children, function (li) { return li.querySelector(".ty"); });
+    var rows = Array.prototype.filter.call(list.children, function (li) { return li.querySelector(".ty") && !li.classList.contains("prep"); });
     var online = rows.filter(function (li) { var d = li.querySelector(".ds .doc"); return d && !d.classList.contains("disabled"); });
     var last = online[online.length - 1];
     if (!last) return;
