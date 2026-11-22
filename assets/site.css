@@ -440,3 +440,16 @@ body { border-top: 4px solid var(--accent); }
 .sec-title .hl { background: linear-gradient(transparent 58%, color-mix(in srgb, var(--accent) 22%, transparent) 58%); padding: 0 .15em; margin-left: -.15em; border-radius: 2px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
 :root[data-theme="dark"] .sec-title .hl { background: linear-gradient(transparent 58%, color-mix(in srgb, var(--accent) 28%, transparent) 58%); }
 @media (max-width: 34rem) { .sec-title { font-size: 1.35rem; } }
+
+/* ---------- Téléphone : numéros (Ch. 07, Prog. KH6…) à la même taille que sur ordinateur,
+   centrés verticalement face au titre et aux boutons ---------- */
+@media (max-width: 34rem) {
+  .items li:has(> .ty) {
+    display: grid; grid-template-columns: 3.6rem minmax(0, 1fr); column-gap: .7rem; row-gap: .35rem; align-items: center;
+  }
+  .items li:has(> .ty) > .ty { grid-row: 1 / span 2; width: auto; align-self: center; font-size: .8rem; }
+  .items li:has(> .ty) > .ty b { font-size: 1.55rem; }
+  .items li:has(> .ty) > .tt { grid-column: 2; }
+  .items li:has(> .ty) > .ds { grid-column: 2; width: auto; padding-left: 0; justify-content: flex-start; }
+  .items li:has(> .ty):not(:has(> .ds)) > .ty { grid-row: 1; }
+}
