@@ -478,3 +478,9 @@ body { overflow-x: clip; }
 @media (max-width: 34rem) {
   .intro-hero p { margin-inline: -36px; font-size: min(1.1rem, calc((100vw - 24px) / 22.6)); }
 }
+
+/* Téléphone : les lignes repliées (chapitres à venir, anciens programmes) restent cachées tant qu'on n'a pas cliqué */
+@media (max-width: 34rem) {
+  .items li.soon:not(.x), .items li.old:not(.x) { display: none; }
+  .items.show-soon li.soon:has(> .ty), .items.show-old li.old:has(> .ty) { display: grid; }
+}
