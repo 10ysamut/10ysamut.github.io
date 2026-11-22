@@ -446,6 +446,25 @@
       .catch(function () {});
   }
 
+  /* ---------- Sous-titres des listes : nombre de documents à droite ---------- */
+  function setupSepCounts() {
+    var MOTS = { DST: ["devoir", "devoirs"], IE: ["interrogation", "interrogations"], TP: ["TP", "TP"] };
+    document.querySelectorAll(".items li.sep").forEach(function (sep) {
+      var n = 0, type = "", li = sep.nextElementSibling;
+      while (li && !li.classList.contains("sep")) {
+        var ty = li.querySelector(".ty");
+        if (ty) { n++; if (!type) type = (ty.firstChild && ty.firstChild.textContent || "").trim(); }
+        li = li.nextElementSibling;
+      }
+      var mots = MOTS[type];
+      if (!n || !mots) return;
+      var em = document.createElement("em");
+      em.className = "sep-n";
+      em.textContent = n + " " + (n > 1 ? mots[1] : mots[0]);
+      sep.appendChild(em);
+    });
+  }
+
   /* ---------- Bouton « retour en haut » ---------- */
   function setupToTop() {
     var b = document.createElement("button");
@@ -483,6 +502,7 @@
   setupPdf();
   setupGate();
   setupToTop();
+  setupSepCounts();
   setupUpdated();
   markMissingDocs().then(function () { setupFold(); setupKholles(); });
   setupAnalytics();
