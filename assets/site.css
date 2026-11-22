@@ -423,3 +423,20 @@ body { border-top: 4px solid var(--accent); }
 .items li.sep a { color: var(--accent); }
 .items li.sep .sep-n { flex: none; font-style: normal; font-weight: 300; font-size: .8rem; color: var(--muted); }
 @media (max-width: 34rem) { .items li.sep { flex-wrap: nowrap; padding-right: .8rem; } }
+
+/* ---------- Filigrane : grand Σ très pâle derrière le nom ---------- */
+.intro-hero { position: relative; isolation: isolate; }
+.intro-hero::before {
+  content: "Σ"; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -46%); z-index: -1;
+  font-family: Georgia, "Times New Roman", serif; font-size: 6.4rem; line-height: 1;
+  color: var(--accent); opacity: .06; pointer-events: none;
+}
+:root[data-theme="dark"] .intro-hero::before { opacity: .09; }
+@media (max-width: 34rem) { .intro-hero::before { font-size: 5.6rem; } }
+
+/* ---------- Titres de rubrique : effet surligneur ---------- */
+.sec-title { position: relative; font-size: 1.6rem; padding-bottom: 0; margin-bottom: .75rem; }
+.sec-title::after { display: none; }
+.sec-title .hl { background: linear-gradient(transparent 58%, color-mix(in srgb, var(--accent) 22%, transparent) 58%); padding: 0 .15em; margin-left: -.15em; border-radius: 2px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+:root[data-theme="dark"] .sec-title .hl { background: linear-gradient(transparent 58%, color-mix(in srgb, var(--accent) 28%, transparent) 58%); }
+@media (max-width: 34rem) { .sec-title { font-size: 1.35rem; } }
