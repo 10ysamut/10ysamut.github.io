@@ -372,3 +372,13 @@ body { border-top: 4px solid var(--accent); }
 @keyframes panneau-fondu { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 .sections .tab-panel:not([hidden]) { animation: panneau-fondu .25s ease; }
 @media (prefers-reduced-motion: reduce) { .sections .tab-panel:not([hidden]) { animation: none; } }
+
+/* Un peu plus d'air autour du nom et du sous-titre (ordinateur) */
+.intro-hero { padding-top: 1.6rem; padding-bottom: .8rem; }
+.intro-hero p { margin-top: .2rem; }
+
+/* Téléphone : un peu plus d'air autour du nom et du sous-titre */
+@media (max-width: 34rem) {
+  .intro-hero { padding-top: 1.5rem; padding-bottom: .75rem; }
+  .intro-hero p { margin-top: .2rem; }
+}
