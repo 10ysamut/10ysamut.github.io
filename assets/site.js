@@ -448,7 +448,7 @@
 
   /* ---------- Sous-titres des listes : nombre de documents à droite ---------- */
   function setupSepCounts() {
-    var MOTS = { DST: ["devoir", "devoirs"], IE: ["interrogation", "interrogations"], TP: ["TP", "TP"] };
+    var MOTS = { "Ch.": ["chapitre", "chapitres"], DST: ["devoir", "devoirs"], IE: ["interrogation", "interrogations"], TP: ["TP", "TP"] };
     document.querySelectorAll(".items li.sep").forEach(function (sep) {
       var n = 0, type = "", li = sep.nextElementSibling;
       while (li && !li.classList.contains("sep")) {
