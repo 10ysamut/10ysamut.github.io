@@ -47,134 +47,45 @@
     f.className = "site-footer";
     f.innerHTML = '<div class="site-footer-inner">' +
       '<span>© <span class="foot-long">Youri Samut</span><span class="foot-short">YSA</span> ' + new Date().getFullYear() + '</span>' +
-      '<nav aria-label="Liens du pied de page"><a class="foot-icon" href="' + ROOT + 'index.html#liens-utiles" title="Liens utiles" aria-label="Liens utiles"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.8 9.2a3 3 0 0 0 4.3 0l2.3-2.3a3 3 0 0 0-4.3-4.3l-1 1M9.2 6.8a3 3 0 0 0-4.3 0L2.6 9.1a3 3 0 0 0 4.3 4.3l1-1" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>' +
+      '<nav aria-label="Liens du pied de page"><a class="foot-icon" href="' + ROOT + 'liens-utiles.html" title="Liens utiles" aria-label="Liens utiles"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.8 9.2a3 3 0 0 0 4.3 0l2.3-2.3a3 3 0 0 0-4.3-4.3l-1 1M9.2 6.8a3 3 0 0 0-4.3 0L2.6 9.1a3 3 0 0 0 4.3 4.3l1-1" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>' +
       '<a class="foot-icon" href="mailto:samut.youri@hotmail.fr" title="M\'écrire" aria-label="E-mail"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 3.5h13v9h-13z M1.5 3.5L8 9l6.5-5.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></a>' +
       '<a class="foot-icon" href="https://www.linkedin.com/in/youri-samut-8949b3149/" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M1 1.8C1 1.4 1.4 1 1.8 1h12.4c.4 0 .8.4.8.8v12.4c0 .4-.4.8-.8.8H1.8c-.4 0-.8-.4-.8-.8zm3.3 11V6.3H2.2v6.5zM3.2 5.4c.7 0 1.2-.5 1.2-1.1 0-.7-.5-1.2-1.2-1.2S2 3.6 2 4.3c0 .6.5 1.1 1.2 1.1zm4.1 7.4V9.2c0-.2 0-.4.1-.5.2-.4.5-.8 1.1-.8.8 0 1.1.6 1.1 1.5v3.4h2.1V9.1c0-2-1-2.9-2.4-2.9-1.1 0-1.6.6-1.9 1.1V6.3H5.3c0 .6 0 6.5 0 6.5z"/></svg></a>' +
       '<a class="foot-icon" href="https://github.com/10ysamut" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 .2a8 8 0 0 0-2.5 15.6c.4 0 .5-.2.5-.4v-1.5c-2.2.5-2.7-1-2.7-1-.4-.9-.9-1.2-.9-1.2-.7-.5.1-.5.1-.5.8.1 1.2.8 1.2.8.7 1.3 1.9.9 2.4.7 0-.5.3-.9.5-1.1-1.8-.2-3.6-.9-3.6-4 0-.9.3-1.6.8-2.1-.1-.2-.4-1 .1-2.1 0 0 .7-.2 2.2.8a7.5 7.5 0 0 1 4 0c1.5-1 2.2-.8 2.2-.8.4 1.1.2 1.9.1 2.1.5.6.8 1.3.8 2.1 0 3.1-1.9 3.8-3.7 4 .3.3.6.8.6 1.5v2.2c0 .2.1.5.6.4A8 8 0 0 0 8 .2z"/></svg></a></nav></div>';
     document.body.appendChild(f);
   }
 
-  /* ---------- Onglets ----------
-     L'adresse garde l'onglet ouvert (#ptsi, #episen…). Une ancre vers une rubrique
-     (#devoirs, #formulaires…) ouvre le bon onglet puis descend jusqu'à elle. */
-  function setupTabs() {
-    document.querySelectorAll(".tabs, .menu").forEach(function (bar) {
-      var btns = bar.querySelectorAll("button[aria-controls]");
-      // Sous-titre sous le nom, propre à chaque onglet (attribut data-sous-titre du panneau)
-      function setSubtitle(p) {
-        var st = document.getElementById("sous-titre");
-        if (st && p.hasAttribute("data-sous-titre")) st.textContent = p.getAttribute("data-sous-titre");
-      }
-      // Panneaux sans onglet (ex. Liens utiles), ouverts seulement depuis le pied de page
-      var extras = document.querySelectorAll(".tab-panel[data-hors-menu]");
-      function showExtra(p) {
-        btns.forEach(function (b) {
-          b.setAttribute("aria-selected", "false");
-          var q = document.getElementById(b.getAttribute("aria-controls"));
-          if (q) q.hidden = true;
-        });
-        extras.forEach(function (x) { x.hidden = x !== p; });
-        setSubtitle(p);
-        var top = menuTop();
-        if (window.scrollY > top) window.scrollTo(0, top);
-      }
-      function select(btn, keepHash) {
-        extras.forEach(function (x) { x.hidden = true; });
-        btns.forEach(function (b) {
-          var on = b === btn;
-          b.setAttribute("aria-selected", on ? "true" : "false");
-          b.tabIndex = on ? 0 : -1;
-          var p = document.getElementById(b.getAttribute("aria-controls"));
-          if (p) p.hidden = !on;
-          if (on && p) setSubtitle(p);
-        });
-        if (!keepHash && history.replaceState) history.replaceState(null, "", "#" + btn.getAttribute("aria-controls"));
-      }
-      function fromHash() {
-        var id = decodeURIComponent(location.hash.slice(1));
-        if (!id) return false;
-        var extra = document.getElementById(id);
-        if (extra && extra.hasAttribute("data-hors-menu")) { showExtra(extra); return true; }
-        var direct = bar.querySelector('button[aria-controls="' + id + '"]');
-        if (direct) { select(direct, true); return true; }
-        var target = document.getElementById(id);
-        var panel = target && target.closest(".tab-panel");
-        var b = panel && bar.querySelector('button[aria-controls="' + panel.id + '"]');
-        if (!b) return false;
-        select(b, true);
-        setTimeout(function () { target.scrollIntoView(); }, 0);
-        return true;
-      }
-      // Menu de l'accueil : un onglet dont le panneau porte data-sous-menu ouvre la liste de ses rubriques
-      var isMenu = bar.classList.contains("menu");
-      // Hauteur où le menu se colle en haut (mesurée sur l'élément qui le précède, le menu étant « sticky »)
-      function menuTop() {
-        var prev = (bar.closest(".menu-bar") || bar).previousElementSibling;
-        return prev ? prev.getBoundingClientRect().bottom + window.scrollY : 0;
-      }
-      function closeDrops(except) {
-        bar.querySelectorAll(".menu-item.open").forEach(function (m) {
-          if (m === except) return;
-          m.classList.remove("open"); m.querySelector("button").setAttribute("aria-expanded", "false");
-        });
-      }
-      function goTo(id) {
-        if (history.replaceState) history.replaceState(null, "", "#" + id);
-        fromHash();
-      }
-      btns.forEach(function (b) {
-        var panel = document.getElementById(b.getAttribute("aria-controls"));
-        var secs = isMenu && panel && panel.hasAttribute("data-sous-menu") ? panel.querySelectorAll("section[id]") : [];
-        if (secs.length) {
-          var wrap = document.createElement("div");
-          wrap.className = "menu-item";
-          b.parentNode.insertBefore(wrap, b);
-          wrap.appendChild(b);
-          b.setAttribute("aria-haspopup", "true");
-          b.setAttribute("aria-expanded", "false");
-          b.insertAdjacentHTML("beforeend", ICON.chevron);
-          var drop = document.createElement("div");
-          drop.className = "menu-drop";
-          drop.innerHTML = Array.prototype.map.call(secs, function (s) {
-            var h = s.querySelector("h2");
-            return '<a href="#' + s.id + '">' + (h ? h.textContent.trim() : s.id) + (s.querySelector(".protected") ? ICON.lock : "") + '</a>';
-          }).join("");
-          wrap.appendChild(drop);
-          drop.addEventListener("click", function (e) {
-            var a = e.target.closest("a"); if (!a) return;
-            e.preventDefault();
-            closeDrops();
-            goTo(a.getAttribute("href").slice(1));
-          });
-        }
-        b.addEventListener("click", function (e) {
-          e.stopPropagation();
-          select(b);
-          var top = menuTop();
-          if (isMenu && window.scrollY > top) window.scrollTo(0, top);
-          var m = b.closest(".menu-item");
-          if (m) {
-            var open = !m.classList.contains("open");
-            closeDrops(m);
-            m.classList.toggle("open", open);
-            b.setAttribute("aria-expanded", open ? "true" : "false");
-          }
-        });
+  /* ---------- Menu (une page par rubrique) ----------
+     « Prépa PTSI » ouvre une liste de ses rubriques ; les anciennes adresses
+     de la page unique (#episen, #formulaires…) renvoient vers la bonne page. */
+  function setupMenu() {
+    var MOVED = {
+      episen: "episen.html", "outils-mathematiques": "episen.html#outils-mathematiques", "analyse-numerique": "episen.html#analyse-numerique",
+      ressources: "ressources.html", formulaires: "ressources.html#formulaires", papiers: "ressources.html#papiers",
+      "liens-utiles": "liens-utiles.html"
+    };
+    var page = document.body.getAttribute("data-page");
+    var h = decodeURIComponent(location.hash.slice(1));
+    if (page === "index.html" && MOVED[h]) { location.replace(ROOT + MOVED[h]); return; }
+    if (page === "index.html" && h === "ptsi" && history.replaceState) history.replaceState(null, "", location.pathname);
+
+    var items = document.querySelectorAll(".menu .menu-item");
+    function closeAll() {
+      items.forEach(function (m) { m.classList.remove("open"); var b = m.querySelector("button"); if (b) b.setAttribute("aria-expanded", "false"); });
+    }
+    items.forEach(function (m) {
+      var b = m.querySelector("button");
+      if (!b) return;
+      b.addEventListener("click", function (e) {
+        e.stopPropagation();
+        var open = !m.classList.contains("open");
+        closeAll();
+        m.classList.toggle("open", open);
+        b.setAttribute("aria-expanded", open ? "true" : "false");
       });
-      if (isMenu) {
-        document.addEventListener("click", function (e) { if (!bar.contains(e.target)) closeDrops(); });
-        document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeDrops(); });
-      }
-      bar.addEventListener("keydown", function (e) {
-        if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
-        var list = Array.prototype.slice.call(btns), i = list.indexOf(document.activeElement);
-        if (i < 0) return;
-        var n = list[(i + (e.key === "ArrowRight" ? 1 : list.length - 1)) % list.length];
-        n.focus(); select(n);
-      });
-      if (!fromHash()) select(btns[0], true);
-      window.addEventListener("hashchange", fromHash);
+      m.querySelectorAll(".menu-drop a").forEach(function (a) { a.addEventListener("click", closeAll); });
     });
+    document.addEventListener("click", function (e) { if (!e.target.closest || !e.target.closest(".menu-item")) closeAll(); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeAll(); });
   }
 
   /* ---------- Liseuse PDF : fenêtre sur la page (comme l'ancien site) ---------- */
@@ -498,12 +409,17 @@
 
   buildHeader();
   buildFooter();
-  setupTabs();
+  setupMenu();
   setupPdf();
   setupGate();
   setupToTop();
   setupSepCounts();
   setupUpdated();
-  markMissingDocs().then(function () { setupFold(); setupKholles(); });
+  markMissingDocs().then(function () {
+    setupFold(); setupKholles();
+    // les listes viennent de se replier : on se recale sur la rubrique visée (#kholles, #devoirs…)
+    var cible = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    if (cible) cible.scrollIntoView();
+  });
   setupAnalytics();
 })();

@@ -453,3 +453,15 @@ body { border-top: 4px solid var(--accent); }
   .items li:has(> .ty) > .ds { grid-column: 2; width: auto; padding-left: 0; justify-content: flex-start; }
   .items li:has(> .ty):not(:has(> .ds)) > .ty { grid-row: 1; }
 }
+
+/* ---------- Menu : liens vers les pages ---------- */
+.menu a.menu-link, .menu button.menu-link {
+  flex: none; font: inherit; font-size: .95rem; color: var(--soft); background: none; border: 0; border-bottom: 2px solid transparent;
+  padding: .45rem .85rem .5rem; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: .35rem;
+}
+.menu a.menu-link:hover, .menu button.menu-link:hover { color: var(--strong); }
+.menu .menu-link[aria-current="page"] {
+  color: var(--accent); border-bottom-color: var(--accent); font-weight: 500;
+  background: color-mix(in srgb, var(--accent) 8%, transparent); border-radius: 8px 8px 0 0;
+}
+@media (max-width: 34rem) { .menu a.menu-link, .menu button.menu-link { padding: .5rem .65rem .55rem; font-size: .9rem; } }
