@@ -1,4 +1,14 @@
+# Seule la page d'accueil doit apparaître dans les moteurs de recherche.
+# Les PDF (cours, TD, DST, corrections…) et la visionneuse PDF ne sont pas indexés.
 User-agent: *
-Allow: /
+Allow: /$
+Allow: /index.html
+Allow: /assets/site.css
+Allow: /assets/site.js
+Allow: /assets/fonts/
+Allow: /deco/
+Disallow: /docs/
+Disallow: /assets/pdfjs/
+Disallow: /lancer.command
 
 Sitemap: https://ysamut.fr/sitemap.xml
